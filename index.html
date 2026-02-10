@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Private List Consulting builds quiet automation systems for small businesses. Reliable systems that save hours every week. No hype, no lock-in.">
-    <title>Private List Consulting — Automation for Small Business</title>
+    <meta name="description" content="Custom automation for small business operations. We build automation systems that save your team 15+ hours per week. Email routing, lead capture, client onboarding, reporting. Transparent pricing, full documentation, no vendor lock-in.">
+    <title>Private List Consulting — Custom Automation for Small Business</title>
     <style>
         * {
             margin: 0;
@@ -32,6 +32,7 @@
             padding: 1rem 2rem;
             z-index: 1000;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: padding 0.3s ease;
         }
         
         nav .container {
@@ -48,12 +49,17 @@
             font-weight: 600;
             color: #ffffff;
             text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        nav .logo:hover {
+            color: #5b9aa9;
         }
         
         nav ul {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 1.5rem;
         }
         
         nav a {
@@ -61,10 +67,26 @@
             text-decoration: none;
             font-size: 0.95rem;
             transition: color 0.3s;
+            position: relative;
         }
         
         nav a:hover {
             color: #5b9aa9;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: #5b9aa9;
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
         }
         
         /* Mobile menu toggle */
@@ -75,6 +97,11 @@
             color: #ffffff;
             font-size: 1.5rem;
             cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .menu-toggle:hover {
+            color: #5b9aa9;
         }
         
         /* Container */
@@ -86,6 +113,18 @@
         
         section {
             padding: 5rem 0;
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         /* Hero Section */
@@ -102,35 +141,64 @@
             font-weight: 700;
             margin-bottom: 1.5rem;
             line-height: 1.2;
+            animation: slideDown 0.8s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         #hero p {
             font-size: 1.25rem;
             margin-bottom: 2.5rem;
-            max-width: 700px;
+            max-width: 750px;
             margin-left: auto;
             margin-right: auto;
             color: #e0e6ed;
             line-height: 1.7;
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .cta-button {
             display: inline-block;
             background: #5b9aa9;
             color: #ffffff;
-            padding: 1rem 2.5rem;
+            padding: 1.1rem 2.8rem;
             font-size: 1.1rem;
             font-weight: 600;
             text-decoration: none;
             border-radius: 6px;
             transition: all 0.3s;
             box-shadow: 0 4px 12px rgba(91, 154, 169, 0.3);
+            animation: slideUp 0.8s ease-out 0.4s both;
         }
         
         .cta-button:hover {
             background: #4a8898;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(91, 154, 169, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(91, 154, 169, 0.4);
+        }
+        
+        .cta-button:active {
+            transform: translateY(-1px);
         }
         
         /* Content Sections */
@@ -143,7 +211,7 @@
         }
         
         section h3 {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             color: #2c3e50;
             margin-bottom: 1rem;
             font-weight: 600;
@@ -161,29 +229,31 @@
             background: #f8f9fa;
         }
         
-        .problem-list {
+        .problem-content {
             max-width: 900px;
             margin: 0 auto;
         }
         
-        .problem-item {
-            margin-bottom: 2.5rem;
+        .problem-content p {
+            text-align: left;
         }
         
-        .problem-item h3 {
+        .problem-content p strong {
             color: #1a2332;
-            font-size: 1.5rem;
-            margin-bottom: 0.75rem;
-        }
-        
-        .problem-item p {
-            color: #4a5568;
+            display: block;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.15rem;
         }
         
         /* What We Do Section */
         #what-we-do {
             max-width: 900px;
             margin: 0 auto;
+        }
+        
+        #what-we-do p {
+            text-align: left;
         }
         
         /* Services Section */
@@ -193,41 +263,53 @@
         
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
         
         .service-card {
             background: #ffffff;
-            padding: 2rem;
+            padding: 2.5rem;
             border-radius: 8px;
             box-shadow: 0 2px 12px rgba(0,0,0,0.08);
             transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
         }
         
         .service-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            transform: translateY(-6px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
         }
         
         .service-card h3 {
             color: #1a2332;
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
+            margin-top: 0;
         }
         
         .service-price {
-            font-size: 1.75rem;
+            font-size: 2rem;
             font-weight: 700;
             color: #5b9aa9;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .service-subtitle {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            font-style: italic;
         }
         
         .service-card h4 {
             font-size: 1.1rem;
             color: #2c3e50;
             margin-bottom: 0.75rem;
+            margin-top: 1rem;
             font-weight: 600;
         }
         
@@ -240,6 +322,7 @@
         .service-card ul {
             list-style: none;
             padding-left: 0;
+            margin-bottom: 1rem;
         }
         
         .service-card li {
@@ -247,6 +330,7 @@
             position: relative;
             margin-bottom: 0.5rem;
             color: #4a5568;
+            font-size: 1rem;
         }
         
         .service-card li:before {
@@ -255,14 +339,34 @@
             left: 0;
             color: #5b9aa9;
             font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .roi-example {
+            background: #f0f7fb;
+            border-left: 4px solid #5b9aa9;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .roi-example p {
+            margin: 0;
+            font-size: 1rem;
+            color: #2c3e50;
+        }
+        
+        .roi-example strong {
+            color: #1a2332;
         }
         
         .guarantee-box {
-            background: #e8f4f8;
-            border-left: 4px solid #5b9aa9;
-            padding: 1.25rem;
+            background: linear-gradient(135deg, #e8f4f8 0%, #f5f9fb 100%);
+            border-left: 5px solid #5b9aa9;
+            padding: 1.5rem;
             margin-top: 1.5rem;
-            border-radius: 4px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(91, 154, 169, 0.1);
         }
         
         .guarantee-box p {
@@ -270,6 +374,11 @@
             font-size: 0.95rem;
             color: #2c3e50;
             font-weight: 500;
+        }
+        
+        .guarantee-box strong {
+            color: #1a2332;
+            font-weight: 700;
         }
         
         /* Who We Help Section */
@@ -280,22 +389,39 @@
         }
         
         #who-we-help li {
-            padding: 1.25rem 1.5rem;
+            padding: 1.5rem;
             margin-bottom: 1rem;
-            background: #f8f9fa;
+            background: #ffffff;
             border-radius: 6px;
             border-left: 4px solid #5b9aa9;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+        
+        #who-we-help li:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transform: translateX(4px);
         }
         
         #who-we-help strong {
             color: #1a2332;
             font-size: 1.2rem;
+            display: block;
+            margin-bottom: 0.5rem;
         }
         
         #who-we-help li span {
             display: block;
-            margin-top: 0.5rem;
             color: #4a5568;
+            font-size: 1rem;
+        }
+        
+        #who-we-help li em {
+            display: block;
+            color: #5b9aa9;
+            font-size: 0.95rem;
+            margin-top: 0.75rem;
+            font-style: italic;
         }
         
         /* How It Works Section */
@@ -312,20 +438,31 @@
         
         .step {
             text-align: center;
+            padding: 1.5rem;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .step:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
         }
         
         .step-number {
             width: 60px;
             height: 60px;
-            background: #5b9aa9;
+            background: linear-gradient(135deg, #5b9aa9 0%, #4a8898 100%);
             color: #ffffff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
             margin: 0 auto 1.5rem;
+            box-shadow: 0 4px 12px rgba(91, 154, 169, 0.3);
         }
         
         .step h3 {
@@ -337,22 +474,142 @@
         .step p {
             font-size: 1rem;
             color: #4a5568;
+            margin: 0;
         }
         
-        /* Why Us Section */
-        #why-us {
+        /* Why We're Different Section */
+        #why-different {
             max-width: 900px;
             margin: 0 auto;
         }
         
         .why-item {
             margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #5b9aa9;
+            transition: all 0.3s;
+        }
+        
+        .why-item:hover {
+            background: #f0f4f8;
+            transform: translateX(4px);
         }
         
         .why-item h3 {
             color: #1a2332;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin-bottom: 0.75rem;
+            margin-top: 0;
+        }
+        
+        .why-item p {
+            margin: 0;
+            color: #4a5568;
+        }
+        
+        /* About Section */
+        #about {
+            background: #f8f9fa;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        #about h2 {
+            margin-bottom: 2rem;
+        }
+        
+        #about-content {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 4px solid #5b9aa9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        #about-content p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #2c3e50;
+            text-align: left;
+        }
+        
+        /* FAQ Section */
+        #faq {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .faq-list {
+            list-style: none;
+            margin-top: 2rem;
+        }
+        
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid #e0e6ed;
+            border-radius: 6px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .faq-item:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .faq-question {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #1a2332;
+            font-size: 1.1rem;
+            transition: background 0.3s;
+        }
+        
+        .faq-question:hover {
+            background: #f0f4f8;
+        }
+        
+        .faq-toggle {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+            color: #5b9aa9;
+        }
+        
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background: #ffffff;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 1.5rem;
+            border-top: 1px solid #e0e6ed;
+        }
+        
+        .faq-answer p {
+            margin: 0;
+            color: #4a5568;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        .faq-answer p + p {
+            margin-top: 1rem;
         }
         
         /* Contact Section */
@@ -367,7 +624,7 @@
             margin-bottom: 1.5rem;
         }
         
-        #contact p {
+        #contact > .container > p {
             color: #e0e6ed;
             font-size: 1.15rem;
             max-width: 700px;
@@ -376,29 +633,58 @@
         
         .contact-details {
             background: rgba(255,255,255,0.1);
-            padding: 2rem;
+            padding: 2.5rem;
             border-radius: 8px;
-            max-width: 600px;
+            max-width: 650px;
             margin: 2.5rem auto;
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
         }
         
         .contact-details p {
             margin-bottom: 1rem;
             font-size: 1rem;
+            color: #e0e6ed;
         }
         
         .contact-email {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             color: #5b9aa9;
-            font-weight: 600;
+            font-weight: 700;
             text-decoration: none;
             display: inline-block;
-            margin: 1rem 0;
+            margin: 1.5rem 0;
+            transition: color 0.3s, transform 0.3s;
         }
         
         .contact-email:hover {
-            color: #4a8898;
+            color: #7ecddd;
+            transform: scale(1.05);
+        }
+        
+        .contact-details .calendly-link {
+            display: inline-block;
+            background: #5b9aa9;
+            color: #ffffff;
+            padding: 0.8rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 1.5rem;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .contact-details .calendly-link:hover {
+            background: #4a8898;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(91, 154, 169, 0.3);
+        }
+        
+        .contact-details strong {
+            color: #ffffff;
+            display: block;
+            margin-bottom: 0.5rem;
         }
         
         /* Footer */
@@ -408,6 +694,7 @@
             text-align: center;
             padding: 2rem;
             font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
         
         footer p {
@@ -453,6 +740,63 @@
             .steps-grid {
                 grid-template-columns: 1fr;
             }
+            
+            #who-we-help li {
+                padding: 1.25rem;
+            }
+            
+            .faq-question {
+                font-size: 1rem;
+                padding: 1.25rem;
+            }
+            
+            .contact-details {
+                padding: 1.5rem;
+            }
+            
+            .contact-email {
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.75rem 1rem;
+            }
+            
+            nav .logo {
+                font-size: 1.1rem;
+            }
+            
+            #hero {
+                padding: 6rem 1rem 4rem;
+                margin-top: 50px;
+            }
+            
+            #hero h1 {
+                font-size: 1.5rem;
+            }
+            
+            #hero p {
+                font-size: 1rem;
+            }
+            
+            section {
+                padding: 2rem 0;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .cta-button {
+                padding: 0.9rem 1.8rem;
+                font-size: 1rem;
+            }
+            
+            .service-card {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -465,11 +809,12 @@
             <ul id="nav-menu">
                 <li><a href="#problem">Problem</a></li>
                 <li><a href="#what-we-do">What We Do</a></li>
-                <li><a href="#about">About</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#who-we-help">Who We Help</a></li>
                 <li><a href="#how-it-works">How It Works</a></li>
-                <li><a href="#why-us">Why Us</a></li>
+                <li><a href="#why-different">Why Us</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#faq">FAQ</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
@@ -478,33 +823,24 @@
     <!-- Hero Section -->
     <section id="hero">
         <div class="container">
-            <h1>Stop doing work the computer should handle.</h1>
-            <p>We build quiet automation systems for small businesses. No hype, no lock-in—just reliable systems that save your team hours every week.</p>
-            <a href="#contact" class="cta-button">Schedule a Discovery Call</a>
+            <h1>Your team wastes 15+ hours per week on repetitive tasks. We automate them—and get you back to revenue.</h1>
+            <p>Custom automation for small business operations. Email routing, lead capture, client onboarding, reporting. Full documentation, transparent pricing, no vendor lock-in. You own the systems we build.</p>
+            <a href="#contact" class="cta-button">Schedule a 30-minute discovery call</a>
         </div>
     </section>
 
     <!-- Problem Section -->
     <section id="problem">
         <div class="container">
-            <h2>You're probably dealing with:</h2>
-            <div class="problem-list">
-                <div class="problem-item">
-                    <h3>Your team is drowning in repetitive work.</h3>
-                    <p>Data entry, email sorting, lead follow-up, appointment scheduling—the kind of tasks that eat 10-20 hours a week but never feel done.</p>
-                </div>
-                <div class="problem-item">
-                    <h3>Important things slip through the cracks.</h3>
-                    <p>Leads go cold because no one followed up. Clients don't get their onboarding email. Reports are late because someone forgot to pull the data.</p>
-                </div>
-                <div class="problem-item">
-                    <h3>You know automation exists, but you're skeptical.</h3>
-                    <p>You've heard the hype about AI. You've been burned by tech companies before. You're not sure what's real, what's worth the cost, or who to trust.</p>
-                </div>
-                <div class="problem-item">
-                    <h3>Hiring more people isn't the answer.</h3>
-                    <p>You need leverage, not headcount. You need systems that work in the background so your team can focus on what actually requires a human.</p>
-                </div>
+            <h2>You're dealing with real costs.</h2>
+            <div class="problem-content">
+                <p>Your team burns 15+ hours per week on work that doesn't require a human. Data entry. Email routing. Lead follow-up. Appointment reminders. Appointment scheduling. The work feels urgent but never moves the needle.</p>
+                
+                <p><strong>Here's the actual cost:</strong> A missed follow-up loses you a $5,000 client. A delayed report costs you a hiring decision. A forgotten onboarding step creates customer friction that hurts retention. These aren't small inconveniences—they're profit leaks.</p>
+                
+                <p>You know automation exists, but you're skeptical. You've been burned by tech consultants before. You've heard the hype. You're not sure what's real, what's worth the cost, or who won't disappear after the sale.</p>
+                
+                <p>Hiring more people isn't the answer. You need leverage, not headcount. Systems that run in the background so your team can focus on things only humans can do.</p>
             </div>
         </div>
     </section>
@@ -513,81 +849,96 @@
     <section id="what-we-do">
         <div class="container">
             <h2>What We Do</h2>
-            <p>We design and build automation systems for small businesses—the kind of behind-the-scenes workflows that just work.</p>
-            <p>Email routing. Lead capture. Client onboarding. Data entry. Appointment reminders. Reporting. The repetitive tasks that drain your team's time and attention.</p>
-            <p>We use proven, cost-effective tools. We document everything clearly. We deliver systems that save real hours, reduce errors, and let your team focus on higher-value work.</p>
-            <p><strong>No hype. No upselling. No black boxes. Just reliable automation that does what you need it to do.</strong></p>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" style="max-width: 900px; margin: 0 auto;">
-        <div class="container">
-            <h2>Who We Are</h2>
-            <p style="text-align: center; font-size: 1.2rem; max-width: 700px; margin: 0 auto;">Private List Consulting is led by Joseph Conrad, who spent 45 years building and running his own small business. He understands the operational challenges business owners face—because he's lived them.</p>
+            <p>We build automation systems that save your team 15-20 hours per week.</p>
+            <p>Email routing. Lead capture. Client onboarding. Appointment reminders. Data processing. Report generation. Transcription. Customer communication. The repetitive tasks that drain attention and slow decisions.</p>
+            <p>We use proven, cost-effective tools. We document everything clearly. We deliver systems that work in the background, reduce errors, and let your team focus on client relationships and revenue-generating work.</p>
+            <p><strong>Transparent pricing. Full admin access. No black boxes. If you want to take the system in-house later or hire someone to maintain it, you can.</strong></p>
         </div>
     </section>
 
     <!-- Services Section -->
     <section id="services">
         <div class="container">
-            <h2>Services</h2>
+            <h2>Services & Pricing</h2>
             <div class="services-grid">
+                <!-- Discovery Audit -->
                 <div class="service-card">
                     <h3>Discovery Audit</h3>
                     <div class="service-price">$500</div>
-                    <h4>Not sure where to start?</h4>
-                    <p>90-minute process review, written audit report identifying automation opportunities, ROI estimates, and a no-obligation roadmap.</p>
-                    <p>This fee is credited toward any service package if you move forward within 30 days.</p>
+                    <p class="service-subtitle">Not sure where to start?</p>
+                    <p>90-minute process review, written audit report identifying automation opportunities with ROI estimates, and a no-obligation roadmap.</p>
+                    <p><strong>Special offer:</strong> This fee is credited toward any service package if you move forward within 30 days.</p>
                     <div class="guarantee-box">
-                        <p><strong>Money-Back Guarantee:</strong> If our audit doesn't identify at least one automation opportunity worth your time, we'll refund the full $500. No questions asked.</p>
+                        <p><strong>Our Guarantee:</strong> If our audit doesn't identify at least one automation opportunity worth your time, we'll refund the full $500. No questions asked.</p>
                     </div>
                 </div>
                 
+                <!-- Starter Package -->
                 <div class="service-card">
                     <h3>Starter Package</h3>
                     <div class="service-price">$3,500</div>
-                    <h4>Your first automation.</h4>
-                    <p>We identify 2-3 high-impact tasks, build the workflows, and deliver in 2-3 weeks.</p>
-                    <p><strong>Common use cases:</strong></p>
+                    <p class="service-subtitle">Your first automation system.</p>
+                    <p>We identify 2-3 high-impact tasks, build the workflows, test thoroughly, and deliver in 2-3 weeks.</p>
+                    <h4>Common use cases:</h4>
                     <ul>
-                        <li>Email categorization</li>
+                        <li>Email categorization and routing</li>
                         <li>Lead capture to CRM</li>
                         <li>Appointment booking</li>
                         <li>Transcription and summaries</li>
+                        <li>Intake form processing</li>
                     </ul>
-                    <p style="margin-top: 1rem;">Includes 30 days post-launch support.</p>
+                    <p><strong>Includes:</strong> 30 days post-launch support.</p>
+                    
+                    <div class="roi-example">
+                        <p><strong>ROI Example:</strong> If your team spends 10 hours per week on email sorting and lead entry at $50/hour cost, you're losing $26,000 per year. This package pays for itself in under 3 weeks.</p>
+                    </div>
+                    
+                    <div class="guarantee-box">
+                        <p><strong>Our Guarantee:</strong> If the automation doesn't save your team at least 10 hours in the first month, we'll refund 50% and optimize until it does. No excuses.</p>
+                    </div>
                 </div>
                 
+                <!-- Custom Build -->
                 <div class="service-card">
                     <h3>Custom Build</h3>
                     <div class="service-price">$8,000–$15,000</div>
-                    <h4>For complex, multi-step processes.</h4>
-                    <p>Full process discovery, custom workflow design, integration across multiple platforms.</p>
-                    <p><strong>Common use cases:</strong></p>
+                    <p class="service-subtitle">For complex, multi-step processes.</p>
+                    <p>Full process discovery, custom workflow design, integration across multiple platforms (CRM, project management, communication), testing, and handoff.</p>
+                    <h4>Common use cases:</h4>
                     <ul>
                         <li>End-to-end client onboarding</li>
                         <li>Lead nurturing sequences</li>
                         <li>Automated reporting</li>
                         <li>AI-powered content pipelines</li>
                         <li>Custom chatbots</li>
+                        <li>Document automation</li>
                     </ul>
-                    <p style="margin-top: 1rem;">Includes 60 days post-launch support.</p>
+                    <p style="margin-top: 1rem;"><strong>Includes:</strong> 60 days post-launch support and one round of optimization.</p>
+                    
+                    <div class="roi-example">
+                        <p><strong>ROI Example:</strong> A 15-person law firm automates intake, triage, and document routing (currently 20 hours/week across staff). At blended cost of $45/hour, that's $46,800 per year in recovered time. System pays for itself in 3-4 months. First-year savings: $31,800.</p>
+                    </div>
+                    
+                    <div class="guarantee-box">
+                        <p><strong>Same Guarantee:</strong> If we don't deliver the promised hours saved, we refund 50% and fix it.</p>
+                    </div>
                 </div>
                 
+                <!-- Monthly Retainer -->
                 <div class="service-card">
                     <h3>Monthly Retainer</h3>
                     <div class="service-price">$750–$2,500/mo</div>
-                    <h4>Ongoing support and optimization.</h4>
-                    <p>We monitor, maintain, and continuously improve your automations.</p>
-                    <p><strong>Includes:</strong></p>
+                    <p class="service-subtitle">Ongoing support and continuous improvement.</p>
+                    <p>We monitor, maintain, and improve your automations.</p>
+                    <h4>Includes:</h4>
                     <ul>
                         <li>Troubleshooting</li>
                         <li>Platform updates</li>
                         <li>Monthly optimization reviews</li>
                         <li>Priority support</li>
                     </ul>
-                    <p style="margin-top: 1rem;">Higher tiers include hours for new builds.</p>
+                    <p style="margin-top: 1rem;"><strong>Higher tiers</strong> include hours for new builds and proactive process improvements.</p>
+                    <p style="margin-top: 1rem; font-style: italic; color: #5b9aa9;">Perfect for teams that want ongoing refinement without project-by-project work.</p>
                 </div>
             </div>
         </div>
@@ -601,30 +952,33 @@
             <ul>
                 <li>
                     <strong>Law Firms</strong>
-                    <span>Lead intake, client onboarding, document routing, case management population</span>
+                    <span>Lead intake, client onboarding, document routing, case management population, conflict checks, billing reminders.</span>
+                    <em>Example: A 12-person firm cut intake processing from 45 minutes to 3 minutes per lead.</em>
                 </li>
                 <li>
                     <strong>Real Estate</strong>
-                    <span>Lead management, follow-up sequences, transaction coordination, client communication</span>
+                    <span>Lead capture and routing, follow-up sequences, transaction coordination, client communication, closing coordination.</span>
+                    <em>Example: One agent's follow-up time dropped from 8 hours/week to 1 hour/week of exception handling.</em>
                 </li>
                 <li>
-                    <strong>Medical & Dental</strong>
-                    <span>Appointment scheduling, patient reminders, record management, intake forms</span>
+                    <strong>Medical & Dental Offices</strong>
+                    <span>Appointment scheduling and reminders, patient intake, record management, follow-up communication, insurance form processing.</span>
+                    <em>Example: Reception team saved 12 hours/week on appointment confirmation and patient follow-up.</em>
                 </li>
                 <li>
                     <strong>Professional Services</strong>
-                    <span>Proposal generation, client onboarding, project tracking, reporting</span>
+                    <span>Proposal generation, client onboarding, project tracking, automated reporting, invoice delivery.</span>
                 </li>
                 <li>
                     <strong>E-commerce</strong>
-                    <span>Order fulfillment, customer service, inventory alerts, follow-up campaigns</span>
+                    <span>Order fulfillment, customer service automation, inventory alerts, follow-up campaigns, returns processing.</span>
                 </li>
                 <li>
                     <strong>Local Service Businesses</strong>
-                    <span>Appointment booking, payment processing, customer follow-up, review requests</span>
+                    <span>Appointment booking, payment processing, customer follow-up, review requests, job scheduling.</span>
                 </li>
             </ul>
-            <p style="text-align: center; max-width: 800px; margin: 2rem auto 0; font-size: 1.15rem;"><strong>If your team spends hours each week on copy-paste work or "just keeping up," we can help.</strong></p>
+            <p style="text-align: center; max-width: 800px; margin: 2rem auto 0; font-size: 1.15rem;"><strong>If your team spends hours each week on copy-paste work, data transfer, or "just keeping up," we can help.</strong></p>
         </div>
     </section>
 
@@ -641,7 +995,7 @@
                 <div class="step">
                     <div class="step-number">2</div>
                     <h3>Proposal</h3>
-                    <p>We send a detailed proposal with scope, timeline, and pricing. You approve, and we lock the plan.</p>
+                    <p>We send a detailed proposal with scope, timeline, deliverables, and pricing. You approve before we start.</p>
                 </div>
                 <div class="step">
                     <div class="step-number">3</div>
@@ -667,42 +1021,150 @@
         </div>
     </section>
 
-    <!-- Why Us Section -->
-    <section id="why-us">
+    <!-- Why We're Different Section -->
+    <section id="why-different">
         <div class="container">
-            <h2>Why Us</h2>
+            <h2>Why We're Different</h2>
             <div class="why-item">
-                <h3>We don't do hype.</h3>
-                <p>No wild promises. No buzzword bingo. We solve specific problems with proven tools.</p>
+                <h3>We optimize for cost, not commissions.</h3>
+                <p>Most agencies push expensive platforms ($500+/month) because they get kickbacks. We use open-source and cost-effective tools. Your typical platform fees: $10-50/month. You pocket the difference.</p>
             </div>
             <div class="why-item">
-                <h3>We're cost-conscious.</h3>
-                <p>We use open-source and cost-effective platforms where possible. Your monthly platform fees stay low (typically $10-50/month).</p>
+                <h3>We document everything and hand you the keys.</h3>
+                <p>Full process documentation, video walkthroughs, and complete admin access. If you want to take over or hire someone else to manage it, you can. No black boxes. No hostage situations. We want you to succeed whether we're involved or not.</p>
             </div>
             <div class="why-item">
-                <h3>We're honest about what works.</h3>
-                <p>If automation isn't the right solution, we'll tell you. If a simpler approach works better, we'll recommend it.</p>
+                <h3>We'll tell you what NOT to automate.</h3>
+                <p>Not everything should be. If a $10/hour VA or a simple checklist solves it better, we'll say so. We're not here to sell you $15,000 in automation you don't need.</p>
             </div>
-            <div class="why-item">
-                <h3>We build systems that last.</h3>
-                <p>Full documentation. No lock-in. If you ever want to take over or hire someone else, you can. No black boxes.</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2>About Joseph Conrad</h2>
+            <div id="about-content">
+                <p>I've spent 45 years running my own small firm. I know the pressure. I know when hiring feels impossible, when good employees can't focus because they're drowning in admin work, and when a missed step costs you a client.</p>
+                <p>I started Private List Consulting because I got tired of watching small business owners get sold complicated, expensive automation they didn't need—or sold by agencies that disappeared after implementation.</p>
+                <p>This is how I'd want someone to work with me. Transparent. Honest about trade-offs. Focused on your actual profit, not on making their quarterly numbers look good.</p>
             </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <ul class="faq-list">
+                <li class="faq-item">
+                    <div class="faq-question">
+                        <span>What if the automation breaks or something changes in my business?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You get support for 30-60 days post-launch included. After that, you can hire us on retainer for ongoing support, maintain it yourself with our documentation, or hire someone else. Your choice. It's your system.</p>
+                    </div>
+                </li>
+                
+                <li class="faq-item">
+                    <div class="faq-question">
+                        <span>What tools do you use?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Primarily n8n (open-source, self-hostable) and Make, depending on your needs and budget. We also integrate with your existing tools—CRM, email, project management, payment processing. You own your workflows. No proprietary lock-in.</p>
+                    </div>
+                </li>
+                
+                <li class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I cancel the retainer anytime?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. 30-day notice. We don't lock clients in. We make money by being useful, not by making you dependent.</p>
+                    </div>
+                </li>
+                
+                <li class="faq-item">
+                    <div class="faq-question">
+                        <span>Do you offshore or outsource the work?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No. I build and deliver every system personally. You're not working with a factory or a junior contractor. You're working with someone who's been doing this for decades and cares about the result.</p>
+                    </div>
+                </li>
+                
+                <li class="faq-item">
+                    <div class="faq-question">
+                        <span>How long does a typical project take?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Starter Package: 2-3 weeks. Custom Build: 4-8 weeks depending on complexity. We give you a specific timeline in the proposal.</p>
+                    </div>
+                </li>
+                
+                <li class="faq-item">
+                    <div class="faq-question">
+                        <span>What if it doesn't work the way we hoped?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>If the automation doesn't save your team the promised hours in the first month, we refund 50% and optimize until it does. No complaints, no friction. We want you to win.</p>
+                    </div>
+                </li>
+                
+                <li class="faq-item">
+                    <div class="faq-question">
+                        <span>How much does this actually cost me per month in platform fees?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Depends on the system, but typically $10-50/month. We'll specify this clearly before you decide.</p>
+                    </div>
+                </li>
+                
+                <li class="faq-item">
+                    <div class="faq-question">
+                        <span>Can you integrate this with our existing software?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Almost always yes. We work with most major platforms—CRMs, project management tools, email, payment processors, accounting software. If you're unsure, ask us during discovery.</p>
+                    </div>
+                </li>
+                
+                <li class="faq-item">
+                    <div class="faq-question">
+                        <span>What if you're not available later?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Everything is documented. Complete process guides, video walkthroughs, and admin credentials. You can take it in-house, hire someone else, or keep us on retainer. You're not stranded.</p>
+                    </div>
+                </li>
+            </ul>
         </div>
     </section>
 
     <!-- Contact Section -->
     <section id="contact">
         <div class="container">
-            <h2>Ready to get hours back?</h2>
-            <p>Start with a no-pressure discovery call. We'll talk about what's eating your team's time, and whether automation makes sense for you.</p>
-            <p>If it's a fit, we'll propose next steps—either a Discovery Audit or moving straight into a service package.</p>
+            <h2>Ready to get your time back?</h2>
+            <p>We take on 4-6 clients per quarter. If you're ready to move, let's talk this week.</p>
+            <p><strong>Schedule a 30-minute discovery call.</strong> No pitch deck. No sales pressure. We'll ask about your business, what's eating your team's time, and whether automation actually makes sense for you right now. If it doesn't, we'll tell you.</p>
             <div class="contact-details">
                 <p><strong>Email us at:</strong></p>
                 <a href="mailto:contact@privatelistconsulting.com" class="contact-email">contact@privatelistconsulting.com</a>
                 <p style="margin-top: 1.5rem;"><strong>Subject line:</strong> "Discovery call request"</p>
                 <p>Tell us a bit about your business and what you're dealing with. We'll reply within 24 hours.</p>
+                <p style="margin-top: 1.5rem;"><strong>Or schedule directly:</strong></p>
+                <a href="https://calendly.com/privatelistconsulting/discovery" class="calendly-link">Book on Calendly</a>
             </div>
-            <p style="font-style: italic; margin-top: 2rem;">Simple, reliable automation. No hype. Just results.</p>
+            <p style="font-style: italic; margin-top: 2rem;">Automation that works. Transparent pricing. Systems you own. No hype, no lock-in.</p>
         </div>
     </section>
 
@@ -711,8 +1173,9 @@
         <p>&copy; 2026 Private List Consulting. All rights reserved.</p>
     </footer>
 
-    <!-- Minimal JavaScript for mobile menu -->
+    <!-- JavaScript for mobile menu and FAQ accordions -->
     <script>
+        // Mobile menu toggle
         function toggleMenu() {
             const menu = document.getElementById('nav-menu');
             menu.classList.toggle('active');
@@ -724,6 +1187,41 @@
                 const menu = document.getElementById('nav-menu');
                 if (menu.classList.contains('active')) {
                     menu.classList.remove('active');
+                }
+            });
+        });
+        
+        // FAQ Accordion functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const faqItem = this.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all other items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Toggle current item
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+        
+        // Smooth scroll enhancement
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
                 }
             });
         });
