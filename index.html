@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Private List Consulting builds quiet automation systems for small businesses. Reliable systems that save hours every week. No hype, no lock-in.">
+    <title>Private List Consulting — Automation for Small Business</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: #ffffff;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #1a2332;
+            padding: 1rem 2rem;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        nav .logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: #e0e6ed;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #5b9aa9;
+        }
+        
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        section {
+            padding: 5rem 0;
+        }
+        
+        /* Hero Section */
+        #hero {
+            background: linear-gradient(135deg, #1a2332 0%, #2c3e50 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 8rem 2rem 6rem;
+            margin-top: 60px;
+        }
+        
+        #hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        #hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #e0e6ed;
+            line-height: 1.7;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #5b9aa9;
+            color: #ffffff;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(91, 154, 169, 0.3);
+        }
+        
+        .cta-button:hover {
+            background: #4a8898;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(91, 154, 169, 0.4);
+        }
+        
+        /* Content Sections */
+        section h2 {
+            font-size: 2.5rem;
+            color: #1a2332;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        section h3 {
+            font-size: 1.75rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        section p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #4a5568;
+            line-height: 1.8;
+        }
+        
+        /* Problem Section */
+        #problem {
+            background: #f8f9fa;
+        }
+        
+        .problem-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .problem-item {
+            margin-bottom: 2.5rem;
+        }
+        
+        .problem-item h3 {
+            color: #1a2332;
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .problem-item p {
+            color: #4a5568;
+        }
+        
+        /* What We Do Section */
+        #what-we-do {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        /* Services Section */
+        #services {
+            background: #f8f9fa;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .service-card {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+        
+        .service-card h3 {
+            color: #1a2332;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .service-price {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #5b9aa9;
+            margin-bottom: 1rem;
+        }
+        
+        .service-card h4 {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .service-card p {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #4a5568;
+        }
+        
+        .service-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .service-card li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+            color: #4a5568;
+        }
+        
+        .service-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #5b9aa9;
+            font-weight: bold;
+        }
+        
+        .guarantee-box {
+            background: #e8f4f8;
+            border-left: 4px solid #5b9aa9;
+            padding: 1.25rem;
+            margin-top: 1.5rem;
+            border-radius: 4px;
+        }
+        
+        .guarantee-box p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        /* Who We Help Section */
+        #who-we-help ul {
+            max-width: 900px;
+            margin: 2rem auto;
+            list-style: none;
+        }
+        
+        #who-we-help li {
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #5b9aa9;
+        }
+        
+        #who-we-help strong {
+            color: #1a2332;
+            font-size: 1.2rem;
+        }
+        
+        #who-we-help li span {
+            display: block;
+            margin-top: 0.5rem;
+            color: #4a5568;
+        }
+        
+        /* How It Works Section */
+        #how-it-works {
+            background: #f8f9fa;
+        }
+        
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .step {
+            text-align: center;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: #5b9aa9;
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .step h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #1a2332;
+        }
+        
+        .step p {
+            font-size: 1rem;
+            color: #4a5568;
+        }
+        
+        /* Why Us Section */
+        #why-us {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .why-item {
+            margin-bottom: 2.5rem;
+        }
+        
+        .why-item h3 {
+            color: #1a2332;
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        /* Contact Section */
+        #contact {
+            background: linear-gradient(135deg, #1a2332 0%, #2c3e50 100%);
+            color: #ffffff;
+            text-align: center;
+        }
+        
+        #contact h2 {
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+        }
+        
+        #contact p {
+            color: #e0e6ed;
+            font-size: 1.15rem;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .contact-details {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: 2.5rem auto;
+            backdrop-filter: blur(10px);
+        }
+        
+        .contact-details p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        
+        .contact-email {
+            font-size: 1.4rem;
+            color: #5b9aa9;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin: 1rem 0;
+        }
+        
+        .contact-email:hover {
+            color: #4a8898;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a2332;
+            color: #e0e6ed;
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+        }
+        
+        footer p {
+            margin: 0;
+            color: #e0e6ed;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                gap: 1rem;
+                margin-top: 1rem;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            #hero h1 {
+                font-size: 2rem;
+            }
+            
+            #hero p {
+                font-size: 1.1rem;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+            
+            section h2 {
+                font-size: 2rem;
+            }
+            
+            .services-grid,
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">Private List Consulting</a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul id="nav-menu">
+                <li><a href="#problem">Problem</a></li>
+                <li><a href="#what-we-do">What We Do</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#who-we-help">Who We Help</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#why-us">Why Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="container">
+            <h1>Stop doing work the computer should handle.</h1>
+            <p>We build quiet automation systems for small businesses. No hype, no lock-in—just reliable systems that save your team hours every week.</p>
+            <a href="#contact" class="cta-button">Schedule a Discovery Call</a>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem">
+        <div class="container">
+            <h2>You're probably dealing with:</h2>
+            <div class="problem-list">
+                <div class="problem-item">
+                    <h3>Your team is drowning in repetitive work.</h3>
+                    <p>Data entry, email sorting, lead follow-up, appointment scheduling—the kind of tasks that eat 10-20 hours a week but never feel done.</p>
+                </div>
+                <div class="problem-item">
+                    <h3>Important things slip through the cracks.</h3>
+                    <p>Leads go cold because no one followed up. Clients don't get their onboarding email. Reports are late because someone forgot to pull the data.</p>
+                </div>
+                <div class="problem-item">
+                    <h3>You know automation exists, but you're skeptical.</h3>
+                    <p>You've heard the hype about AI. You've been burned by tech companies before. You're not sure what's real, what's worth the cost, or who to trust.</p>
+                </div>
+                <div class="problem-item">
+                    <h3>Hiring more people isn't the answer.</h3>
+                    <p>You need leverage, not headcount. You need systems that work in the background so your team can focus on what actually requires a human.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Do Section -->
+    <section id="what-we-do">
+        <div class="container">
+            <h2>What We Do</h2>
+            <p>We design and build automation systems for small businesses—the kind of behind-the-scenes workflows that just work.</p>
+            <p>Email routing. Lead capture. Client onboarding. Data entry. Appointment reminders. Reporting. The repetitive tasks that drain your team's time and attention.</p>
+            <p>We use proven, cost-effective tools. We document everything clearly. We deliver systems that save real hours, reduce errors, and let your team focus on higher-value work.</p>
+            <p><strong>No hype. No upselling. No black boxes. Just reliable automation that does what you need it to do.</strong></p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <h2>Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Discovery Audit</h3>
+                    <div class="service-price">$500</div>
+                    <h4>Not sure where to start?</h4>
+                    <p>90-minute process review, written audit report identifying automation opportunities, ROI estimates, and a no-obligation roadmap.</p>
+                    <p>This fee is credited toward any service package if you move forward within 30 days.</p>
+                    <div class="guarantee-box">
+                        <p><strong>Money-Back Guarantee:</strong> If our audit doesn't identify at least one automation opportunity worth your time, we'll refund the full $500. No questions asked.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <h3>Starter Package</h3>
+                    <div class="service-price">$3,500</div>
+                    <h4>Your first automation.</h4>
+                    <p>We identify 2-3 high-impact tasks, build the workflows, and deliver in 2-3 weeks.</p>
+                    <p><strong>Common use cases:</strong></p>
+                    <ul>
+                        <li>Email categorization</li>
+                        <li>Lead capture to CRM</li>
+                        <li>Appointment booking</li>
+                        <li>Transcription and summaries</li>
+                    </ul>
+                    <p style="margin-top: 1rem;">Includes 30 days post-launch support.</p>
+                </div>
+                
+                <div class="service-card">
+                    <h3>Custom Build</h3>
+                    <div class="service-price">$8,000–$15,000</div>
+                    <h4>For complex, multi-step processes.</h4>
+                    <p>Full process discovery, custom workflow design, integration across multiple platforms.</p>
+                    <p><strong>Common use cases:</strong></p>
+                    <ul>
+                        <li>End-to-end client onboarding</li>
+                        <li>Lead nurturing sequences</li>
+                        <li>Automated reporting</li>
+                        <li>AI-powered content pipelines</li>
+                        <li>Custom chatbots</li>
+                    </ul>
+                    <p style="margin-top: 1rem;">Includes 60 days post-launch support.</p>
+                </div>
+                
+                <div class="service-card">
+                    <h3>Monthly Retainer</h3>
+                    <div class="service-price">$750–$2,500/mo</div>
+                    <h4>Ongoing support and optimization.</h4>
+                    <p>We monitor, maintain, and continuously improve your automations.</p>
+                    <p><strong>Includes:</strong></p>
+                    <ul>
+                        <li>Troubleshooting</li>
+                        <li>Platform updates</li>
+                        <li>Monthly optimization reviews</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <p style="margin-top: 1rem;">Higher tiers include hours for new builds.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who We Help Section -->
+    <section id="who-we-help">
+        <div class="container">
+            <h2>Who We Help</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 2rem;">We work with small businesses (5-50 employees) in industries where repetitive processes eat staff time:</p>
+            <ul>
+                <li>
+                    <strong>Law Firms</strong>
+                    <span>Lead intake, client onboarding, document routing, case management population</span>
+                </li>
+                <li>
+                    <strong>Real Estate</strong>
+                    <span>Lead management, follow-up sequences, transaction coordination, client communication</span>
+                </li>
+                <li>
+                    <strong>Medical & Dental</strong>
+                    <span>Appointment scheduling, patient reminders, record management, intake forms</span>
+                </li>
+                <li>
+                    <strong>Professional Services</strong>
+                    <span>Proposal generation, client onboarding, project tracking, reporting</span>
+                </li>
+                <li>
+                    <strong>E-commerce</strong>
+                    <span>Order fulfillment, customer service, inventory alerts, follow-up campaigns</span>
+                </li>
+                <li>
+                    <strong>Local Service Businesses</strong>
+                    <span>Appointment booking, payment processing, customer follow-up, review requests</span>
+                </li>
+            </ul>
+            <p style="text-align: center; max-width: 800px; margin: 2rem auto 0; font-size: 1.15rem;"><strong>If your team spends hours each week on copy-paste work or "just keeping up," we can help.</strong></p>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Discovery</h3>
+                    <p>We listen, ask questions, and map your current processes. We identify pain points and high-ROI automation opportunities.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Proposal</h3>
+                    <p>We send a detailed proposal with scope, timeline, and pricing. You approve, and we lock the plan.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Build</h3>
+                    <p>We design and build the workflows with regular check-ins. You see progress as we go.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Test & Refine</h3>
+                    <p>We test thoroughly. You review, provide feedback, and we adjust until it works exactly right.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h3>Deliver & Train</h3>
+                    <p>Live deployment, team training (recorded for reference), and full documentation. You're up and running.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <h3>Support</h3>
+                    <p>We monitor closely for 30-60 days post-launch, fix any issues, and make adjustments as you use the system.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section id="why-us">
+        <div class="container">
+            <h2>Why Us</h2>
+            <div class="why-item">
+                <h3>We don't do hype.</h3>
+                <p>No wild promises. No buzzword bingo. We solve specific problems with proven tools.</p>
+            </div>
+            <div class="why-item">
+                <h3>We're cost-conscious.</h3>
+                <p>We use open-source and cost-effective platforms where possible. Your monthly platform fees stay low (typically $10-50/month).</p>
+            </div>
+            <div class="why-item">
+                <h3>We're honest about what works.</h3>
+                <p>If automation isn't the right solution, we'll tell you. If a simpler approach works better, we'll recommend it.</p>
+            </div>
+            <div class="why-item">
+                <h3>We build systems that last.</h3>
+                <p>Full documentation. No lock-in. If you ever want to take over or hire someone else, you can. No black boxes.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2>Ready to get hours back?</h2>
+            <p>Start with a no-pressure discovery call. We'll talk about what's eating your team's time, and whether automation makes sense for you.</p>
+            <p>If it's a fit, we'll propose next steps—either a Discovery Audit or moving straight into a service package.</p>
+            <div class="contact-details">
+                <p><strong>Email us at:</strong></p>
+                <a href="mailto:contact@privatelistconsulting.com" class="contact-email">contact@privatelistconsulting.com</a>
+                <p style="margin-top: 1.5rem;"><strong>Subject line:</strong> "Discovery call request"</p>
+                <p>Tell us a bit about your business and what you're dealing with. We'll reply within 24 hours.</p>
+            </div>
+            <p style="font-style: italic; margin-top: 2rem;">Simple, reliable automation. No hype. Just results.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Private List Consulting. All rights reserved.</p>
+    </footer>
+
+    <!-- Minimal JavaScript for mobile menu -->
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('active');
+        }
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                const menu = document.getElementById('nav-menu');
+                if (menu.classList.contains('active')) {
+                    menu.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
