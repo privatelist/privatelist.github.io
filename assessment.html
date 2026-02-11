@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your AI Awaits — Private List Consulting</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --slate: #1E3A5F;
+            --copper: #C47D3A;
+            --light-gray: #F5F5F5;
+            --dark-gray: #2D2D2D;
+            --success: #10B981;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--text-primary);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .form-wrapper {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--slate);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: var(--light-gray);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--slate), var(--copper));
+            border-radius: 2px;
+            transition: width 0.4s ease;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .form-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .question-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--slate);
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .question-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--slate);
+            box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .radio-option,
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        .radio-option:hover,
+        .checkbox-option:hover {
+            border-color: var(--copper);
+            background: rgba(196, 125, 58, 0.02);
+        }
+
+        .radio-option input[type="radio"],
+        .checkbox-option input[type="checkbox"] {
+            cursor: pointer;
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--slate);
+        }
+
+        .radio-option.selected,
+        .checkbox-option.selected {
+            border-color: var(--slate);
+            background: rgba(30, 58, 95, 0.05);
+        }
+
+        .option-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            justify-content: space-between;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--slate), #0f2341);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(30, 58, 95, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--light-gray);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: #E5E7EB;
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Analysis Screen */
+        .analysis-screen {
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .analysis-screen.active {
+            display: block;
+        }
+
+        .analysis-spinner {
+            width: 60px;
+            height: 60px;
+            margin: 40px auto 30px;
+            border: 3px solid #E5E7EB;
+            border-top-color: var(--slate);
+            border-radius: 50%;
+            animation: spin 1.2s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .analysis-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--slate);
+            margin-bottom: 10px;
+        }
+
+        .analysis-subtext {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        /* Report Screen */
+        .report-screen {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .report-screen.active {
+            display: block;
+        }
+
+        .report-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .report-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--slate);
+            margin-bottom: 8px;
+        }
+
+        .report-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(30, 58, 95, 0.05), rgba(196, 125, 58, 0.05));
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--slate);
+            margin-bottom: 4px;
+        }
+
+        .metric-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .opportunities-section {
+            margin-top: 30px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--slate);
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .opportunity-item {
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+
+        .opportunity-number {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background: var(--slate);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-weight: 700;
+            font-size: 12px;
+            margin-right: 12px;
+        }
+
+        .opportunity-text {
+            font-size: 13px;
+            color: var(--text-primary);
+            display: inline-block;
+            vertical-align: middle;
+            flex: 1;
+        }
+
+        .package-section {
+            margin-top: 30px;
+            background: linear-gradient(135deg, var(--slate), #0f2341);
+            border-radius: 12px;
+            padding: 24px;
+            color: white;
+        }
+
+        .package-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            opacity: 0.9;
+        }
+
+        .package-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .package-desc {
+            font-size: 12px;
+            opacity: 0.85;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .cta-button {
+            width: 100%;
+            padding: 14px 24px;
+            background: var(--copper);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+        }
+
+        .cta-button:hover {
+            background: #B06E2E;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 640px) {
+            .form-wrapper {
+                padding: 24px;
+            }
+
+            .question-title {
+                font-size: 18px;
+            }
+
+            .logo-text {
+                font-size: 24px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .metric-value {
+                font-size: 28px;
+            }
+
+            .report-title {
+                font-size: 20px;
+            }
+        }
+
+        .success-checkmark {
+            width: 60px;
+            height: 60px;
+            margin: 40px auto 30px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: white;
+            animation: scaleIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-wrapper">
+            <!-- Form Screen -->
+            <div id="formScreen" class="form-container">
+                <div class="header">
+                    <div class="logo-text">Your AI Awaits</div>
+                    <div class="tagline">Let's see what magic we can build for your business</div>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">Step 1 of 10</div>
+                </div>
+
+                <!-- Question 1: Name -->
+                <div class="form-section active" data-step="1">
+                    <div class="question-title">What should we call you?</div>
+                    <div class="input-group">
+                        <input type="text" id="name" placeholder="Your name" class="form-input">
+                    </div>
+                </div>
+
+                <!-- Question 2: Company -->
+                <div class="form-section" data-step="2">
+                    <div class="question-title">What's your company called?</div>
+                    <div class="input-group">
+                        <input type="text" id="company" placeholder="Your company name" class="form-input">
+                    </div>
+                </div>
+
+                <!-- Question 3: Industry -->
+                <div class="form-section" data-step="3">
+                    <div class="question-title">What industry are you in?</div>
+                    <div class="question-subtitle">This helps us understand your unique challenges</div>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="industry" value="SaaS/Tech" class="form-input">
+                            <span class="option-label">SaaS / Tech</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="industry" value="E-commerce" class="form-input">
+                            <span class="option-label">E-commerce</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="industry" value="Professional Services" class="form-input">
+                            <span class="option-label">Professional Services</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="industry" value="Marketing/Agency" class="form-input">
+                            <span class="option-label">Marketing / Agency</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="industry" value="Real Estate" class="form-input">
+                            <span class="option-label">Real Estate</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="industry" value="Other" class="form-input">
+                            <span class="option-label">Something Else</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 4: Team Size -->
+                <div class="form-section" data-step="4">
+                    <div class="question-title">How many people are on your team?</div>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="teamSize" value="Just me" class="form-input">
+                            <span class="option-label">Just me (solopreneur)</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="teamSize" value="2-5 people" class="form-input">
+                            <span class="option-label">2–5 people</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="teamSize" value="6-15 people" class="form-input">
+                            <span class="option-label">6–15 people</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="teamSize" value="16-50 people" class="form-input">
+                            <span class="option-label">16–50 people</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="teamSize" value="50+ people" class="form-input">
+                            <span class="option-label">50+ people</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 5: Monthly Revenue -->
+                <div class="form-section" data-step="5">
+                    <div class="question-title">What's your monthly revenue range?</div>
+                    <div class="question-subtitle">Just a ballpark—helps us understand your scale</div>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="revenue" value="Under $5K" class="form-input">
+                            <span class="option-label">Under $5K</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="revenue" value="$5K - $25K" class="form-input">
+                            <span class="option-label">$5K – $25K</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="revenue" value="$25K - $100K" class="form-input">
+                            <span class="option-label">$25K – $100K</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="revenue" value="$100K - $500K" class="form-input">
+                            <span class="option-label">$100K – $500K</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="revenue" value="$500K+" class="form-input">
+                            <span class="option-label">$500K+</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 6: Current Tools -->
+                <div class="form-section" data-step="6">
+                    <div class="question-title">What tools do you use daily?</div>
+                    <div class="question-subtitle">Pick the ones that matter most to you</div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="tools" value="CRM (HubSpot, Salesforce)" class="form-input">
+                            <span class="option-label">CRM (HubSpot, Salesforce)</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="tools" value="Email (Gmail, Outlook)" class="form-input">
+                            <span class="option-label">Email (Gmail, Outlook)</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="tools" value="Project Management (Asana, Monday)" class="form-input">
+                            <span class="option-label">Project Management (Asana, Monday)</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="tools" value="Slack" class="form-input">
+                            <span class="option-label">Slack</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="tools" value="Google Workspace" class="form-input">
+                            <span class="option-label">Google Workspace</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="tools" value="Accounting (QuickBooks, Xero)" class="form-input">
+                            <span class="option-label">Accounting (QuickBooks, Xero)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 7: Biggest Time Waster -->
+                <div class="form-section" data-step="7">
+                    <div class="question-title">What drains your time the most?</div>
+                    <div class="question-subtitle">The thing that keeps you up at night</div>
+                    <div class="input-group">
+                        <textarea id="timewaster" placeholder="Be specific. The more detail, the better our AI understands." class="form-input"></textarea>
+                    </div>
+                </div>
+
+                <!-- Question 8: Dream Automation -->
+                <div class="form-section" data-step="8">
+                    <div class="question-title">What do you wish you could automate?</div>
+                    <div class="question-subtitle">Dream big. What would change the game?</div>
+                    <div class="input-group">
+                        <textarea id="dreamAuto" placeholder="Describe your ideal automation scenario." class="form-input"></textarea>
+                    </div>
+                </div>
+
+                <!-- Question 9: Current Pain Points -->
+                <div class="form-section" data-step="9">
+                    <div class="question-title">Which of these frustrates you most?</div>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="painPoint" value="Manual data entry" class="form-input">
+                            <span class="option-label">Manual data entry</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="painPoint" value="Duplicate work across tools" class="form-input">
+                            <span class="option-label">Duplicate work across tools</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="painPoint" value="Missed follow-ups" class="form-input">
+                            <span class="option-label">Missed follow-ups</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="painPoint" value="Can't see the big picture" class="form-input">
+                            <span class="option-label">Can't see the big picture</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="painPoint" value="Scaling without hiring" class="form-input">
+                            <span class="option-label">Scaling without hiring</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 10: Email -->
+                <div class="form-section" data-step="10">
+                    <div class="question-title">One last thing—your email?</div>
+                    <div class="question-subtitle">So we can follow up with your personalized report</div>
+                    <div class="input-group">
+                        <input type="email" id="email" placeholder="your@email.com" class="form-input">
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-secondary" id="prevBtn" onclick="previousStep()" style="display: none;">← Back</button>
+                    <button class="btn-primary" id="nextBtn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+
+            <!-- Analysis Screen -->
+            <div class="analysis-screen" id="analysisScreen">
+                <div class="analysis-spinner"></div>
+                <div class="analysis-text">Your AI is thinking...</div>
+                <div class="analysis-subtext">Analyzing your business, finding opportunities...</div>
+            </div>
+
+            <!-- Report Screen -->
+            <div class="report-screen" id="reportScreen">
+                <div class="report-header">
+                    <div class="success-checkmark">✓</div>
+                    <div class="report-title">Your AI Blueprint</div>
+                    <div class="report-subtitle" id="reportSubtitle">Personalized for your business</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" id="hoursSaved">8–12</div>
+                    <div class="metric-label">Hours Saved Per Week</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" id="roiValue">340%</div>
+                    <div class="metric-label">Estimated ROI Year 1</div>
+                </div>
+
+                <div class="opportunities-section">
+                    <div class="section-title">Top 3 Automation Opportunities</div>
+                    <div id="opportunitiesList"></div>
+                </div>
+
+                <div class="package-section">
+                    <div class="package-title">We recommend</div>
+                    <div class="package-name" id="packageName">The Accelerator</div>
+                    <div class="package-desc" id="packageDesc">Your AI handles the chaos. You handle the strategy.</div>
+                    <button class="cta-button" onclick="alert('Schedule your strategy call at private-list.com/call')">Schedule Your Call</button>
+                </div>
+
+                <div class="button-group" style="margin-top: 20px;">
+                    <button class="btn-secondary" onclick="restartForm()" style="flex: 1;">← Start Over</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 10;
+
+        function updateProgress() {
+            const percent = (currentStep / totalSteps) * 100;
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressText').textContent = `Step ${currentStep} of ${totalSteps}`;
+        }
+
+        function showStep(step) {
+            // Hide all sections
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show current section
+            document.querySelector(`[data-step="${step}"]`).classList.add('active');
+
+            // Update buttons
+            document.getElementById('prevBtn').style.display = step === 1 ? 'none' : 'block';
+            document.getElementById('nextBtn').textContent = step === totalSteps ? 'Analyze My Business' : 'Next →';
+
+            updateProgress();
+        }
+
+        function getFormData() {
+            const data = {
+                name: document.getElementById('name').value,
+                company: document.getElementById('company').value,
+                industry: document.querySelector('input[name="industry"]:checked')?.value || '',
+                teamSize: document.querySelector('input[name="teamSize"]:checked')?.value || '',
+                revenue: document.querySelector('input[name="revenue"]:checked')?.value || '',
+                tools: Array.from(document.querySelectorAll('input[name="tools"]:checked')).map(el => el.value),
+                timewaster: document.getElementById('timewaster').value,
+                dreamAuto: document.getElementById('dreamAuto').value,
+                painPoint: document.querySelector('input[name="painPoint"]:checked')?.value || '',
+                email: document.getElementById('email').value
+            };
+            return data;
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
+            } else {
+                // Final step - show analysis and generate report
+                submitForm();
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        function submitForm() {
+            const data = getFormData();
+
+            // Validation
+            if (!data.name || !data.company || !data.email) {
+                alert('Please fill in your name, company, and email before submitting.');
+                return;
+            }
+
+            // Hide form, show analysis
+            document.getElementById('formScreen').style.display = 'none';
+            document.getElementById('analysisScreen').classList.add('active');
+
+            // Simulate AI analysis
+            setTimeout(() => {
+                generateReport(data);
+            }, 2500);
+        }
+
+        function generateReport(data) {
+            // Hide analysis, show report
+            document.getElementById('analysisScreen').classList.remove('active');
+            document.getElementById('reportScreen').classList.add('active');
+
+            // Generate dynamic content based on answers
+            let hoursSaved = 8;
+            let roi = 320;
+            let packageName = 'The Accelerator';
+            let packageDesc = 'Your AI handles the chaos. You handle the strategy.';
+
+            // Adjust based on team size
+            if (data.teamSize.includes('50+') || data.teamSize.includes('16-50')) {
+                hoursSaved = 20;
+                roi = 420;
+                packageName = 'The Enterprise Partner';
+                packageDesc = 'Scale without the headcount. Your AI grows with you.';
+            } else if (data.teamSize.includes('6-15')) {
+                hoursSaved = 12;
+                roi = 360;
+                packageName = 'The Growth Catalyst';
+                packageDesc = 'Automate the repetitive. Focus on what matters.';
+            }
+
+            // Adjust based on revenue
+            if (data.revenue && data.revenue.includes('500K+')) {
+                roi = 480;
+            }
+
+            // Generate opportunities based on inputs
+            let opportunities = [];
+
+            if (data.timewaster.toLowerCase().includes('email') || data.painPoint.includes('Follow')) {
+                opportunities.push('AI email triage & auto-response system');
+            }
+            if (data.painPoint.includes('data entry') || data.painPoint.includes('Duplicate')) {
+                opportunities.push('Automated data sync across your tools');
+            }
+            if (data.dreamAuto.toLowerCase().includes('follow') || data.painPoint.includes('Follow')) {
+                opportunities.push('Smart follow-up automation & reminders');
+            }
+            if (data.timewaster.toLowerCase().includes('report') || data.dreamAuto.toLowerCase().includes('report')) {
+                opportunities.push('Automatic reporting & insights generation');
+            }
+            if (data.tools.includes('CRM') || data.painPoint.includes('picture')) {
+                opportunities.push('Real-time CRM intelligence & predictions');
+            }
+            if (data.painPoint.includes('Scaling')) {
+                opportunities.push('Process automation for scaling teams');
+            }
+
+            // Ensure we have 3 opportunities
+            const defaultOpportunities = [
+                'Intelligent lead scoring & qualification',
+                'Automated task delegation & prioritization',
+                'Smart meeting prep & follow-up summaries'
+            ];
+
+            while (opportunities.length < 3) {
+                opportunities.push(defaultOpportunities[opportunities.length]);
+            }
+
+            opportunities = opportunities.slice(0, 3);
+
+            // Update report
+            document.getElementById('reportSubtitle').textContent = `Here's what we found for ${data.company}, ${data.name}`;
+            document.getElementById('hoursSaved').textContent = hoursSaved + '–' + (hoursSaved + 4);
+            document.getElementById('roiValue').textContent = roi + '%';
+            document.getElementById('packageName').textContent = packageName;
+            document.getElementById('packageDesc').textContent = packageDesc;
+
+            // Populate opportunities
+            const oppList = document.getElementById('opportunitiesList');
+            oppList.innerHTML = '';
+            opportunities.forEach((opp, idx) => {
+                const div = document.createElement('div');
+                div.className = 'opportunity-item';
+                div.innerHTML = `
+                    <span class="opportunity-number">${idx + 1}</span>
+                    <span class="opportunity-text">${opp}</span>
+                `;
+                oppList.appendChild(div);
+            });
+        }
+
+        function restartForm() {
+            currentStep = 1;
+            document.getElementById('formScreen').style.display = 'block';
+            document.getElementById('analysisScreen').classList.remove('active');
+            document.getElementById('reportScreen').classList.remove('active');
+            
+            // Reset form
+            document.querySelectorAll('.form-input').forEach(input => {
+                if (input.type === 'checkbox' || input.type === 'radio') {
+                    input.checked = false;
+                } else {
+                    input.value = '';
+                }
+            });
+            
+            // Update radio/checkbox styling
+            document.querySelectorAll('.radio-option, .checkbox-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            showStep(1);
+        }
+
+        // Add styling to selected options
+        document.addEventListener('change', function(e) {
+            if (e.target.type === 'radio' || e.target.type === 'checkbox') {
+                const parent = e.target.closest('.radio-option, .checkbox-option');
+                if (parent) {
+                    if (e.target.type === 'radio') {
+                        document.querySelectorAll(`input[name="${e.target.name}"]`).forEach(input => {
+                            input.closest('.radio-option, .checkbox-option')?.classList.remove('selected');
+                        });
+                    }
+                    if (e.target.checked) {
+                        parent.classList.add('selected');
+                    } else {
+                        parent.classList.remove('selected');
+                    }
+                }
+            }
+        });
+
+        // Initialize
+        showStep(1);
+    </script>
+</body>
+</html>
