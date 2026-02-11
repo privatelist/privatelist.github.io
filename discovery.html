@@ -576,23 +576,23 @@
                 <div class="input-section">
                     <div class="option-group">
                         <label class="option">
-                            <input type="radio" name="q5" value="tried-failed" onchange="setQ5('tried-failed')">
+                            <input type="checkbox" name="q5" value="tried-failed" onchange="toggleQ5('tried-failed')">
                             <label>Tried something and it didn't work</label>
                         </label>
                         <label class="option">
-                            <input type="radio" name="q5" value="too-complex" onchange="setQ5('too-complex')">
+                            <input type="checkbox" name="q5" value="too-complex" onchange="toggleQ5('too-complex')">
                             <label>Thought about it, seemed too complex</label>
                         </label>
                         <label class="option">
-                            <input type="radio" name="q5" value="no-solution" onchange="setQ5('no-solution')">
+                            <input type="checkbox" name="q5" value="no-solution" onchange="toggleQ5('no-solution')">
                             <label>Don't believe a solution exists yet</label>
                         </label>
                         <label class="option">
-                            <input type="radio" name="q5" value="lower-priority" onchange="setQ5('lower-priority')">
+                            <input type="checkbox" name="q5" value="lower-priority" onchange="toggleQ5('lower-priority')">
                             <label>Other priorities have been more urgent</label>
                         </label>
                         <label class="option">
-                            <input type="radio" name="q5" value="other" onchange="setQ5('other')">
+                            <input type="checkbox" name="q5" value="other" onchange="toggleQ5('other')">
                             <label>Something else</label>
                         </label>
                     </div>
@@ -852,7 +852,7 @@
             }
             
             // Radio button questions (5-8) require a selection
-            if (num === 5 && !state.q5) { alert('Pick one that fits.'); return; }
+            if (num === 5 && (!state.q5 || (Array.isArray(state.q5) && state.q5.length === 0))) { alert('Pick at least one.'); return; }
             if (num === 6 && !state.q6) { alert('Pick one that fits.'); return; }
             if (num === 7 && !state.q7) { alert('Pick one that fits.'); return; }
             if (num === 8 && !state.q8) { alert('Pick one that fits.'); return; }
@@ -883,10 +883,16 @@
             }
         }
 
-        function setQ5(value) {
-            state.q5 = value;
+        function toggleQ5(value) {
+            if (!Array.isArray(state.q5)) state.q5 = [];
+            const idx = state.q5.indexOf(value);
+            if (idx > -1) {
+                state.q5.splice(idx, 1);
+            } else {
+                state.q5.push(value);
+            }
             const otherField = document.getElementById('q5-other');
-            otherField.style.display = value === 'other' ? 'block' : 'none';
+            otherField.style.display = state.q5.includes('other') ? 'block' : 'none';
         }
 
         function setQ6(value) {
