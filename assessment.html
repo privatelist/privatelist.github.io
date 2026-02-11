@@ -664,7 +664,7 @@
                     <div class="question-title">What do you wish you could automate?</div>
                     <div class="question-subtitle">Dream big. What would change the game?</div>
                     <div class="input-group">
-                        <textarea id="dreamAuto" placeholder="Describe your ideal automation scenario." class="form-input"></textarea>
+                        <textarea id="dreamAuto" placeholder="Describe what you wish your AI could do for you." class="form-input"></textarea>
                     </div>
                 </div>
 
@@ -744,7 +744,7 @@
                     <div class="package-title">We recommend</div>
                     <div class="package-name" id="packageName">The Accelerator</div>
                     <div class="package-desc" id="packageDesc">Your AI handles the chaos. You handle the strategy.</div>
-                    <button class="cta-button" onclick="alert('Schedule your strategy call at private-list.com/call')">Schedule Your Call</button>
+                    <button class="cta-button" onclick="alert('We'll reach out within 24 hours with your custom AI blueprint.')">Let's Talk About Your AI</button>
                 </div>
 
                 <div class="button-group" style="margin-top: 20px;">
@@ -868,10 +868,10 @@
                 opportunities.push('AI email triage & auto-response system');
             }
             if (data.painPoint.includes('data entry') || data.painPoint.includes('Duplicate')) {
-                opportunities.push('Automated data sync across your tools');
+                opportunities.push('AI-powered data sync across your tools');
             }
             if (data.dreamAuto.toLowerCase().includes('follow') || data.painPoint.includes('Follow')) {
-                opportunities.push('Smart follow-up automation & reminders');
+                opportunities.push('Smart follow-ups & reminders that run themselves');
             }
             if (data.timewaster.toLowerCase().includes('report') || data.dreamAuto.toLowerCase().includes('report')) {
                 opportunities.push('Automatic reporting & insights generation');
@@ -880,13 +880,13 @@
                 opportunities.push('Real-time CRM intelligence & predictions');
             }
             if (data.painPoint.includes('Scaling')) {
-                opportunities.push('Process automation for scaling teams');
+                opportunities.push('AI-powered operations for scaling teams');
             }
 
             // Ensure we have 3 opportunities
             const defaultOpportunities = [
                 'Intelligent lead scoring & qualification',
-                'Automated task delegation & prioritization',
+                'AI-driven task delegation & prioritization',
                 'Smart meeting prep & follow-up summaries'
             ];
 
