@@ -3,170 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Custom automation for small business operations. We build automation systems that save your team 15+ hours per week. Email routing, lead capture, client onboarding, reporting. Transparent pricing, full documentation, no vendor lock-in.">
-    <title>Private List Consulting — Custom Automation for Small Business</title>
+    <meta name="description" content="Automation consulting for small businesses. Save 10-20 hours per week. AI-powered workflows your team will actually use.">
+    <meta name="theme-color" content="#1E3A5F">
+    <title>Private List Consulting | AI Automation for Professional Services</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* ======================
+           RESET & BASE STYLES
+           ====================== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         html {
             scroll-behavior: smooth;
         }
-        
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
             line-height: 1.6;
-            color: #2c3e50;
-            background: #ffffff;
+            color: #2C2C2C;
+            background-color: #FFFFFF;
+            overflow-x: hidden;
         }
-        
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: #1a2332;
-            padding: 1rem 2rem;
-            z-index: 1000;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: padding 0.3s ease;
+
+        /* Typography */
+        h1 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: clamp(32px, 6vw, 48px);
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+            color: #1E3A5F;
+            margin-bottom: 1rem;
         }
-        
-        nav .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
+
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: clamp(28px, 5vw, 36px);
+            line-height: 1.3;
+            letter-spacing: -0.3px;
+            color: #1E3A5F;
+            margin-bottom: 1.5rem;
         }
-        
-        nav .logo {
-            font-size: 1.25rem;
+
+        h3 {
+            font-family: 'Inter', sans-serif;
             font-weight: 600;
-            color: #ffffff;
+            font-size: clamp(18px, 3.5vw, 24px);
+            line-height: 1.4;
+            color: #1E3A5F;
+            margin-bottom: 1rem;
+        }
+
+        h4 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 1.4;
+            color: #1E3A5F;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #2C2C2C;
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: #1E3A5F;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
         }
-        
-        nav .logo:hover {
-            color: #5b9aa9;
+
+        a:hover {
+            color: #C47D3A;
         }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 1.5rem;
-        }
-        
-        nav a {
-            color: #e0e6ed;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-            position: relative;
-        }
-        
-        nav a:hover {
-            color: #5b9aa9;
-        }
-        
-        nav a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background: #5b9aa9;
-            transition: width 0.3s ease;
-        }
-        
-        nav a:hover::after {
-            width: 100%;
-        }
-        
-        /* Mobile menu toggle */
-        .menu-toggle {
-            display: none;
-            background: none;
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            border-radius: 4px;
             border: none;
-            color: #ffffff;
-            font-size: 1.5rem;
             cursor: pointer;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            text-align: center;
+            line-height: 1.4;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
-        .menu-toggle:hover {
-            color: #5b9aa9;
+
+        .btn-primary {
+            background-color: #1E3A5F;
+            color: #FFFFFF;
         }
-        
+
+        .btn-primary:hover {
+            background-color: #0F2841;
+            box-shadow: 0 4px 12px rgba(30, 58, 95, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #5A7E7E;
+            border: 2px solid #5A7E7E;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5A7E7E;
+            color: #FFFFFF;
+        }
+
+        .btn-accent {
+            background-color: #C47D3A;
+            color: #FFFFFF;
+        }
+
+        .btn-accent:hover {
+            background-color: #B36E2E;
+            box-shadow: 0 4px 12px rgba(196, 125, 58, 0.3);
+            transform: translateY(-2px);
+        }
+
         /* Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 clamp(20px, 5%, 60px);
         }
-        
-        section {
-            padding: 5rem 0;
-            animation: fadeIn 0.6s ease-in;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Hero Section */
-        #hero {
-            background: linear-gradient(135deg, #1a2332 0%, #2c3e50 100%);
-            color: #ffffff;
+
+        /* Utility Classes */
+        .text-center {
             text-align: center;
-            padding: 8rem 2rem 6rem;
-            margin-top: 60px;
         }
-        
-        #hero h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            animation: slideDown 0.8s ease-out;
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
         }
-        
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: #5A7E7E;
+            margin-top: 0.5rem;
         }
-        
-        #hero p {
-            font-size: 1.25rem;
-            margin-bottom: 2.5rem;
-            max-width: 750px;
-            margin-left: auto;
-            margin-right: auto;
-            color: #e0e6ed;
-            line-height: 1.7;
-            animation: slideUp 0.8s ease-out 0.2s both;
-        }
-        
-        @keyframes slideUp {
+
+        /* Animation: Fade In */
+        @keyframes fadeIn {
             from {
                 opacity: 0;
                 transform: translateY(20px);
@@ -176,1055 +173,1102 @@
                 transform: translateY(0);
             }
         }
-        
-        .cta-button {
-            display: inline-block;
-            background: #5b9aa9;
-            color: #ffffff;
-            padding: 1.1rem 2.8rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 6px;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(91, 154, 169, 0.3);
-            animation: slideUp 0.8s ease-out 0.4s both;
+
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
         }
-        
-        .cta-button:hover {
-            background: #4a8898;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(91, 154, 169, 0.4);
+
+        .fade-in-delay-1 { animation-delay: 0.1s; }
+        .fade-in-delay-2 { animation-delay: 0.2s; }
+        .fade-in-delay-3 { animation-delay: 0.3s; }
+        .fade-in-delay-4 { animation-delay: 0.4s; }
+        .fade-in-delay-5 { animation-delay: 0.5s; }
+
+        /* ======================
+           HEADER & NAVIGATION
+           ====================== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background-color: #FFFFFF;
+            border-bottom: 1px solid #E8EAEA;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
         }
-        
-        .cta-button:active {
-            transform: translateY(-1px);
+
+        header .container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        
-        /* Content Sections */
-        section h2 {
-            font-size: 2.5rem;
-            color: #1a2332;
-            margin-bottom: 2rem;
-            text-align: center;
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             font-weight: 700;
+            font-size: 16px;
+            color: #1E3A5F;
+            cursor: pointer;
+            text-decoration: none;
         }
-        
-        section h3 {
-            font-size: 1.5rem;
-            color: #2c3e50;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-        
-        section p {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            color: #4a5568;
-            line-height: 1.8;
-        }
-        
-        /* Problem Section */
-        #problem {
-            background: #f8f9fa;
-        }
-        
-        .problem-content {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        
-        .problem-content p {
-            text-align: left;
-        }
-        
-        .problem-content p strong {
-            color: #1a2332;
-            display: block;
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-            font-size: 1.15rem;
-        }
-        
-        /* What We Do Section */
-        #what-we-do {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        
-        #what-we-do p {
-            text-align: left;
-        }
-        
-        /* Services Section */
-        #services {
-            background: #f8f9fa;
-        }
-        
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        
-        .service-card {
-            background: #ffffff;
-            padding: 2.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
+
+        .logo-symbol {
+            width: 32px;
+            height: 32px;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
         }
-        
-        .service-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+
+        .logo-line {
+            height: 2px;
+            background-color: #1E3A5F;
+            border-radius: 1px;
         }
-        
-        .service-card h3 {
-            color: #1a2332;
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            margin-top: 0;
+
+        .logo-line-1 { width: 32px; opacity: 1; }
+        .logo-line-2 { width: 24px; opacity: 0.7; align-self: center; }
+        .logo-line-3 { width: 16px; opacity: 0.4; align-self: center; }
+
+        nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
         }
-        
-        .service-price {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #5b9aa9;
-            margin-bottom: 0.5rem;
-        }
-        
-        .service-subtitle {
-            font-size: 1.1rem;
-            color: #2c3e50;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-            font-style: italic;
-        }
-        
-        .service-card h4 {
-            font-size: 1.1rem;
-            color: #2c3e50;
-            margin-bottom: 0.75rem;
-            margin-top: 1rem;
-            font-weight: 600;
-        }
-        
-        .service-card p {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            color: #4a5568;
-        }
-        
-        .service-card ul {
-            list-style: none;
-            padding-left: 0;
-            margin-bottom: 1rem;
-        }
-        
-        .service-card li {
-            padding-left: 1.5rem;
-            position: relative;
-            margin-bottom: 0.5rem;
-            color: #4a5568;
-            font-size: 1rem;
-        }
-        
-        .service-card li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #5b9aa9;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-        
-        .roi-example {
-            background: #f0f7fb;
-            border-left: 4px solid #5b9aa9;
-            padding: 1.25rem;
-            margin: 1.5rem 0;
-            border-radius: 4px;
-        }
-        
-        .roi-example p {
-            margin: 0;
-            font-size: 1rem;
-            color: #2c3e50;
-        }
-        
-        .roi-example strong {
-            color: #1a2332;
-        }
-        
-        .guarantee-box {
-            background: linear-gradient(135deg, #e8f4f8 0%, #f5f9fb 100%);
-            border-left: 5px solid #5b9aa9;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-            border-radius: 6px;
-            box-shadow: 0 2px 8px rgba(91, 154, 169, 0.1);
-        }
-        
-        .guarantee-box p {
-            margin: 0;
-            font-size: 0.95rem;
-            color: #2c3e50;
+
+        nav a {
             font-weight: 500;
+            font-size: 14px;
+            color: #1E3A5F;
+            position: relative;
         }
-        
-        .guarantee-box strong {
-            color: #1a2332;
-            font-weight: 700;
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #C47D3A;
+            transition: width 0.3s ease;
         }
-        
-        /* Who We Help Section */
-        #who-we-help ul {
-            max-width: 900px;
-            margin: 2rem auto;
-            list-style: none;
+
+        nav a:hover::after {
+            width: 100%;
         }
-        
-        #who-we-help li {
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            background: #ffffff;
-            border-radius: 6px;
-            border-left: 4px solid #5b9aa9;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: box-shadow 0.3s, transform 0.3s;
+
+        .nav-spacer {
+            flex: 1;
         }
-        
-        #who-we-help li:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transform: translateX(4px);
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+
+            .nav-spacer {
+                flex: 1;
+            }
+
+            .logo-text {
+                display: none;
+            }
         }
-        
-        #who-we-help strong {
-            color: #1a2332;
-            font-size: 1.2rem;
-            display: block;
-            margin-bottom: 0.5rem;
+
+        /* ======================
+           HERO SECTION
+           ====================== */
+        #hero {
+            padding-top: 140px;
+            padding-bottom: 80px;
+            background-color: #FFFFFF;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
-        
-        #who-we-help li span {
-            display: block;
-            color: #4a5568;
-            font-size: 1rem;
+
+        .hero-content {
+            text-align: center;
         }
-        
-        #who-we-help li em {
-            display: block;
-            color: #5b9aa9;
-            font-size: 0.95rem;
-            margin-top: 0.75rem;
-            font-style: italic;
+
+        .hero-content h1 {
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
         }
-        
-        /* How It Works Section */
-        #how-it-works {
-            background: #f8f9fa;
+
+        .hero-subheading {
+            font-size: clamp(16px, 4vw, 20px);
+            color: #5A7E7E;
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.4;
         }
-        
-        .steps-grid {
+
+        .hero-support {
+            font-size: 16px;
+            color: #2C2C2C;
+            max-width: 550px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            margin-bottom: 3rem;
+        }
+
+        .hero-cta .btn {
+            font-size: 16px;
+            padding: 12px 40px;
+            min-height: 48px;
+        }
+
+        @media (max-width: 768px) {
+            #hero {
+                padding-top: 100px;
+                padding-bottom: 60px;
+                min-height: auto;
+            }
+
+            .hero-cta .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* ======================
+           SOCIAL PROOF SECTION
+           ====================== */
+        #social-proof {
+            padding: 80px 0;
+            background-color: #F7F8F8;
+        }
+
+        .testimonials-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
+            gap: 24px;
             margin-top: 3rem;
         }
-        
-        .step {
-            text-align: center;
-            padding: 1.5rem;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
+
+        .testimonial-card {
+            background-color: #FFFFFF;
+            border: 1px solid #E8EAEA;
+            padding: 24px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
         }
-        
-        .step:hover {
+
+        .testimonial-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             transform: translateY(-4px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
         }
-        
+
+        .testimonial-quote {
+            font-family: 'Merriweather', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: #1E3A5F;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .testimonial-attribution h4 {
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: #2C2C2C;
+        }
+
+        .testimonial-attribution p {
+            font-size: 13px;
+            color: #5A7E7E;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ======================
+           VALUE PROPS SECTION
+           ====================== */
+        #value-props {
+            padding: 80px 0;
+            background-color: #FFFFFF;
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 4rem;
+        }
+
+        .value-card {
+            background-color: #F7F8F8;
+            border: 1px solid #E8EAEA;
+            padding: 32px;
+            border-radius: 4px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .value-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .value-card h3 {
+            margin-bottom: 1rem;
+            font-size: 20px;
+        }
+
+        .value-card p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #2C2C2C;
+            margin: 0;
+        }
+
+        .solution-checklist {
+            background-color: transparent;
+            margin-top: 4rem;
+        }
+
+        .solution-checklist h2 {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .checklist-items {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .checklist-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 1.5rem;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .checklist-icon {
+            color: #C47D3A;
+            font-weight: 700;
+            flex-shrink: 0;
+            font-size: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .value-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ======================
+           HOW IT WORKS SECTION
+           ====================== */
+        #how-it-works {
+            padding: 80px 0;
+            background-color: #F7F8F8;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            background-color: #FFFFFF;
+            border: 1px solid #E8EAEA;
+            padding: 28px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
         .step-number {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #5b9aa9 0%, #4a8898 100%);
-            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            background-color: #1E3A5F;
+            color: #FFFFFF;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
             font-weight: 700;
-            margin: 0 auto 1.5rem;
-            box-shadow: 0 4px 12px rgba(91, 154, 169, 0.3);
+            font-size: 18px;
+            margin: 0 auto 16px;
         }
-        
-        .step h3 {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            color: #1a2332;
+
+        .step-card h3 {
+            margin-bottom: 12px;
+            font-size: 18px;
         }
-        
-        .step p {
-            font-size: 1rem;
-            color: #4a5568;
+
+        .step-card p {
+            font-size: 14px;
+            line-height: 1.6;
             margin: 0;
+            color: #2C2C2C;
         }
-        
-        /* Why We're Different Section */
-        #why-different {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        
-        .why-item {
-            margin-bottom: 2.5rem;
-            padding: 1.5rem;
-            background: #f8f9fa;
-            border-radius: 6px;
-            border-left: 4px solid #5b9aa9;
-            transition: all 0.3s;
-        }
-        
-        .why-item:hover {
-            background: #f0f4f8;
-            transform: translateX(4px);
-        }
-        
-        .why-item h3 {
-            color: #1a2332;
-            font-size: 1.4rem;
-            margin-bottom: 0.75rem;
-            margin-top: 0;
-        }
-        
-        .why-item p {
-            margin: 0;
-            color: #4a5568;
-        }
-        
-        /* About Section */
-        #about {
-            background: #f8f9fa;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        
-        #about h2 {
-            margin-bottom: 2rem;
-        }
-        
-        #about-content {
-            background: #ffffff;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            border-left: 4px solid #5b9aa9;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        #about-content p {
-            font-size: 1.15rem;
-            line-height: 1.8;
-            color: #2c3e50;
-            text-align: left;
-        }
-        
-        /* FAQ Section */
-        #faq {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        
-        .faq-list {
-            list-style: none;
-            margin-top: 2rem;
-        }
-        
-        .faq-item {
-            margin-bottom: 1rem;
-            border: 1px solid #e0e6ed;
-            border-radius: 6px;
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-        
-        .faq-item:hover {
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-        
-        .faq-question {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            cursor: pointer;
-            user-select: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            color: #1a2332;
-            font-size: 1.1rem;
-            transition: background 0.3s;
-        }
-        
-        .faq-question:hover {
-            background: #f0f4f8;
-        }
-        
-        .faq-toggle {
-            font-size: 1.5rem;
-            transition: transform 0.3s;
-            color: #5b9aa9;
-        }
-        
-        .faq-item.active .faq-toggle {
-            transform: rotate(180deg);
-        }
-        
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-            background: #ffffff;
-        }
-        
-        .faq-item.active .faq-answer {
-            max-height: 500px;
-            padding: 1.5rem;
-            border-top: 1px solid #e0e6ed;
-        }
-        
-        .faq-answer p {
-            margin: 0;
-            color: #4a5568;
-            font-size: 1rem;
-            line-height: 1.7;
-        }
-        
-        .faq-answer p + p {
-            margin-top: 1rem;
-        }
-        
-        /* Contact Section */
-        #contact {
-            background: linear-gradient(135deg, #1a2332 0%, #2c3e50 100%);
-            color: #ffffff;
-            text-align: center;
-        }
-        
-        #contact h2 {
-            color: #ffffff;
-            margin-bottom: 1.5rem;
-        }
-        
-        #contact > .container > p {
-            color: #e0e6ed;
-            font-size: 1.15rem;
-            max-width: 700px;
-            margin: 0 auto 1.5rem;
-        }
-        
-        .contact-details {
-            background: rgba(255,255,255,0.1);
-            padding: 2.5rem;
-            border-radius: 8px;
-            max-width: 650px;
-            margin: 2.5rem auto;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-        }
-        
-        .contact-details p {
-            margin-bottom: 1rem;
-            font-size: 1rem;
-            color: #e0e6ed;
-        }
-        
-        .contact-email {
-            font-size: 1.5rem;
-            color: #5b9aa9;
-            font-weight: 700;
-            text-decoration: none;
-            display: inline-block;
-            margin: 1.5rem 0;
-            transition: color 0.3s, transform 0.3s;
-        }
-        
-        .contact-email:hover {
-            color: #7ecddd;
-            transform: scale(1.05);
-        }
-        
-        .contact-details .calendly-link {
-            display: inline-block;
-            background: #5b9aa9;
-            color: #ffffff;
-            padding: 0.8rem 2rem;
-            border-radius: 6px;
-            text-decoration: none;
-            margin-top: 1.5rem;
-            transition: all 0.3s;
-            font-weight: 600;
-        }
-        
-        .contact-details .calendly-link:hover {
-            background: #4a8898;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(91, 154, 169, 0.3);
-        }
-        
-        .contact-details strong {
-            color: #ffffff;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-        
-        /* Footer */
-        footer {
-            background: #1a2332;
-            color: #e0e6ed;
-            text-align: center;
-            padding: 2rem;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        footer p {
-            margin: 0;
-            color: #e0e6ed;
-        }
-        
-        /* Responsive Design */
+
         @media (max-width: 768px) {
-            nav ul {
-                display: none;
-                width: 100%;
-                flex-direction: column;
-                gap: 1rem;
-                margin-top: 1rem;
-            }
-            
-            nav ul.active {
-                display: flex;
-            }
-            
-            .menu-toggle {
-                display: block;
-            }
-            
-            #hero h1 {
-                font-size: 2rem;
-            }
-            
-            #hero p {
-                font-size: 1.1rem;
-            }
-            
-            section {
-                padding: 3rem 0;
-            }
-            
-            section h2 {
-                font-size: 2rem;
-            }
-            
-            .services-grid,
-            .steps-grid {
+            .steps-container {
                 grid-template-columns: 1fr;
             }
-            
-            #who-we-help li {
-                padding: 1.25rem;
+        }
+
+        /* ======================
+           PRICING SECTION
+           ====================== */
+        #pricing {
+            padding: 80px 0;
+            background-color: #FFFFFF;
+        }
+
+        .pricing-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background-color: #FFFFFF;
+            border: 2px solid #E8EAEA;
+            border-radius: 4px;
+            padding: 32px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .pricing-card.featured {
+            border-color: #1E3A5F;
+            background-color: #F0F4F8;
+            transform: scale(1.02);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 24px;
+            background-color: rgba(196, 125, 58, 0.1);
+            color: #C47D3A;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pricing-amount {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1E3A5F;
+            margin-bottom: 4px;
+            margin-top: 12px;
+        }
+
+        .pricing-card.featured .pricing-amount {
+            color: #1E3A5F;
+        }
+
+        .pricing-card:nth-child(4) .pricing-amount {
+            color: #C47D3A;
+        }
+
+        .pricing-description {
+            font-size: 13px;
+            color: #5A7E7E;
+            margin-bottom: 24px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+
+        .pricing-features li {
+            font-size: 14px;
+            color: #2C2C2C;
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .pricing-features li:before {
+            content: '–';
+            position: absolute;
+            left: 0;
+            color: #5A7E7E;
+        }
+
+        .pricing-guarantee {
+            font-size: 13px;
+            color: #2D7E5A;
+            background-color: rgba(45, 126, 90, 0.1);
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .pricing-card .btn {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .pricing-container {
+                grid-template-columns: 1fr;
             }
-            
-            .faq-question {
-                font-size: 1rem;
-                padding: 1.25rem;
-            }
-            
-            .contact-details {
-                padding: 1.5rem;
-            }
-            
-            .contact-email {
-                font-size: 1.3rem;
+
+            .pricing-card.featured {
+                transform: scale(1);
             }
         }
-        
-        @media (max-width: 480px) {
-            nav {
-                padding: 0.75rem 1rem;
+
+        /* ======================
+           INDUSTRIES SECTION
+           ====================== */
+        #industries {
+            padding: 80px 0;
+            background-color: #F7F8F8;
+        }
+
+        .industries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 3rem;
+        }
+
+        .industry-card {
+            background-color: #FFFFFF;
+            border: 1px solid #E8EAEA;
+            padding: 24px;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .industry-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .industry-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .industry-card h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .industry-card p {
+            font-size: 13px;
+            color: #2C2C2C;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .industry-example {
+            font-size: 12px;
+            color: #5A7E7E;
+            font-style: italic;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #E8EAEA;
+        }
+
+        @media (max-width: 768px) {
+            .industries-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-            
-            nav .logo {
-                font-size: 1.1rem;
+        }
+
+        /* ======================
+           FINAL CTA SECTION
+           ====================== */
+        #final-cta {
+            padding: 80px 0;
+            background-color: #1E3A5F;
+            color: #FFFFFF;
+            text-align: center;
+        }
+
+        #final-cta h1 {
+            color: #FFFFFF;
+            margin-bottom: 1rem;
+        }
+
+        .final-cta-subheading {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #final-cta .btn-accent {
+            margin-bottom: 2rem;
+        }
+
+        .final-cta-support {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            #final-cta {
+                padding: 60px 0;
             }
-            
-            #hero {
-                padding: 6rem 1rem 4rem;
-                margin-top: 50px;
+
+            #final-cta .btn-accent {
+                width: 100%;
+                max-width: 280px;
             }
-            
-            #hero h1 {
-                font-size: 1.5rem;
+        }
+
+        /* ======================
+           FOOTER
+           ====================== */
+        footer {
+            background-color: #1E3A5F;
+            color: #FFFFFF;
+            padding: 60px 0 32px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 32px;
+        }
+
+        .footer-section h4 {
+            color: #FFFFFF;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-section p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+            line-height: 2.0;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            line-height: 2.0;
+        }
+
+        .footer-section a:hover {
+            color: #C47D3A;
+            text-decoration: underline;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .footer-contact {
+            margin-top: 12px;
+        }
+
+        .footer-contact a {
+            color: #C47D3A;
+            font-weight: 500;
+        }
+
+        .footer-contact a:hover {
+            color: #E8A84A;
+        }
+
+        .footer-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 24px;
+            text-align: center;
+        }
+
+        .footer-divider p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
             }
-            
-            #hero p {
-                font-size: 1rem;
+        }
+
+        /* ======================
+           SCROLL ANIMATIONS
+           ====================== */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Menu (fallback) */
+        @media (max-width: 768px) {
+            body {
+                font-size: 15px;
             }
-            
-            section {
-                padding: 2rem 0;
+
+            h1 {
+                font-size: 32px;
             }
-            
+
+            h2 {
+                font-size: 24px;
+            }
+
+            h3 {
+                font-size: 18px;
+            }
+
             .container {
-                padding: 0 1rem;
-            }
-            
-            .cta-button {
-                padding: 0.9rem 1.8rem;
-                font-size: 1rem;
-            }
-            
-            .service-card {
-                padding: 1.5rem;
+                padding: 0 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <div class="container">
-            <a href="#" class="logo">Private List Consulting</a>
-            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-            <ul id="nav-menu">
-                <li><a href="#problem">Problem</a></li>
-                <li><a href="#what-we-do">What We Do</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#who-we-help">Who We Help</a></li>
-                <li><a href="#how-it-works">How It Works</a></li>
-                <li><a href="#why-different">Why Us</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#faq">FAQ</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
+    <!-- HEADER & NAVIGATION -->
+    <header>
+        <div class="container">
+            <a href="#hero" class="logo">
+                <div class="logo-symbol">
+                    <div class="logo-line logo-line-1"></div>
+                    <div class="logo-line logo-line-2"></div>
+                    <div class="logo-line logo-line-3"></div>
+                </div>
+                <span class="logo-text">PRIVATE LIST</span>
+            </a>
+            
+            <nav>
+                <a href="#value-props">Services</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#industries">Industries</a>
+                <a href="#pricing">Pricing</a>
+            </nav>
+
+            <div class="nav-spacer"></div>
+
+            <button class="btn btn-primary" onclick="document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });">
+                Get Started
+            </button>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
     <section id="hero">
         <div class="container">
-            <h1>Your team wastes 15+ hours per week on repetitive tasks. We automate them—and get you back to revenue.</h1>
-            <p>Custom automation for small business operations. Email routing, lead capture, client onboarding, reporting. Full documentation, transparent pricing, no vendor lock-in. You own the systems we build.</p>
-            <a href="#contact" class="cta-button">Schedule a 30-minute discovery call</a>
-        </div>
-    </section>
-
-    <!-- Problem Section -->
-    <section id="problem">
-        <div class="container">
-            <h2>You're dealing with real costs.</h2>
-            <div class="problem-content">
-                <p>Your team burns 15+ hours per week on work that doesn't require a human. Data entry. Email routing. Lead follow-up. Appointment reminders. Appointment scheduling. The work feels urgent but never moves the needle.</p>
-                
-                <p><strong>Here's the actual cost:</strong> A missed follow-up loses you a $5,000 client. A delayed report costs you a hiring decision. A forgotten onboarding step creates customer friction that hurts retention. These aren't small inconveniences—they're profit leaks.</p>
-                
-                <p>You know automation exists, but you're skeptical. You've been burned by tech consultants before. You've heard the hype. You're not sure what's real, what's worth the cost, or who won't disappear after the sale.</p>
-                
-                <p>Hiring more people isn't the answer. You need leverage, not headcount. Systems that run in the background so your team can focus on things only humans can do.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- What We Do Section -->
-    <section id="what-we-do">
-        <div class="container">
-            <h2>What We Do</h2>
-            <p>We build automation systems that save your team 15-20 hours per week.</p>
-            <p>Email routing. Lead capture. Client onboarding. Appointment reminders. Data processing. Report generation. Transcription. Customer communication. The repetitive tasks that drain attention and slow decisions.</p>
-            <p>We use proven, cost-effective tools. We document everything clearly. We deliver systems that work in the background, reduce errors, and let your team focus on client relationships and revenue-generating work.</p>
-            <p><strong>Transparent pricing. Full admin access. No black boxes. If you want to take the system in-house later or hire someone to maintain it, you can.</strong></p>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services">
-        <div class="container">
-            <h2>Services & Pricing</h2>
-            <div class="services-grid">
-                <!-- Discovery Audit -->
-                <div class="service-card">
-                    <h3>Discovery Audit</h3>
-                    <div class="service-price">$500</div>
-                    <p class="service-subtitle">Not sure where to start?</p>
-                    <p>90-minute process review, written audit report identifying automation opportunities with ROI estimates, and a no-obligation roadmap.</p>
-                    <p><strong>Special offer:</strong> This fee is credited toward any service package if you move forward within 30 days.</p>
-                    <div class="guarantee-box">
-                        <p><strong>Our Guarantee:</strong> If our audit doesn't identify at least one automation opportunity worth your time, we'll refund the full $500. No questions asked.</p>
-                    </div>
-                </div>
-                
-                <!-- Starter Package -->
-                <div class="service-card">
-                    <h3>Starter Package</h3>
-                    <div class="service-price">$3,500</div>
-                    <p class="service-subtitle">Your first automation system.</p>
-                    <p>We identify 2-3 high-impact tasks, build the workflows, test thoroughly, and deliver in 2-3 weeks.</p>
-                    <h4>Common use cases:</h4>
-                    <ul>
-                        <li>Email categorization and routing</li>
-                        <li>Lead capture to CRM</li>
-                        <li>Appointment booking</li>
-                        <li>Transcription and summaries</li>
-                        <li>Intake form processing</li>
-                    </ul>
-                    <p><strong>Includes:</strong> 30 days post-launch support.</p>
-                    
-                    <div class="roi-example">
-                        <p><strong>ROI Example:</strong> If your team spends 10 hours per week on email sorting and lead entry at $50/hour cost, you're losing $26,000 per year. This package pays for itself in under 3 weeks.</p>
-                    </div>
-                    
-                    <div class="guarantee-box">
-                        <p><strong>Our Guarantee:</strong> If the automation doesn't save your team at least 10 hours in the first month, we'll refund 50% and optimize until it does. No excuses.</p>
-                    </div>
-                </div>
-                
-                <!-- Custom Build -->
-                <div class="service-card">
-                    <h3>Custom Build</h3>
-                    <div class="service-price">$8,000–$15,000</div>
-                    <p class="service-subtitle">For complex, multi-step processes.</p>
-                    <p>Full process discovery, custom workflow design, integration across multiple platforms (CRM, project management, communication), testing, and handoff.</p>
-                    <h4>Common use cases:</h4>
-                    <ul>
-                        <li>End-to-end client onboarding</li>
-                        <li>Lead nurturing sequences</li>
-                        <li>Automated reporting</li>
-                        <li>AI-powered content pipelines</li>
-                        <li>Custom chatbots</li>
-                        <li>Document automation</li>
-                    </ul>
-                    <p style="margin-top: 1rem;"><strong>Includes:</strong> 60 days post-launch support and one round of optimization.</p>
-                    
-                    <div class="roi-example">
-                        <p><strong>ROI Example:</strong> A 15-person law firm automates intake, triage, and document routing (currently 20 hours/week across staff). At blended cost of $45/hour, that's $46,800 per year in recovered time. System pays for itself in 3-4 months. First-year savings: $31,800.</p>
-                    </div>
-                    
-                    <div class="guarantee-box">
-                        <p><strong>Same Guarantee:</strong> If we don't deliver the promised hours saved, we refund 50% and fix it.</p>
-                    </div>
-                </div>
-                
-                <!-- Monthly Retainer -->
-                <div class="service-card">
-                    <h3>Monthly Retainer</h3>
-                    <div class="service-price">$750–$2,500/mo</div>
-                    <p class="service-subtitle">Ongoing support and continuous improvement.</p>
-                    <p>We monitor, maintain, and improve your automations.</p>
-                    <h4>Includes:</h4>
-                    <ul>
-                        <li>Troubleshooting</li>
-                        <li>Platform updates</li>
-                        <li>Monthly optimization reviews</li>
-                        <li>Priority support</li>
-                    </ul>
-                    <p style="margin-top: 1rem;"><strong>Higher tiers</strong> include hours for new builds and proactive process improvements.</p>
-                    <p style="margin-top: 1rem; font-style: italic; color: #5b9aa9;">Perfect for teams that want ongoing refinement without project-by-project work.</p>
+            <div class="hero-content fade-in">
+                <h1>See How Much Time Your Business Wastes on Manual Work</h1>
+                <p class="hero-subheading fade-in fade-in-delay-1">Free audit. 5-minute form. Results in 5 business days.</p>
+                <p class="hero-support fade-in fade-in-delay-2">Automation that saves 10–20 hours per week. No lock-in. Systems you own.</p>
+                <div class="hero-cta fade-in fade-in-delay-3">
+                    <button class="btn btn-accent" onclick="scrollToForm()">Start Your Free AI Audit</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Who We Help Section -->
-    <section id="who-we-help">
+    <!-- SOCIAL PROOF SECTION -->
+    <section id="social-proof">
         <div class="container">
-            <h2>Who We Help</h2>
-            <p style="text-align: center; max-width: 800px; margin: 0 auto 2rem;">We work with small businesses (5-50 employees) in industries where repetitive processes eat staff time:</p>
-            <ul>
-                <li>
-                    <strong>Law Firms</strong>
-                    <span>Lead intake, client onboarding, document routing, case management population, conflict checks, billing reminders.</span>
-                    <em>Example: A 12-person firm cut intake processing from 45 minutes to 3 minutes per lead.</em>
-                </li>
-                <li>
-                    <strong>Real Estate</strong>
-                    <span>Lead capture and routing, follow-up sequences, transaction coordination, client communication, closing coordination.</span>
-                    <em>Example: One agent's follow-up time dropped from 8 hours/week to 1 hour/week of exception handling.</em>
-                </li>
-                <li>
-                    <strong>Medical & Dental Offices</strong>
-                    <span>Appointment scheduling and reminders, patient intake, record management, follow-up communication, insurance form processing.</span>
-                    <em>Example: Reception team saved 12 hours/week on appointment confirmation and patient follow-up.</em>
-                </li>
-                <li>
-                    <strong>Professional Services</strong>
-                    <span>Proposal generation, client onboarding, project tracking, automated reporting, invoice delivery.</span>
-                </li>
-                <li>
-                    <strong>E-commerce</strong>
-                    <span>Order fulfillment, customer service automation, inventory alerts, follow-up campaigns, returns processing.</span>
-                </li>
-                <li>
-                    <strong>Local Service Businesses</strong>
-                    <span>Appointment booking, payment processing, customer follow-up, review requests, job scheduling.</span>
-                </li>
-            </ul>
-            <p style="text-align: center; max-width: 800px; margin: 2rem auto 0; font-size: 1.15rem;"><strong>If your team spends hours each week on copy-paste work, data transfer, or "just keeping up," we can help.</strong></p>
+            <div class="section-title scroll-fade">
+                <h2>Trusted by Small Businesses That Can't Afford Downtime</h2>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card scroll-fade fade-in-delay-1">
+                    <p class="testimonial-quote">"Our intake time dropped from 45 minutes to 3 minutes per lead. That's 20 hours per week freed up to focus on case strategy."</p>
+                    <div class="testimonial-attribution">
+                        <h4>Law Firm Operations, 12-person firm</h4>
+                        <p>Mid-sized law practice</p>
+                    </div>
+                </div>
+
+                <div class="testimonial-card scroll-fade fade-in-delay-2">
+                    <p class="testimonial-quote">"We cut no-show appointments from 12% to 2% within the first month. That's $6,000 in recovered revenue immediately."</p>
+                    <div class="testimonial-attribution">
+                        <h4>Medical Practice Director</h4>
+                        <p>Dental office, 3 providers</p>
+                    </div>
+                </div>
+
+                <div class="testimonial-card scroll-fade fade-in-delay-3">
+                    <p class="testimonial-quote">"Lead follow-up went from 'when I remember' to automated daily. Deals we used to lose? We're winning them now."</p>
+                    <div class="testimonial-attribution">
+                        <h4>Real Estate Team Lead</h4>
+                        <p>6-agent brokerage</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- How It Works Section -->
+    <!-- VALUE PROPS SECTION -->
+    <section id="value-props">
+        <div class="container">
+            <div class="section-title scroll-fade">
+                <h2>The Real Cost of Manual Work</h2>
+            </div>
+
+            <div class="value-grid">
+                <div class="value-card scroll-fade fade-in-delay-1">
+                    <div>
+                        <div class="value-icon">⏱️</div>
+                        <h3>15+ Hours Per Week</h3>
+                        <p>Your team spends this on data entry, email routing, appointment scheduling, and 'keeping up.' Work that doesn't move the needle.</p>
+                    </div>
+                </div>
+
+                <div class="value-card scroll-fade fade-in-delay-2">
+                    <div>
+                        <div class="value-icon">💰</div>
+                        <h3>$26,000+ Per Year</h3>
+                        <p>At $50/hour, that's the annual cost of manual work. A missed follow-up? That's a $5,000 deal gone. A delayed report? A decision delayed.</p>
+                    </div>
+                </div>
+
+                <div class="value-card scroll-fade fade-in-delay-3">
+                    <div>
+                        <div class="value-icon">⚠️</div>
+                        <h3>Inconsistent Process</h3>
+                        <p>Manual work depends on mood, memory, workload. When people are busy, processes slip. Client follow-ups happen sporadically. Quality varies.</p>
+                    </div>
+                </div>
+
+                <div class="value-card scroll-fade fade-in-delay-4">
+                    <div>
+                        <div class="value-icon">👥</div>
+                        <h3>Retention Pressure</h3>
+                        <p>You can't hire your way out. Good people burn out doing busy work. Your best people will leave unless you reduce the noise.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="solution-checklist scroll-fade">
+                <h2>What We Do About It</h2>
+                <div class="checklist-items">
+                    <div class="checklist-item">
+                        <div class="checklist-icon">✓</div>
+                        <div>We automate the repetitive work that drains attention</div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-icon">✓</div>
+                        <div>You see measurable ROI in 2–3 weeks (not 6 months)</div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-icon">✓</div>
+                        <div>Systems you own. No lock-in. No vendor hostage situation.</div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-icon">✓</div>
+                        <div>We'll tell you what NOT to automate (honesty over hype)</div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-icon">✓</div>
+                        <div>Transparent pricing. Documented systems. Full admin access.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS SECTION -->
     <section id="how-it-works">
         <div class="container">
-            <h2>How It Works</h2>
-            <div class="steps-grid">
-                <div class="step">
+            <div class="section-title scroll-fade">
+                <h2>How It Works</h2>
+                <p class="section-subtitle">Simple 4-step process from discovery to live</p>
+            </div>
+
+            <div class="steps-container">
+                <div class="step-card scroll-fade fade-in-delay-1">
                     <div class="step-number">1</div>
-                    <h3>Discovery</h3>
-                    <p>We listen, ask questions, and map your current processes. We identify pain points and high-ROI automation opportunities.</p>
+                    <h3>90-min Audit</h3>
+                    <p>We review your processes, identify automation opportunities, estimate ROI.</p>
                 </div>
-                <div class="step">
+
+                <div class="step-card scroll-fade fade-in-delay-2">
                     <div class="step-number">2</div>
-                    <h3>Proposal</h3>
-                    <p>We send a detailed proposal with scope, timeline, deliverables, and pricing. You approve before we start.</p>
+                    <h3>Clear Proposal</h3>
+                    <p>You approve scope, timeline, and pricing before we start. No surprises.</p>
                 </div>
-                <div class="step">
+
+                <div class="step-card scroll-fade fade-in-delay-3">
                     <div class="step-number">3</div>
-                    <h3>Build</h3>
-                    <p>We design and build the workflows with regular check-ins. You see progress as we go.</p>
+                    <h3>We Build It</h3>
+                    <p>2–3 weeks for Starter, 4–8 weeks for Custom. Regular check-ins, full transparency.</p>
                 </div>
-                <div class="step">
+
+                <div class="step-card scroll-fade fade-in-delay-4">
                     <div class="step-number">4</div>
-                    <h3>Test & Refine</h3>
-                    <p>We test thoroughly. You review, provide feedback, and we adjust until it works exactly right.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">5</div>
-                    <h3>Deliver & Train</h3>
-                    <p>Live deployment, team training (recorded for reference), and full documentation. You're up and running.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">6</div>
-                    <h3>Support</h3>
-                    <p>We monitor closely for 30-60 days post-launch, fix any issues, and make adjustments as you use the system.</p>
+                    <h3>Live & Supported</h3>
+                    <p>Launch, team training, full documentation. We monitor for 30–60 days post-launch.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Why We're Different Section -->
-    <section id="why-different">
+    <!-- PRICING SECTION -->
+    <section id="pricing">
         <div class="container">
-            <h2>Why We're Different</h2>
-            <div class="why-item">
-                <h3>We optimize for cost, not commissions.</h3>
-                <p>Most agencies push expensive platforms ($500+/month) because they get kickbacks. We use open-source and cost-effective tools. Your typical platform fees: $10-50/month. You pocket the difference.</p>
+            <div class="section-title scroll-fade">
+                <h2>Transparent Pricing</h2>
+                <p class="section-subtitle">No surprises. No hidden fees. You know exactly what you're getting and what it costs.</p>
             </div>
-            <div class="why-item">
-                <h3>We document everything and hand you the keys.</h3>
-                <p>Full process documentation, video walkthroughs, and complete admin access. If you want to take over or hire someone else to manage it, you can. No black boxes. No hostage situations. We want you to succeed whether we're involved or not.</p>
-            </div>
-            <div class="why-item">
-                <h3>We'll tell you what NOT to automate.</h3>
-                <p>Not everything should be. If a $10/hour VA or a simple checklist solves it better, we'll say so. We're not here to sell you $15,000 in automation you don't need.</p>
+
+            <div class="pricing-container">
+                <!-- Discovery -->
+                <div class="pricing-card scroll-fade fade-in-delay-1">
+                    <div class="pricing-amount">$500</div>
+                    <p class="pricing-description">Free with any project within 30 days</p>
+                    <ul class="pricing-features">
+                        <li>90-minute process review</li>
+                        <li>Written audit report</li>
+                        <li>ROI estimates</li>
+                        <li>No-obligation roadmap</li>
+                    </ul>
+                    <div class="pricing-guarantee">If we don't find at least one high-ROI automation, we refund 100%.</div>
+                    <button class="btn btn-secondary">Schedule Audit</button>
+                </div>
+
+                <!-- Starter (Featured) -->
+                <div class="pricing-card featured scroll-fade fade-in-delay-2">
+                    <div class="pricing-badge">MOST POPULAR</div>
+                    <div class="pricing-amount">$3,500</div>
+                    <p class="pricing-description">Your first automation system</p>
+                    <ul class="pricing-features">
+                        <li>2–3 high-impact tasks</li>
+                        <li>Build & test (2–3 weeks)</li>
+                        <li>Live deployment</li>
+                        <li>30 days post-launch support</li>
+                    </ul>
+                    <div class="pricing-guarantee">Save 10+ hours/month or we refund 50% and optimize.</div>
+                    <button class="btn btn-primary">Start Your Automation</button>
+                </div>
+
+                <!-- Custom -->
+                <div class="pricing-card scroll-fade fade-in-delay-3">
+                    <div class="pricing-amount">$8K – $15K</div>
+                    <p class="pricing-description">Complex, multi-step processes</p>
+                    <ul class="pricing-features">
+                        <li>Full process discovery</li>
+                        <li>Custom workflow design</li>
+                        <li>Multi-platform integration</li>
+                        <li>60 days post-launch support</li>
+                    </ul>
+                    <div class="pricing-guarantee">Save 10+ hours/month or we refund 50% and optimize.</div>
+                    <button class="btn btn-secondary">Get a Custom Quote</button>
+                </div>
+
+                <!-- Retainer -->
+                <div class="pricing-card scroll-fade fade-in-delay-4">
+                    <div class="pricing-amount">$750 – $2.5K/mo</div>
+                    <p class="pricing-description">Ongoing support & continuous optimization</p>
+                    <ul class="pricing-features">
+                        <li>Troubleshooting & maintenance</li>
+                        <li>Monthly optimization sprints</li>
+                        <li>Priority support</li>
+                        <li>New builds & improvements</li>
+                    </ul>
+                    <div class="pricing-guarantee">Lock in predictable automation costs.</div>
+                    <button class="btn btn-secondary">Explore Retainer</button>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about">
+    <!-- INDUSTRIES SECTION -->
+    <section id="industries">
         <div class="container">
-            <h2>About Joseph Conrad</h2>
-            <div id="about-content">
-                <p>I've spent 45 years running my own small firm. I know the pressure. I know when hiring feels impossible, when good employees can't focus because they're drowning in admin work, and when a missed step costs you a client.</p>
-                <p>I started Private List Consulting because I got tired of watching small business owners get sold complicated, expensive automation they didn't need—or sold by agencies that disappeared after implementation.</p>
-                <p>This is how I'd want someone to work with me. Transparent. Honest about trade-offs. Focused on your actual profit, not on making their quarterly numbers look good.</p>
+            <div class="section-title scroll-fade">
+                <h2>Built for Professional Services</h2>
+                <p class="section-subtitle">We specialize in your industry</p>
+            </div>
+
+            <div class="industries-grid">
+                <div class="industry-card scroll-fade fade-in-delay-1">
+                    <div class="industry-icon">⚖️</div>
+                    <h3>Law Firms</h3>
+                    <p>Client intake, document routing, case management, billing reminders, conflict checks.</p>
+                    <div class="industry-example">A 12-person firm cut intake time from 45 min to 3 min per lead.</div>
+                </div>
+
+                <div class="industry-card scroll-fade fade-in-delay-2">
+                    <div class="industry-icon">🩺</div>
+                    <h3>Medical & Dental</h3>
+                    <p>Patient intake, appointment reminders, insurance verification, follow-ups, records.</p>
+                    <div class="industry-example">Reception team saved 12 hours/week on confirmations.</div>
+                </div>
+
+                <div class="industry-card scroll-fade fade-in-delay-3">
+                    <div class="industry-icon">🏠</div>
+                    <h3>Real Estate</h3>
+                    <p>Lead capture and routing, follow-up sequences, transaction coordination, closings.</p>
+                    <div class="industry-example">Agent's follow-up time dropped from 8 hrs/week to 1 hr/week.</div>
+                </div>
+
+                <div class="industry-card scroll-fade fade-in-delay-4">
+                    <div class="industry-icon">💼</div>
+                    <h3>Accounting & Tax</h3>
+                    <p>Data entry automation, client document collection, deadline reminders, reporting.</p>
+                    <div class="industry-example">Firm cut tax season prep by 30% (saved 8 weeks/year).</div>
+                </div>
+
+                <div class="industry-card scroll-fade fade-in-delay-5">
+                    <div class="industry-icon">🎯</div>
+                    <h3>Other Services</h3>
+                    <p>If your team spends 10+ hours/week on repetitive tasks, we can help.</p>
+                    <div class="industry-example">Consulting, staffing, architecture, engineering, and more.</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section id="faq">
+    <!-- FINAL CTA SECTION -->
+    <section id="final-cta">
         <div class="container">
-            <h2>Frequently Asked Questions</h2>
-            <ul class="faq-list">
-                <li class="faq-item">
-                    <div class="faq-question">
-                        <span>What if the automation breaks or something changes in my business?</span>
-                        <span class="faq-toggle">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>You get support for 30-60 days post-launch included. After that, you can hire us on retainer for ongoing support, maintain it yourself with our documentation, or hire someone else. Your choice. It's your system.</p>
-                    </div>
-                </li>
-                
-                <li class="faq-item">
-                    <div class="faq-question">
-                        <span>What tools do you use?</span>
-                        <span class="faq-toggle">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Primarily n8n (open-source, self-hostable) and Make, depending on your needs and budget. We also integrate with your existing tools—CRM, email, project management, payment processing. You own your workflows. No proprietary lock-in.</p>
-                    </div>
-                </li>
-                
-                <li class="faq-item">
-                    <div class="faq-question">
-                        <span>Can I cancel the retainer anytime?</span>
-                        <span class="faq-toggle">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Yes. 30-day notice. We don't lock clients in. We make money by being useful, not by making you dependent.</p>
-                    </div>
-                </li>
-                
-                <li class="faq-item">
-                    <div class="faq-question">
-                        <span>Do you offshore or outsource the work?</span>
-                        <span class="faq-toggle">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>No. I build and deliver every system personally. You're not working with a factory or a junior contractor. You're working with someone who's been doing this for decades and cares about the result.</p>
-                    </div>
-                </li>
-                
-                <li class="faq-item">
-                    <div class="faq-question">
-                        <span>How long does a typical project take?</span>
-                        <span class="faq-toggle">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Starter Package: 2-3 weeks. Custom Build: 4-8 weeks depending on complexity. We give you a specific timeline in the proposal.</p>
-                    </div>
-                </li>
-                
-                <li class="faq-item">
-                    <div class="faq-question">
-                        <span>What if it doesn't work the way we hoped?</span>
-                        <span class="faq-toggle">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>If the automation doesn't save your team the promised hours in the first month, we refund 50% and optimize until it does. No complaints, no friction. We want you to win.</p>
-                    </div>
-                </li>
-                
-                <li class="faq-item">
-                    <div class="faq-question">
-                        <span>How much does this actually cost me per month in platform fees?</span>
-                        <span class="faq-toggle">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Depends on the system, but typically $10-50/month. We'll specify this clearly before you decide.</p>
-                    </div>
-                </li>
-                
-                <li class="faq-item">
-                    <div class="faq-question">
-                        <span>Can you integrate this with our existing software?</span>
-                        <span class="faq-toggle">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Almost always yes. We work with most major platforms—CRMs, project management tools, email, payment processors, accounting software. If you're unsure, ask us during discovery.</p>
-                    </div>
-                </li>
-                
-                <li class="faq-item">
-                    <div class="faq-question">
-                        <span>What if you're not available later?</span>
-                        <span class="faq-toggle">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Everything is documented. Complete process guides, video walkthroughs, and admin credentials. You can take it in-house, hire someone else, or keep us on retainer. You're not stranded.</p>
-                    </div>
-                </li>
-            </ul>
+            <h1>Ready to Get Your Time Back?</h1>
+            <p class="final-cta-subheading">We take 4–6 clients per quarter. If you're ready to move, let's talk this week.</p>
+            <button class="btn btn-accent" onclick="scrollToForm()">Start Your Free Audit</button>
+            <p class="final-cta-support">No pitch deck. No sales pressure. We'll assess if automation makes sense for you right now. If it doesn't, we'll tell you.</p>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <h2>Ready to get your time back?</h2>
-            <p>We take on 4-6 clients per quarter. If you're ready to move, let's talk this week.</p>
-            <p><strong>Schedule a 30-minute discovery call.</strong> No pitch deck. No sales pressure. We'll ask about your business, what's eating your team's time, and whether automation actually makes sense for you right now. If it doesn't, we'll tell you.</p>
-            <div class="contact-details">
-                <p><strong>Email us at:</strong></p>
-                <a href="mailto:contact@privatelistconsulting.com" class="contact-email">contact@privatelistconsulting.com</a>
-                <p style="margin-top: 1.5rem;"><strong>Subject line:</strong> "Discovery call request"</p>
-                <p>Tell us a bit about your business and what you're dealing with. We'll reply within 24 hours.</p>
-                <p style="margin-top: 1.5rem;"><strong>Or schedule directly:</strong></p>
-                <a href="https://calendly.com/joseph-privatelistconsulting/30min" class="calendly-link">Book on Calendly</a>
-            </div>
-            <p style="font-style: italic; margin-top: 2rem;">Automation that works. Transparent pricing. Systems you own. No hype, no lock-in.</p>
-        </div>
-    </section>
-
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer>
-        <p>&copy; 2026 Private List Consulting. All rights reserved.</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-symbol" style="transform: scale(0.8);">
+                            <div class="logo-line logo-line-1" style="background-color: #FFFFFF;"></div>
+                            <div class="logo-line logo-line-2" style="background-color: #FFFFFF;"></div>
+                            <div class="logo-line logo-line-3" style="background-color: #FFFFFF;"></div>
+                        </div>
+                        <span style="color: #FFFFFF;">PRIVATE LIST</span>
+                    </div>
+                    <p>Automation for small businesses that run the world.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <a href="#pricing">Discovery Audit</a>
+                    <a href="#pricing">Starter Package</a>
+                    <a href="#pricing">Custom Builds</a>
+                    <a href="#pricing">Retainer Support</a>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Get In Touch</h4>
+                    <div class="footer-contact">
+                        <a href="mailto:contact@privatelistconsulting.com">contact@privatelistconsulting.com</a>
+                    </div>
+                    <p style="margin-top: 12px;">We respond within 24 hours.</p>
+                </div>
+            </div>
+
+            <div class="footer-divider">
+                <p>© 2026 Private List Consulting. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
-    <!-- JavaScript for mobile menu and FAQ accordions -->
     <script>
-        // Mobile menu toggle
-        function toggleMenu() {
-            const menu = document.getElementById('nav-menu');
-            menu.classList.toggle('active');
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-fade').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll function
+        function scrollToForm() {
+            document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
         }
-        
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                const menu = document.getElementById('nav-menu');
-                if (menu.classList.contains('active')) {
-                    menu.classList.remove('active');
-                }
-            });
-        });
-        
-        // FAQ Accordion functionality
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', function() {
-                const faqItem = this.parentElement;
-                const isActive = faqItem.classList.contains('active');
-                
-                // Close all other items
-                document.querySelectorAll('.faq-item').forEach(item => {
-                    item.classList.remove('active');
-                });
-                
-                // Toggle current item
-                if (!isActive) {
-                    faqItem.classList.add('active');
-                }
-            });
-        });
-        
-        // Smooth scroll enhancement
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if (href !== '#') {
-                    const target = document.querySelector(href);
-                    if (target) {
-                        e.preventDefault();
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                }
-            });
+
+        // Header shadow on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 10) {
+                header.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.05)';
+            }
         });
     </script>
+
 </body>
 </html>
