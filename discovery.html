@@ -863,18 +863,19 @@
             if (num === 4) state.q4 = answer.value;
             if (num === 9) state.q9 = document.getElementById('q9-answer') ? document.getElementById('q9-answer').value : '';
 
+            // Screen mapping: Q1=screen1, Q2=screen2, Q3=screen3, Q4=screen4,
+            // mirror=screen5, Q5=screen6, Q6=screen7, Q7=screen8, Q8=screen9, Q9=screen10, final=screen11
             if (num === 4) {
-                // Generate clarity mirror
                 generateClarityMirror();
                 goToScreen(5);
             } else if (num === 5) {
-                goToScreen(6);
+                goToScreen(7); // Q5 is on screen6, next is Q6 on screen7
             } else if (num === 6) {
-                goToScreen(7);
+                goToScreen(8); // Q6 is on screen7, next is Q7 on screen8
             } else if (num === 7) {
-                goToScreen(8);
+                goToScreen(9); // Q7 is on screen8, next is Q8 on screen9
             } else if (num === 8) {
-                goToScreen(9);
+                goToScreen(10); // Q8 is on screen9, next is Q9 on screen10
             } else if (num === 9) {
                 generateFinalMirror();
                 goToScreen(11);
