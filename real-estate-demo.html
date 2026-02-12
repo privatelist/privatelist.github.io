@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Real Estate Speed-to-Lead System - <2 minute lead qualification and intelligent routing">
+    <title>Real Estate Speed-to-Lead System | Private List Consulting</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1E3A5F 0%, #2d4a73 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(30, 58, 95, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header .tagline {
+            font-size: 1.1em;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        header .subtitle {
+            font-size: 1.3em;
+            color: #C47D3A;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        .brand {
+            display: inline-block;
+            font-size: 0.8em;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin-top: 20px;
+        }
+
+        nav {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #1E3A5F;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #C47D3A;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 60px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #1E3A5F;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 1.4em;
+            color: #1E3A5F;
+            margin: 30px 0 15px 0;
+        }
+
+        h4 {
+            color: #1E3A5F;
+            margin-bottom: 10px;
+        }
+
+        .intro-text {
+            font-size: 1.1em;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        /* Comparison Section */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin: 30px 0;
+        }
+
+        .comparison-table th {
+            background: #1E3A5F;
+            color: white;
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .comparison-table td {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .metric-left {
+            font-weight: 600;
+            color: #666;
+            width: 200px;
+        }
+
+        .metric-old {
+            color: #d35400;
+        }
+
+        .metric-new {
+            color: #27ae60;
+            font-weight: 600;
+        }
+
+        /* Workflow Diagram */
+        .workflow-diagram {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin: 40px 0;
+            overflow-x: auto;
+        }
+
+        .flow-step {
+            display: inline-block;
+            background: #f0f4f8;
+            padding: 20px 25px;
+            border-radius: 6px;
+            margin: 0 10px 0 0;
+            border-left: 4px solid #C47D3A;
+            min-width: 180px;
+            text-align: center;
+        }
+
+        .flow-step.system {
+            background: #fef8f4;
+            border-left-color: #d35400;
+        }
+
+        .flow-step strong {
+            color: #1E3A5F;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .flow-arrow {
+            display: inline-block;
+            color: #C47D3A;
+            font-weight: bold;
+            font-size: 1.5em;
+            margin: 0 5px;
+            vertical-align: middle;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid #C47D3A;
+        }
+
+        .feature-box h4 {
+            margin-bottom: 15px;
+        }
+
+        .feature-box p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        /* Scoring Section */
+        .scoring-grid {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin: 40px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .score-tier {
+            padding: 25px;
+            border-radius: 6px;
+            border-left: 4px solid #e0e0e0;
+        }
+
+        .score-tier.hot {
+            background: #fef5f5;
+            border-left-color: #e74c3c;
+        }
+
+        .score-tier.warm {
+            background: #fef8f4;
+            border-left-color: #d35400;
+        }
+
+        .score-tier.cold {
+            background: #f0f4f8;
+            border-left-color: #1E3A5F;
+        }
+
+        .tier-score {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #1E3A5F;
+            margin-bottom: 10px;
+        }
+
+        .tier-label {
+            font-weight: 600;
+            color: #1E3A5F;
+            margin-bottom: 10px;
+        }
+
+        .tier-description {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        /* Chatbot Example */
+        .chatbot-demo {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin: 40px 0;
+        }
+
+        .chatbot-header {
+            background: #1E3A5F;
+            color: white;
+            padding: 20px;
+            font-weight: 600;
+        }
+
+        .chatbot-content {
+            padding: 30px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .message.bot {
+            background: #f0f4f8;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 3px solid #C47D3A;
+        }
+
+        .message.user {
+            text-align: right;
+        }
+
+        .message.user span {
+            background: #1E3A5F;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            display: inline-block;
+            max-width: 70%;
+        }
+
+        /* Pricing Section */
+        .pricing-breakdown {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin: 40px 0;
+        }
+
+        .pricing-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .pricing-item:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-item.total {
+            font-weight: 700;
+            font-size: 1.2em;
+            color: #1E3A5F;
+            padding: 15px 0;
+        }
+
+        /* ROI Calculation */
+        .roi-section {
+            background: linear-gradient(135deg, #fef8f4 0%, #fef0e6 100%);
+            padding: 40px;
+            border-radius: 8px;
+            border: 2px solid #C47D3A;
+            margin: 40px 0;
+        }
+
+        .roi-calculation {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .roi-item {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 3px solid #C47D3A;
+        }
+
+        .roi-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+
+        .roi-value {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #C47D3A;
+        }
+
+        .benefits-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .benefit-item {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid #C47D3A;
+        }
+
+        .benefit-item h4 {
+            margin-bottom: 10px;
+        }
+
+        .benefit-item p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            background: #C47D3A;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .cta-button:hover {
+            background: #a86a30;
+            transform: translateY(-2px);
+        }
+
+        .text-center {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        /* Highlight boxes */
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        .highlight-box p {
+            color: #856404;
+            margin: 0;
+        }
+
+        footer {
+            background: #1E3A5F;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.9em;
+        }
+
+        footer a {
+            color: #C47D3A;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .comparison-table {
+                font-size: 0.9em;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 15px 10px;
+            }
+
+            .workflow-diagram {
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .flow-step {
+                margin-bottom: 15px;
+                min-width: auto;
+                width: 100%;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+                display: block;
+                margin: 10px 0;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits-list {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 40px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🏠 Real Estate Speed-to-Lead System</h1>
+        <p class="tagline">AI-powered lead qualification & intelligent routing. Qualify leads in <2 minutes, assign to agents instantly.</p>
+        <div class="subtitle">2x Conversion Lift vs. Manual 30-Minute Response</div>
+        <div class="brand">Private List Consulting</div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#executive">Executive Summary</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#scoring">Lead Scoring</a></li>
+            <li><a href="#roi">ROI & Metrics</a></li>
+            <li><a href="index.html">Back to Demos</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <section id="executive">
+            <h2>The Competitive Advantage</h2>
+            <p class="intro-text">
+                Real estate is won on speed. When a buyer fills out a form, they're in shopping mode. By the time a competitor calls them 30 minutes later, they're already comparing offers. This system changes that math.
+            </p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th class="metric-old">Industry Standard</th>
+                        <th class="metric-new">Speed-to-Lead System</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="metric-left">Lead Response Time</td>
+                        <td>30 minutes</td>
+                        <td class="metric-new">&lt;2 minutes</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-left">Qualification Method</td>
+                        <td>Manual (agent judgment)</td>
+                        <td class="metric-new">AI chatbot (90 seconds)</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-left">Lead Information Available</td>
+                        <td>Partial (name, email, phone)</td>
+                        <td class="metric-new">Complete (budget, timeline, preferences)</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-left">Agent Preparation Time</td>
+                        <td>0 minutes (cold call)</td>
+                        <td class="metric-new">5-10 minutes (full context)</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-left">Conversion Lift</td>
+                        <td>Baseline</td>
+                        <td class="metric-new">+100-200% lift documented</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <p><strong>🎯 The Pitch:</strong> "You just got a lead. Your competitor is still in their inbox."</p>
+            </div>
+        </section>
+
+        <section id="how-it-works">
+            <h2>Architecture & Workflow</h2>
+            <p class="intro-text">The system automates lead capture, AI qualification, behavioral scoring, intelligent routing, and calendar synchronization in one seamless flow.</p>
+
+            <h3>5-Step Process Flow</h3>
+
+            <div class="workflow-diagram">
+                <div class="flow-step">
+                    <strong>1️⃣ Lead Capture</strong>
+                    <p style="font-size: 0.9em; color: #666;">Jotform submission</p>
+                </div>
+                <div class="flow-arrow">→</div>
+
+                <div class="flow-step system">
+                    <strong>2️⃣ Zapier Trigger</strong>
+                    <p style="font-size: 0.9em; color: #666;">Capture & route data</p>
+                </div>
+                <div class="flow-arrow">→</div>
+
+                <div class="flow-step">
+                    <strong>3️⃣ Lindy Chatbot</strong>
+                    <p style="font-size: 0.9em; color: #666;">AI qualification</p>
+                </div>
+                <div class="flow-arrow">→</div>
+
+                <div class="flow-step system">
+                    <strong>4️⃣ Scoring Engine</strong>
+                    <p style="font-size: 0.9em; color: #666;">Lead temperature</p>
+                </div>
+                <div class="flow-arrow">→</div>
+
+                <div class="flow-step">
+                    <strong>5️⃣ Route & Sync</strong>
+                    <p style="font-size: 0.9em; color: #666;">Agent + calendar</p>
+                </div>
+            </div>
+
+            <h3>Technical Integrations</h3>
+            <div class="features-grid">
+                <div class="feature-box">
+                    <h4>📋 Jotform</h4>
+                    <p>Lead capture form with property type, budget, location, timeline fields. Mobile-optimized for mobile shoppers.</p>
+                </div>
+
+                <div class="feature-box">
+                    <h4>⚙️ Zapier</h4>
+                    <p>Automation orchestration. Watches form submissions, triggers chatbot, logs data, manages integrations.</p>
+                </div>
+
+                <div class="feature-box">
+                    <h4>🤖 Lindy Chatbot</h4>
+                    <p>AI-powered qualification. 4 targeted questions. Warm, conversational tone. Completes in ~90 seconds.</p>
+                </div>
+
+                <div class="feature-box">
+                    <h4>📊 Scoring Engine</h4>
+                    <p>Behavioral scoring based on responses. Rates leads HOT/WARM/COLD. Considers timeline, budget fit, competition.</p>
+                </div>
+
+                <div class="feature-box">
+                    <h4>💼 Follow Up Boss / HubSpot</h4>
+                    <p>CRM integration. Automatically creates contact, assigns to agent, flags temperature, adds to pipeline.</p>
+                </div>
+
+                <div class="feature-box">
+                    <h4>📅 Google Calendar</h4>
+                    <p>Auto-schedules 15-min intro calls. Sends SMS + email confirmations to agent and lead.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="features">
+            <h2>Key Features</h2>
+
+            <h3>🤖 AI Chatbot Qualification</h3>
+            <div class="features-grid">
+                <div class="feature-box">
+                    <h4>Q1: Timeline & Urgency</h4>
+                    <p>"Are you looking to buy within the next 30, 60, or 90 days? Or are you still in the research phase?"</p>
+                    <p style="margin-top: 10px; color: #999; font-size: 0.85em;">Identifies HOT (30 days) vs. WARM (60 days) vs. COLD (research)</p>
+                </div>
+
+                <div class="feature-box">
+                    <h4>Q2: Existing Representation</h4>
+                    <p>"Are you currently working with another real estate agent?"</p>
+                    <p style="margin-top: 10px; color: #999; font-size: 0.85em;">Fresh leads score higher. Existing representation = referral opportunity.</p>
+                </div>
+
+                <div class="feature-box">
+                    <h4>Q3: Budget Alignment</h4>
+                    <p>"What's your comfortable price range?"</p>
+                    <p style="margin-top: 10px; color: #999; font-size: 0.85em;">Matches to agent specialization. Outside range = refer or nurture.</p>
+                </div>
+
+                <div class="feature-box">
+                    <h4>Q4: Geographic Routing</h4>
+                    <p>"Which neighborhoods interest you most?"</p>
+                    <p style="margin-top: 10px; color: #999; font-size: 0.85em;">Routes to territory specialist. Assigns the right agent instantly.</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;">📊 Behavioral Scoring System</h3>
+            <p style="color: #666; margin-bottom: 20px;">
+                Each response scores points. Final score (0-100+) determines urgency and routing. Higher score = faster response, higher priority.
+            </p>
+
+            <div class="scoring-grid">
+                <div class="score-tier hot">
+                    <div class="tier-score">90+</div>
+                    <div class="tier-label">HOT LEAD</div>
+                    <div class="tier-description">
+                        30-day timeline, clear intent, perfect geographic & budget fit. No competing agent.
+                        <p style="margin-top: 10px; font-weight: 600;">→ PRIORITY routing (0-15 min SLA)</p>
+                    </div>
+                </div>
+
+                <div class="score-tier warm">
+                    <div class="tier-score">60-89</div>
+                    <div class="tier-label">WARM LEAD</div>
+                    <div class="tier-description">
+                        60-90 day timeline, good intent, partial geographic/budget alignment, exploring options.
+                        <p style="margin-top: 10px; font-weight: 600;">→ Standard routing (2-4 hour SLA)</p>
+                    </div>
+                </div>
+
+                <div class="score-tier cold">
+                    <div class="tier-score">40-59</div>
+                    <div class="tier-label">LUKEWARM</div>
+                    <div class="tier-description">
+                        90+ day timeline, research phase, exploring multiple areas or price points.
+                        <p style="margin-top: 10px; font-weight: 600;">→ Nurture sequence (auto-follow-ups)</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;">🎯 Intelligent Routing Logic</h3>
+            <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);">
+                <p style="color: #666; margin-bottom: 20px;">
+                    The system doesn't just score leads—it matches them to the best agent based on:
+                </p>
+                <ul style="color: #666; line-height: 1.9; list-style: none; padding: 0;">
+                    <li>✅ <strong>Geographic territory:</strong> Agent specializes in lead's target neighborhood</li>
+                    <li>✅ <strong>Price range expertise:</strong> Agent typically sells in lead's budget</li>
+                    <li>✅ <strong>Current availability:</strong> Agent has capacity (max 5 active leads)</li>
+                    <li>✅ <strong>Response history:</strong> Some agents are faster responders</li>
+                    <li>✅ <strong>Lead type match:</strong> Buyer agents for buyers, investor specialists for investors</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="scoring">
+            <h2>Sample Lead Scoring in Action</h2>
+
+            <div class="chatbot-demo">
+                <div class="chatbot-header">
+                    💬 Live Example: HOT Lead (115/100 score)
+                </div>
+                <div class="chatbot-content">
+                    <div class="message bot">
+                        <strong>Bot:</strong> Thanks for reaching out! I'm excited to help you find the perfect home. A couple quick questions to match you with the right agent. First: Are you looking to buy within the next 30, 60, or 90 days? Or are you still in the research phase?
+                    </div>
+
+                    <div class="message user">
+                        <span>Actually, we're hoping to move within 30 days. We just got a job offer here.</span>
+                    </div>
+
+                    <div class="message bot">
+                        <strong>Bot:</strong> That's fantastic! 30 days is a solid timeline. Are you currently working with another real estate agent, or are you looking for representation?
+                    </div>
+
+                    <div class="message user">
+                        <span>No, we're new to the area. First time buying here.</span>
+                    </div>
+
+                    <div class="message bot">
+                        <strong>Bot:</strong> Perfect — I'm going to get you in great hands. What's your comfortable price range?
+                    </div>
+
+                    <div class="message user">
+                        <span>We're looking in the $350K to $450K range.</span>
+                    </div>
+
+                    <div class="message bot">
+                        <strong>Bot:</strong> Excellent. We have fantastic options in that range. Last one: Which neighborhoods interest you most? We work primarily in Downtown, Westside, and Midtown.
+                    </div>
+
+                    <div class="message user">
+                        <span>Westside appeals to us. That's closer to my wife's office.</span>
+                    </div>
+
+                    <div class="message bot">
+                        <strong>Bot:</strong> Great choice. The Westside market is hot right now. I'm connecting you with Sarah Chen—she's our top agent there. Sarah is going to reach out within 15 minutes. Keep your eyes on your phone for a text from her. Looking forward to helping you settle in!
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); margin-top: 30px;">
+                <h4 style="margin-bottom: 20px;">Score Breakdown</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="background: #f0f4f8; padding: 15px; border-radius: 6px; border-left: 3px solid #C47D3A;">
+                        <div style="font-weight: 600; color: #1E3A5F; margin-bottom: 5px;">Timeline (30 days)</div>
+                        <div style="font-size: 1.3em; font-weight: 700; color: #C47D3A;">+40 pts</div>
+                    </div>
+                    <div style="background: #f0f4f8; padding: 15px; border-radius: 6px; border-left: 3px solid #C47D3A;">
+                        <div style="font-weight: 600; color: #1E3A5F; margin-bottom: 5px;">No Competing Agent</div>
+                        <div style="font-size: 1.3em; font-weight: 700; color: #C47D3A;">+20 pts</div>
+                    </div>
+                    <div style="background: #f0f4f8; padding: 15px; border-radius: 6px; border-left: 3px solid #C47D3A;">
+                        <div style="font-weight: 600; color: #1E3A5F; margin-bottom: 5px;">Price Range Match</div>
+                        <div style="font-size: 1.3em; font-weight: 700; color: #C47D3A;">+30 pts</div>
+                    </div>
+                    <div style="background: #f0f4f8; padding: 15px; border-radius: 6px; border-left: 3px solid #C47D3A;">
+                        <div style="font-weight: 600; color: #1E3A5F; margin-bottom: 5px;">Geographic Match</div>
+                        <div style="font-size: 1.3em; font-weight: 700; color: #C47D3A;">+25 pts</div>
+                    </div>
+                </div>
+                <div style="background: #fef8f4; padding: 15px; border-radius: 6px; border-left: 3px solid #d35400; margin-top: 20px;">
+                    <div style="font-weight: 600; color: #1E3A5F;">Total Score: 115/100 (capped)</div>
+                    <div style="color: #666; font-size: 0.9em; margin-top: 5px;">→ PRIORITY ROUTING to Sarah Chen (Westside specialist)</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roi">
+            <h2>ROI, Metrics & Implementation</h2>
+
+            <h3>📊 Key Performance Indicators</h3>
+            <div class="benefits-list">
+                <div class="benefit-item">
+                    <h4>⏱️ Response Time</h4>
+                    <p><strong>Target:</strong> &lt;2 minutes from form submission to agent notification. Your competitor is still reading the email.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h4>📈 Qualification Accuracy</h4>
+                    <p><strong>Expected:</strong> 85-90% of leads routed to correct agent on first try. Improves with ML retraining.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h4>🎯 Conversion Lift</h4>
+                    <p><strong>Documented:</strong> 2x conversion lift vs. manual 30-min response. Faster response = higher lead quality perception.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h4>💰 Cost Per Lead</h4>
+                    <p><strong>Total:</strong> ~$70-100 monthly baseline + variable API costs. Lower per-lead cost than traditional lead gen.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h4>👥 Agent Satisfaction</h4>
+                    <p><strong>Impact:</strong> Agents love pre-qualified leads. Reduces cold call frustration. Higher appointment-to-close rate.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h4>📋 Lead Quality</h4>
+                    <p><strong>Result:</strong> Only HOT/WARM leads sent to agents immediately. COLD leads go to nurture. No garbage leads.</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;">💵 ROI Calculation (Example)</h3>
+
+            <div class="roi-section">
+                <h4 style="color: #1E3A5F; margin-top: 0;">Assumptions:</h4>
+                <ul style="color: #666; line-height: 1.9; margin-left: 20px;">
+                    <li>40 leads/month captured</li>
+                    <li>30% convert to appointments (baseline: 15% with manual process)</li>
+                    <li>40% appointment-to-client conversion</li>
+                    <li>$15,000 average commission per deal</li>
+                </ul>
+
+                <div class="roi-calculation">
+                    <div class="roi-item">
+                        <div class="roi-label">Old Process (Manual, 30+ min response)</div>
+                        <div class="roi-value">$36K/mo</div>
+                        <p style="color: #666; font-size: 0.85em; margin-top: 10px;">40 leads × 15% conv = 6 appt<br>6 appt × 40% = 2.4 clients<br>2.4 × $15K = $36K</p>
+                    </div>
+
+                    <div class="roi-item">
+                        <div class="roi-label">New Process (AI, &lt;2 min response)</div>
+                        <div class="roi-value">$72K/mo</div>
+                        <p style="color: #666; font-size: 0.85em; margin-top: 10px;">40 leads × 30% conv = 12 appt<br>12 appt × 40% = 4.8 clients<br>4.8 × $15K = $72K</p>
+                    </div>
+
+                    <div class="roi-item" style="grid-column: 1 / -1;">
+                        <div class="roi-label">Monthly Lift</div>
+                        <div class="roi-value">+$36K/month</div>
+                        <p style="color: #666; font-size: 0.85em; margin-top: 10px;">= $432K/year additional revenue</p>
+                    </div>
+                </div>
+
+                <div style="background: white; padding: 20px; border-radius: 6px; margin-top: 20px;">
+                    <p style="color: #1E3A5F; font-weight: 600; margin-bottom: 10px;">Net First Year:</p>
+                    <p style="color: #666; font-size: 0.95em;">
+                        $432,000 (revenue) - $500 (setup) - $1,200 (yearly costs) = <strong>$430,300 net gain</strong><br>
+                        <strong>ROI: 860x</strong>
+                    </p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;">🚀 Implementation Timeline</h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); border-left: 4px solid #C47D3A;">
+                    <h4>Day 1-2: Foundation</h4>
+                    <p style="color: #666; font-size: 0.9em; margin-top: 10px;">
+                        ✅ Build Jotform<br>
+                        ✅ Zapier workflow<br>
+                        ✅ Lindy chatbot training<br>
+                        ✅ End-to-end testing
+                    </p>
+                </div>
+
+                <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); border-left: 4px solid #C47D3A;">
+                    <h4>Day 2-3: Routing</h4>
+                    <p style="color: #666; font-size: 0.9em; margin-top: 10px;">
+                        ✅ CRM integration<br>
+                        ✅ Scoring formula<br>
+                        ✅ Calendar sync<br>
+                        ✅ SMS/email templates
+                    </p>
+                </div>
+
+                <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); border-left: 4px solid #C47D3A;">
+                    <h4>Week 2-3: Refinement</h4>
+                    <p style="color: #666; font-size: 0.9em; margin-top: 10px;">
+                        ✅ Monitor accuracy<br>
+                        ✅ Agent feedback<br>
+                        ✅ Adjust scoring<br>
+                        ✅ Scale to all agents
+                    </p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;">✨ Why This Works</h3>
+
+            <div class="benefits-list">
+                <div class="benefit-item">
+                    <h4>🎯 Speed is Everything</h4>
+                    <p>Lead is in shopping mode for ~5 minutes. You reach them in 2. Competitor reaches them in 30. You win.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h4>📊 Context Beats Cold Calling</h4>
+                    <p>Agent knows budget, timeline, location, motivation before calling. First conversation is expert-level, not exploratory.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h4>🤖 AI Feels Natural</h4>
+                    <p>Chatbot is warm and conversational, not sales-y. Leads feel like they're talking to a knowledgeable assistant.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h4>✅ Accuracy Improves Over Time</h4>
+                    <p>ML retraining means scoring gets better each week. Routing accuracy climbs from 85% to 95%+.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h4>💪 Agent Morale</h4>
+                    <p>Pre-qualified, warm leads beat cold lead lists. Agents are happier, more confident, close more deals.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h4>🎁 Competitive Moat</h4>
+                    <p>Once deployed, this system is hard to compete with. You own the speed advantage.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Ready to Launch?</h2>
+            <p class="intro-text">
+                The Speed-to-Lead system is production-ready. Implementation takes 2-3 days. ROI payback is typically &lt;1 month in real estate applications.
+            </p>
+
+            <div class="text-center">
+                <button class="cta-button">Schedule Implementation Consultation</button>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Private List Consulting. Real Estate Speed-to-Lead System.</p>
+        <p>Built for agents who can't afford to be slow. | <a href="index.html">← Back to All Demos</a></p>
+    </footer>
+</body>
+</html>

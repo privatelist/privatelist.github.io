@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Law Firm AI Morning Briefing - Daily intelligence for managing partners">
+    <title>Law Firm AI Morning Briefing | Private List Consulting</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1E3A5F 0%, #2d4a73 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(30, 58, 95, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header .tagline {
+            font-size: 1.1em;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .brand {
+            display: inline-block;
+            font-size: 0.8em;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin-top: 20px;
+        }
+
+        nav {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #1E3A5F;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #C47D3A;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 60px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #1E3A5F;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 1.4em;
+            color: #1E3A5F;
+            margin: 30px 0 15px 0;
+        }
+
+        .intro-text {
+            font-size: 1.1em;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        /* Workflow Section */
+        .workflow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .workflow-step {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid #C47D3A;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .workflow-step:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #1E3A5F;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .workflow-step h4 {
+            font-size: 1.1em;
+            color: #1E3A5F;
+            margin: 15px 0 10px 0;
+        }
+
+        .workflow-step p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h4 {
+            font-size: 1.2em;
+            color: #1E3A5F;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        /* Sample Dashboard */
+        .dashboard-sample {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin: 40px 0;
+        }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, #1E3A5F 0%, #2d4a73 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .dashboard-header h4 {
+            font-size: 1.3em;
+            margin-bottom: 5px;
+        }
+
+        .dashboard-header p {
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+
+        .dashboard-content {
+            padding: 40px 30px;
+        }
+
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric {
+            background: #f0f4f8;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            border-left: 3px solid #C47D3A;
+        }
+
+        .metric-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: #1E3A5F;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.85em;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sample-item {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border-left: 3px solid #e0e0e0;
+        }
+
+        .sample-item.urgent {
+            border-left-color: #e74c3c;
+            background: #fef5f5;
+        }
+
+        .sample-item h5 {
+            color: #1E3A5F;
+            font-size: 1em;
+            margin-bottom: 8px;
+        }
+
+        .sample-item p {
+            color: #666;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-top: 8px;
+        }
+
+        .badge-urgent {
+            background: #fadbd8;
+            color: #c0392b;
+        }
+
+        .badge-high {
+            background: #f5b7b1;
+            color: #d35400;
+        }
+
+        .badge-meeting {
+            background: #d6eaf8;
+            color: #1E3A5F;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .benefit {
+            padding: 25px;
+            background: white;
+            border-radius: 8px;
+            border-top: 4px solid #C47D3A;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .benefit h4 {
+            color: #1E3A5F;
+            margin-bottom: 10px;
+        }
+
+        .benefit p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #C47D3A;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .cta-button:hover {
+            background: #a86a30;
+            transform: translateY(-2px);
+        }
+
+        .text-center {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        footer {
+            background: #1E3A5F;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.9em;
+        }
+
+        .tech-stack {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .tech-stack h5 {
+            color: #1E3A5F;
+            margin-bottom: 15px;
+            font-size: 1em;
+        }
+
+        .tech-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            font-size: 0.9em;
+        }
+
+        .tech-item {
+            padding: 10px 15px;
+            background: white;
+            border-radius: 4px;
+            border-left: 3px solid #C47D3A;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .workflow {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            section {
+                padding: 40px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>⚖️ Law Firm AI Morning Briefing</h1>
+        <p class="tagline">Daily intelligence system that delivers what partners need to know — automatically at 7:30 AM</p>
+        <div class="brand">Private List Consulting</div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#workflow">Workflow</a></li>
+            <li><a href="#features">Key Features</a></li>
+            <li><a href="#sample">Sample Briefing</a></li>
+            <li><a href="#benefits">Benefits</a></li>
+            <li><a href="index.html">Back to Demos</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <section id="overview">
+            <h2>Automated Daily Briefings for Managing Partners</h2>
+            <p class="intro-text">
+                The Morning Briefing system consolidates calendar events, new leads, outstanding tasks, and cash flow data into a single intelligent report. Instead of hunting through email and systems, your managing partner opens their inbox at 7:30 AM to a complete strategic summary — every day, automatically.
+            </p>
+
+            <div class="benefits">
+                <div class="benefit">
+                    <h4>⏰ Never Miss Critical Information</h4>
+                    <p>Court deadlines, client meetings, overdue tasks, and invoice aging — all in one place, ranked by priority.</p>
+                </div>
+                <div class="benefit">
+                    <h4>💰 Protect Billable Hours</h4>
+                    <p>Visibility into outstanding invoices and cash flow. No more losing $20K+ per associate per year to invisible hour leakage.</p>
+                </div>
+                <div class="benefit">
+                    <h4>🎯 Actionable Intelligence</h4>
+                    <p>AI-generated executive summary tells you what matters and why — not just a dump of data.</p>
+                </div>
+                <div class="benefit">
+                    <h4>📧 Professional Branded Email</h4>
+                    <p>Beautifully formatted HTML email with your firm's branding. Looks premium, every day.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="workflow">
+            <h2>How It Works: 5-Step Workflow</h2>
+            <p class="intro-text">
+                The system orchestrates multiple data sources into a single coherent briefing through intelligent automation.
+            </p>
+
+            <div class="workflow">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <h4>Trigger (7:30 AM)</h4>
+                    <p>Cron trigger fires automatically every morning at 7:30 AM. Or test manually anytime with the Manual Trigger node.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <h4>Gather Data</h4>
+                    <p>Simultaneously fetch calendar events, new leads, outstanding tasks, and invoices from your systems. Uses sample data in demo; connects to real systems in production.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <h4>Generate AI Summary</h4>
+                    <p>OpenAI GPT-4 generates a natural-language executive summary. Reads like your trusted advisor, not a chatbot.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <h4>Format & Send Email</h4>
+                    <p>HTML email formatted with your firm's branding. Calendar, leads, tasks, and cash flow sections all included.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">5</div>
+                    <h4>Optional: Slack/Teams</h4>
+                    <p>Optionally post summary to Slack or Microsoft Teams for team-wide visibility.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="features">
+            <h2>Key Features & Data Sources</h2>
+
+            <h3>📅 Calendar Intelligence</h3>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h4>Client Meetings</h4>
+                    <p>All scheduled client meetings with location, attendees, and case context.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚖️</div>
+                    <h4>Court Deadlines</h4>
+                    <p>Court dates and filing deadlines highlighted as priority items.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h4>Partner Meetings</h4>
+                    <p>Internal strategy meetings and firm-wide sessions.</p>
+                </div>
+            </div>
+
+            <h3>🌟 Lead Intelligence</h3>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">💼</div>
+                    <h4>New Leads Captured</h4>
+                    <p>Overnight lead intake. Name, practice area, urgency level, estimated value.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔥</div>
+                    <h4>Urgency Scoring</h4>
+                    <p>Leads marked HIGH urgency float to the top. Low-urgency leads sorted by value.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h4>Lead Source Tracking</h4>
+                    <p>See where leads came from: website, referral, LinkedIn, etc.</p>
+                </div>
+            </div>
+
+            <h3>✅ Task Management</h3>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🚨</div>
+                    <h4>Overdue Tasks Flagged</h4>
+                    <p>Overdue items highlighted in red. Prevents deadline slips.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h4>Case-Linked Tasks</h4>
+                    <p>Tasks tied to specific cases with case numbers and priorities.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h4>Assignee Visibility</h4>
+                    <p>Know who's responsible for what. Identify bottlenecks.</p>
+                </div>
+            </div>
+
+            <h3>💰 Cash Flow Intelligence</h3>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">💵</div>
+                    <h4>Outstanding Invoices</h4>
+                    <p>Total amount outstanding with aging breakdown (30-60+ days).</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h4>Upcoming Payments</h4>
+                    <p>Forecasted cash coming in from invoices due soon.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⏳</div>
+                    <h4>Aging Analysis</h4>
+                    <p>Visual breakdown of invoice age. Identify collection priorities.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="sample">
+            <h2>Sample Briefing (What Your Partner Sees)</h2>
+            <p class="intro-text">Here's what a typical morning briefing looks like when delivered to your managing partner:</p>
+
+            <div class="dashboard-sample">
+                <div class="dashboard-header">
+                    <h4>⚖️ Morning Briefing</h4>
+                    <p>Thursday, February 12, 2026 | Managing Partner Dashboard</p>
+                </div>
+
+                <div class="dashboard-content">
+                    <div style="background: #f0f4f8; border-left: 4px solid #C47D3A; padding: 20px; margin-bottom: 30px; border-radius: 4px; font-style: italic; color: #555;">
+                        <p>"Today is shaping up to be your busiest day this week. You have 4 calendar items with 2 client meetings and 1 court deadline. 3 new leads came in overnight with 1 marked HIGH urgency. There's an overdue discovery response that needs immediate attention. On the positive side, your upcoming invoices total $12,300, but you have $43,250 outstanding that needs collection follow-up."</p>
+                    </div>
+
+                    <h3 style="font-size: 1.1em; color: #1E3A5F; margin: 25px 0 15px 0; padding-bottom: 10px; border-bottom: 2px solid #C47D3A; display: inline-block;">📅 Today's Calendar</h3>
+
+                    <div class="sample-item important">
+                        <h5>Client Meeting - Smith v. Johnson</h5>
+                        <p><strong>⏰ 9:00 AM</strong> | Conference Room A | John Smith</p>
+                        <p>Quarterly review of litigation strategy</p>
+                    </div>
+
+                    <div class="sample-item important">
+                        <h5>Court Filing Deadline - Motion for Summary Judgment</h5>
+                        <p><strong>⏰ 5:00 PM</strong> | District Court</p>
+                        <p>Final deadline to file motion in Anderson case. <span class="badge badge-urgent">2 HOURS PREP NEEDED</span></p>
+                    </div>
+
+                    <div class="sample-item">
+                        <h5>Deposition - Weber Contract Dispute</h5>
+                        <p><strong>⏰ 11:00 AM</strong> | Opposing counsel office</p>
+                        <p>Cross-examination of defendant witness</p>
+                    </div>
+
+                    <h3 style="font-size: 1.1em; color: #1E3A5F; margin: 25px 0 15px 0; padding-bottom: 10px; border-bottom: 2px solid #C47D3A; display: inline-block;">🌟 New Leads Overnight</h3>
+
+                    <div class="sample-item">
+                        <h5>Patricia Anderson</h5>
+                        <span class="badge badge-meeting">Corporate Litigation</span>
+                        <p><strong>Urgency:</strong> <span class="badge badge-urgent">HIGH</span></p>
+                        <p>Fortune 500 company seeking counsel for IP dispute. Budget: $100k+. Decision timeline: this week.</p>
+                    </div>
+
+                    <div class="sample-item">
+                        <h5>Michael Chen</h5>
+                        <span class="badge badge-meeting">Healthcare Law</span>
+                        <p><strong>Urgency:</strong> Medium | <strong>Source:</strong> Bar Association Referral</p>
+                        <p>Medical device startup needs regulatory compliance review and FDA submission strategy.</p>
+                    </div>
+
+                    <h3 style="font-size: 1.1em; color: #1E3A5F; margin: 25px 0 15px 0; padding-bottom: 10px; border-bottom: 2px solid #C47D3A; display: inline-block;">✅ Outstanding Tasks</h3>
+
+                    <div class="sample-item urgent">
+                        <h5>Respond to Discovery Request - Smith v. Johnson</h5>
+                        <p><strong>Assigned to:</strong> Jennifer Walsh | <strong>Case:</strong> Case #2025-0447</p>
+                        <span class="badge badge-urgent">OVERDUE (1 day)</span>
+                        <p>Opposing counsel requesting documents related to email correspondence 2024-2025.</p>
+                    </div>
+
+                    <div class="sample-item">
+                        <h5>Prepare Expert Witness Report</h5>
+                        <p><strong>Assigned to:</strong> David Martinez | <strong>Case:</strong> Case #2025-0512</p>
+                        <span class="badge badge-high">Due in 1 day</span>
+                        <p>Contract damages analysis for trial scheduled in 3 weeks.</p>
+                    </div>
+
+                    <h3 style="font-size: 1.1em; color: #1E3A5F; margin: 25px 0 15px 0; padding-bottom: 10px; border-bottom: 2px solid #C47D3A; display: inline-block;">💰 Cash Flow Alert</h3>
+
+                    <div class="metrics-row">
+                        <div class="metric">
+                            <div class="metric-value">$43,250</div>
+                            <div class="metric-label">Outstanding</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">$12,300</div>
+                            <div class="metric-label">Upcoming Payments</div>
+                        </div>
+                    </div>
+
+                    <div class="sample-item urgent">
+                        <h5>Invoice INV-2024-0891</h5>
+                        <p><strong>Amount:</strong> $24,500 | <strong>Client:</strong> Smith v. Johnson | <strong>Age:</strong> 30 days</p>
+                        <span class="badge badge-urgent">OVERDUE</span>
+                    </div>
+
+                    <div class="sample-item urgent">
+                        <h5>Invoice INV-2024-0902</h5>
+                        <p><strong>Amount:</strong> $18,750 | <strong>Client:</strong> Weber Industries | <strong>Age:</strong> 15 days</p>
+                        <span class="badge badge-urgent">OVERDUE</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="benefits">
+            <h2>Why This Matters for Law Firms</h2>
+
+            <div class="benefits">
+                <div class="benefit">
+                    <h4>Protect Billable Hours</h4>
+                    <p>Most law firms lose 2-4 billable hours per associate per week to information chaos. That's $20,000+ per associate per year — just vanishing. The Morning Briefing prevents this by surfacing priority items first.</p>
+                </div>
+
+                <div class="benefit">
+                    <h4>Malpractice Risk Prevention</h4>
+                    <p>One missed deadline isn't inefficiency — it's malpractice exposure. The briefing ensures critical dates are never missed.</p>
+                </div>
+
+                <div class="benefit">
+                    <h4>Cash Flow Visibility</h4>
+                    <p>Outstanding invoices aren't mysterious. You see exactly what's owed, who owes it, and how overdue it is. Better collections, faster cash.</p>
+                </div>
+
+                <div class="benefit">
+                    <h4>Lead Prioritization</h4>
+                    <p>New leads are ranked by urgency and estimated value. Your partner knows immediately which leads need attention.</p>
+                </div>
+
+                <div class="benefit">
+                    <h4>Institutional Knowledge</h4>
+                    <p>When an associate leaves, their knowledge walks out the door. This system captures and retains that knowledge for the firm.</p>
+                </div>
+
+                <div class="benefit">
+                    <h4>Executive Presence</h4>
+                    <p>Your managing partner starts every day fully informed. Professional, prepared, confident.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Technical Architecture</h2>
+
+            <div class="tech-stack">
+                <h5>🔧 Components</h5>
+                <div class="tech-list">
+                    <div class="tech-item">Cron Trigger (7:30 AM daily)</div>
+                    <div class="tech-item">Manual Trigger (for testing)</div>
+                    <div class="tech-item">Calendar Data Integration</div>
+                    <div class="tech-item">Lead Capture (CRM)</div>
+                    <div class="tech-item">Task Management System</div>
+                    <div class="tech-item">Invoice/Accounting System</div>
+                </div>
+            </div>
+
+            <div class="tech-stack">
+                <h5>🤖 AI & Automation</h5>
+                <div class="tech-list">
+                    <div class="tech-item">OpenAI GPT-4 (summary)</div>
+                    <div class="tech-item">n8n Workflow Orchestration</div>
+                    <div class="tech-item">Data Aggregation Engine</div>
+                    <div class="tech-item">HTML Email Formatting</div>
+                </div>
+            </div>
+
+            <div class="tech-stack">
+                <h5>📡 Integrations</h5>
+                <div class="tech-list">
+                    <div class="tech-item">SMTP Email Service</div>
+                    <div class="tech-item">Slack (optional)</div>
+                    <div class="tech-item">Microsoft Teams (optional)</div>
+                    <div class="tech-item">Calendar System</div>
+                    <div class="tech-item">CRM Platform</div>
+                </div>
+            </div>
+
+            <p style="margin-top: 20px; color: #666; font-size: 0.95em;">
+                <strong>Customization:</strong> In production, this system connects to your actual calendar (Outlook, Google), CRM (HubSpot, Salesforce), task system (Asana, Monday), and accounting software (QuickBooks, NetSuite). The demo shows the architecture with sample data.
+            </p>
+        </section>
+
+        <section>
+            <h2>Ready to Deploy</h2>
+            <p class="intro-text">
+                The Law Firm Morning Briefing is production-ready. It integrates with your existing systems and runs automatically every morning. In 2-3 days, your managing partner can have this delivering daily intelligence at 7:30 AM.
+            </p>
+
+            <div class="text-center">
+                <button class="cta-button">Schedule Implementation Call</button>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Private List Consulting. Law Firm Morning Briefing System.</p>
+        <p>Built for managing partners who need intelligent daily briefings. | <a href="index.html" style="color: #C47D3A; text-decoration: none;">← Back to All Demos</a></p>
+    </footer>
+</body>
+</html>
