@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discovery - Real Insights</title>
+    <title>AI Discovery — Private List Consulting</title>
     <style>
         * {
             margin: 0;
@@ -12,133 +12,395 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #fff;
-            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            background: linear-gradient(135deg, #1E3A5F 0%, #2a4f7a 100%);
             min-height: 100vh;
-            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
         }
 
         .container {
-            max-width: 800px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 640px;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-top: 20px;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        header p {
-            font-size: 1.1rem;
-            color: #aaa;
-        }
-
-        .form-section {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .card {
+            background: white;
             border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            padding: 32px;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
         }
 
-        .form-group {
-            margin-bottom: 25px;
+        @media (max-width: 640px) {
+            .card {
+                padding: 24px;
+                border-radius: 8px;
+            }
         }
 
-        label {
-            display: block;
-            margin-bottom: 10px;
+        .header {
+            margin-bottom: 24px;
+        }
+
+        .logo {
+            font-size: 13px;
             font-weight: 600;
-            font-size: 0.95rem;
-            color: #ccc;
+            color: #C47D3A;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .stage-indicator {
+            font-size: 11px;
+            color: #999;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 24px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1E3A5F;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
+
+        .message {
+            background: #f8f9fa;
+            border-left: 3px solid #C47D3A;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .message strong {
+            color: #1E3A5F;
+        }
+
+        .input-section {
+            margin-bottom: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1E3A5F;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            color: #333;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #C47D3A;
+            box-shadow: 0 0 0 3px rgba(196, 125, 58, 0.1);
         }
 
         textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            font-family: inherit;
-            font-size: 1rem;
-            line-height: 1.5;
             resize: vertical;
-            min-height: 100px;
-            transition: all 0.3s ease;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: rgba(100, 200, 255, 0.5);
-            background: rgba(255, 255, 255, 0.08);
+            min-height: 80px;
+            line-height: 1.5;
         }
 
         .button-group {
             display: flex;
-            gap: 15px;
-            margin-top: 30px;
+            gap: 12px;
+            justify-content: space-between;
         }
 
         button {
-            flex: 1;
-            padding: 14px 24px;
-            font-size: 1rem;
-            font-weight: 600;
+            padding: 12px 24px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #64c8ff 0%, #0099ff 100%);
-            color: #000;
+            background: #C47D3A;
+            color: white;
+            flex: 1;
         }
 
-        .btn-primary:hover:not(:disabled) {
+        .btn-primary:hover {
+            background: #b36d2e;
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 153, 255, 0.3);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
+            box-shadow: 0 6px 20px rgba(196, 125, 58, 0.3);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: #f0f0f0;
+            color: #333;
+            flex: 1;
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: #e0e0e0;
         }
 
-        .synthesis-section {
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 12px;
+            flex: 0 1 auto;
+        }
+
+        .clarity-mirror {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .clarity-mirror h3 {
+            color: #1E3A5F;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .clarity-section {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .clarity-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .clarity-section strong {
+            color: #1E3A5F;
+        }
+
+        .clarity-mirror p {
+            margin-bottom: 8px;
+        }
+
+        .mirror-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .mirror-buttons button {
+            padding: 10px 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .mirror-buttons .btn-primary {
+            grid-column: 1 / 3;
+        }
+
+        @media (max-width: 480px) {
+            .mirror-buttons {
+                grid-template-columns: 1fr;
+            }
+            .mirror-buttons .btn-primary {
+                grid-column: 1;
+            }
+        }
+
+        .option-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option:hover {
+            background: #f5f5f5;
+            border-color: #C47D3A;
+        }
+
+        .option input[type="radio"] {
+            margin-top: 4px;
+            margin-right: 10px;
+            cursor: pointer;
+            accent-color: #C47D3A;
+        }
+
+        .option label {
+            cursor: pointer;
+            flex: 1;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .option input[type="radio"]:checked + label {
+            color: #1E3A5F;
+            font-weight: 500;
+        }
+
+        .hidden {
             display: none;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 30px;
-            margin-top: 30px;
-            backdrop-filter: blur(10px);
         }
 
-        .synthesis-section.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
+        .progress-bar {
+            height: 3px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #C47D3A;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .final-message {
+            background: #f0f7ff;
+            border-left: 3px solid #1E3A5F;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .final-message strong {
+            color: #1E3A5F;
+        }
+
+        .week-comparison {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .week-comparison h4 {
+            color: #C47D3A;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 8px;
+        }
+
+        .week-comparison p {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .week-now {
+            padding: 12px;
+            background: #fff;
+            border-left: 3px solid #999;
+            margin-bottom: 12px;
+            border-radius: 4px;
+        }
+
+        .week-with-ai {
+            padding: 12px;
+            background: #fff;
+            border-left: 3px solid #C47D3A;
+            border-radius: 4px;
+        }
+
+        .contact-field {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .contact-field {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .success-screen {
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .success-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1E3A5F;
+            margin-bottom: 12px;
+        }
+
+        .success-text {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
         }
 
         @keyframes fadeIn {
@@ -152,247 +414,771 @@
             }
         }
 
-        .thinking-container {
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .thinking-text {
-            font-size: 1.1rem;
-            color: #aaa;
-            margin-bottom: 20px;
-        }
-
-        .thinking-animation {
-            display: inline-block;
-        }
-
-        .dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #64c8ff;
-            margin: 0 4px;
-            animation: bounce 1.4s infinite;
-        }
-
-        .dot:nth-child(1) {
-            animation-delay: -0.32s;
-        }
-
-        .dot:nth-child(2) {
-            animation-delay: -0.16s;
-        }
-
-        @keyframes bounce {
-            0%, 80%, 100% {
-                transform: scale(0);
-                opacity: 0.5;
-            }
-            40% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .clarity-section {
-            margin-top: 20px;
-        }
-
-        .clarity-section p {
-            margin-bottom: 16px;
-            line-height: 1.7;
-            color: #e0e0e0;
-            font-size: 1rem;
-        }
-
-        .clarity-section p:last-child {
-            margin-bottom: 0;
-        }
-
-        .error-message {
-            background: rgba(255, 100, 100, 0.1);
-            border: 1px solid rgba(255, 100, 100, 0.3);
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-            color: #ffcccc;
-        }
-
-        .fallback-message {
-            background: rgba(100, 200, 100, 0.1);
-            border: 1px solid rgba(100, 200, 100, 0.3);
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-            color: #ccffcc;
+        .next-step-text {
+            font-size: 12px;
+            color: #999;
+            margin-top: 8px;
             font-style: italic;
         }
 
-        .success-checkmark {
-            font-size: 2rem;
-            margin-bottom: 10px;
+        .coherent-note {
+            font-size: 12px;
+            color: #666;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #ddd;
         }
 
-        .section-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: #64c8ff;
+        .loading-state {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px;
+            background: #f0f7ff;
+            border-left: 3px solid #1E3A5F;
+            border-radius: 6px;
+            color: #1E3A5F;
+            font-size: 14px;
+            font-weight: 500;
         }
 
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 1.8rem;
-            }
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #1E3A5F;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
 
-            .form-section,
-            .synthesis-section {
-                padding: 20px;
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
             }
+        }
 
-            .button-group {
-                flex-direction: column;
-            }
+        .error-state {
+            background: #fff3cd;
+            border-left: 3px solid #ffc107;
+            padding: 16px;
+            border-radius: 6px;
+            color: #856404;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 24px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Discovery</h1>
-            <p>Four questions. Real insights.</p>
-        </header>
-
-        <form class="form-section" id="discoveryForm">
-            <div class="form-group">
-                <label for="q1">What brought you here?</label>
-                <textarea id="q1" placeholder="Tell us what's on your mind..." required></textarea>
+        <div class="card">
+            <!-- Screen 0: Opening Message -->
+            <div id="screen-0" class="screen fade-in">
+                <div class="header">
+                    <div class="logo">Private List Consulting</div>
+                </div>
+                <div class="title">Hey.</div>
+                <div class="message">
+                    <strong>I'm an AI agent.</strong> Not a form, not a chatbot trained on the internet. An AI built by Private List Consulting to understand your business.
+                </div>
+                <div class="subtitle">
+                    <p style="margin-bottom: 16px;">You're about to talk with me — not a human. If we end up working together, your AI will work a lot like this. So think of this as a preview. I might not get everything right, but I'm genuinely curious about your business.</p>
+                    <p>A few things to know:</p>
+                    <ul style="margin-left: 20px; margin-top: 12px;">
+                        <li style="margin-bottom: 6px;">I'll ask you questions one at a time</li>
+                        <li style="margin-bottom: 6px;">Real questions, not a form you're filling out</li>
+                        <li style="margin-bottom: 6px;">Halfway through, you'll see what I'm hearing</li>
+                        <li style="margin-bottom: 6px;">If something doesn't make sense, tell me</li>
+                    </ul>
+                </div>
+                <div style="flex: 1;"></div>
+                <button class="btn-primary" onclick="goToScreen(1)">Let's Start →</button>
             </div>
 
-            <div class="form-group">
-                <label for="q2">What have you tried so far?</label>
-                <textarea id="q2" placeholder="What's already on the table..." required></textarea>
+            <!-- Screen 1: Q1 - Time Killer -->
+            <div id="screen-1" class="screen hidden fade-in">
+                <div class="header">
+                    <div class="stage-indicator">Question 1 of 9</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 11%;"></div>
+                    </div>
+                </div>
+                <div class="title">What's Killing Your Time?</div>
+                <div class="subtitle">Not your calendar. Not meetings. The work itself. What eats your energy every week?</div>
+                <div class="input-section">
+                    <textarea id="q1-answer" placeholder="What takes up the most time in your week? What do you wish you didn't have to do?" autocomplete="off"></textarea>
+                </div>
+                <div class="button-group">
+                    <button class="btn-secondary" onclick="goToScreen(0)">← Back</button>
+                    <button class="btn-primary" onclick="answerQuestion(1)">Continue →</button>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="q3">What's the real obstacle?</label>
-                <textarea id="q3" placeholder="What's actually stopping you..." required></textarea>
+            <!-- Screen 2: Q2 - The Priority -->
+            <div id="screen-2" class="screen hidden fade-in">
+                <div class="header">
+                    <div class="stage-indicator">Question 2 of 9</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 22%;"></div>
+                    </div>
+                </div>
+                <div class="title">Magic Wand Question</div>
+                <div class="subtitle">If you woke up tomorrow and [what you just mentioned] was solved, how would your week feel different?</div>
+                <div class="input-section">
+                    <textarea id="q2-answer" placeholder="Describe what relief would feel like. What would that free you up to do?" autocomplete="off"></textarea>
+                </div>
+                <div class="button-group">
+                    <button class="btn-secondary" onclick="goToScreen(1)">← Back</button>
+                    <button class="btn-primary" onclick="answerQuestion(2)">Continue →</button>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="q4">What would change?</label>
-                <textarea id="q4" placeholder="If this shifted, what would be different..." required></textarea>
+            <!-- Screen 3: Q3 - Weekly Pattern -->
+            <div id="screen-3" class="screen hidden fade-in">
+                <div class="header">
+                    <div class="stage-indicator">Question 3 of 9</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 33%;"></div>
+                    </div>
+                </div>
+                <div class="title">Walk Me Through Your Week</div>
+                <div class="subtitle">Not your calendar. The actual work that stresses you. When does chaos peak? Where do things break?</div>
+                <div class="input-section">
+                    <textarea id="q3-answer" placeholder="Monday starts... Wednesday gets... Friday feels..." autocomplete="off"></textarea>
+                </div>
+                <div class="button-group">
+                    <button class="btn-secondary" onclick="goToScreen(2)">← Back</button>
+                    <button class="btn-primary" onclick="answerQuestion(3)">Continue →</button>
+                </div>
             </div>
 
-            <div class="button-group">
-                <button type="submit" class="btn-primary" id="synthesizeBtn">Get Clarity</button>
-                <button type="reset" class="btn-secondary">Clear</button>
+            <!-- Screen 4: Q4 - The Leak -->
+            <div id="screen-4" class="screen hidden fade-in">
+                <div class="header">
+                    <div class="stage-indicator">Question 4 of 9</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 44%;"></div>
+                    </div>
+                </div>
+                <div class="title">Where Do Things Actually Disappear?</div>
+                <div class="subtitle">Be specific. Not "communication" — like, leads sit in email and nobody routes them. Where's the leak?</div>
+                <div class="input-section">
+                    <textarea id="q4-answer" placeholder="When things slip through, where do they live before disappearing? Email? Spreadsheet? Someone's brain?" autocomplete="off"></textarea>
+                </div>
+                <div class="button-group">
+                    <button class="btn-secondary" onclick="goToScreen(3)">← Back</button>
+                    <button class="btn-primary" onclick="answerQuestion(4)">Generate Clarity Mirror →</button>
+                </div>
             </div>
-        </form>
 
-        <div class="synthesis-section" id="synthesisSection">
-            <div class="section-title">Your Clarity</div>
-            <div id="synthesisContent"></div>
+            <!-- Screen 5: Clarity Mirror 1 -->
+            <div id="screen-5" class="screen hidden fade-in">
+                <div class="header">
+                    <div class="stage-indicator">Here's What I'm Seeing</div>
+                </div>
+                <div id="clarity-mirror-1" class="clarity-mirror"></div>
+                <div class="clarity-mirror-buttons">
+                    <div class="mirror-buttons">
+                        <button class="btn-primary" onclick="continuePastMirror()">Yes, This Is It →</button>
+                        <button class="btn-secondary btn-small" onclick="showMirrorAdjust()">Close, But...</button>
+                        <button class="btn-secondary btn-small" onclick="goToScreen(4)">← Back</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 5b: Clarity Mirror Adjustment -->
+            <div id="screen-5b" class="screen hidden fade-in">
+                <div class="header">
+                    <div class="stage-indicator">Let's Adjust</div>
+                </div>
+                <div class="title">What Did I Miss?</div>
+                <div class="subtitle">Tell me where I got it wrong, and I'll re-read what you said.</div>
+                <div class="input-section">
+                    <textarea id="mirror-adjust" placeholder="What's not quite right? What should I be focusing on instead?" autocomplete="off"></textarea>
+                </div>
+                <div class="button-group">
+                    <button class="btn-secondary" onclick="goToScreen(5)">← Back</button>
+                    <button class="btn-primary" onclick="regenerateMirror()">Re-Read My Answers →</button>
+                </div>
+            </div>
+
+            <!-- Screen 6: Q5 - Past Constraint -->
+            <div id="screen-6" class="screen hidden fade-in">
+                <div class="header">
+                    <div class="stage-indicator">Question 5 of 9</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 55%;"></div>
+                    </div>
+                </div>
+                <div class="title">What Would Need to Be True?</div>
+                <div class="subtitle">You've probably thought about fixing some of this before. What stopped you?</div>
+                <div class="input-section">
+                    <div class="option-group">
+                        <label class="option">
+                            <input type="checkbox" name="q5" value="tried-failed" onchange="toggleQ5('tried-failed')">
+                            <label>Tried something and it didn't work</label>
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="q5" value="too-complex" onchange="toggleQ5('too-complex')">
+                            <label>Thought about it, seemed too complex</label>
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="q5" value="no-solution" onchange="toggleQ5('no-solution')">
+                            <label>Don't believe a solution exists yet</label>
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="q5" value="lower-priority" onchange="toggleQ5('lower-priority')">
+                            <label>Other priorities have been more urgent</label>
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="q5" value="other" onchange="toggleQ5('other')">
+                            <label>Something else</label>
+                        </label>
+                    </div>
+                    <textarea id="q5-other" placeholder="Tell me more..." style="margin-top: 12px; display: none;"></textarea>
+                </div>
+                <div class="button-group">
+                    <button class="btn-secondary" onclick="goToScreen(5)">← Back</button>
+                    <button class="btn-primary" onclick="answerQuestion(5)">Continue →</button>
+                </div>
+            </div>
+
+            <!-- Screen 7: Q6 - Decision Maker -->
+            <div id="screen-7" class="screen hidden fade-in">
+                <div class="header">
+                    <div class="stage-indicator">Question 6 of 9</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 66%;"></div>
+                    </div>
+                </div>
+                <div class="title">Are YOU the One Making the Decision?</div>
+                <div class="subtitle">Would you use this daily, or are you exploring for someone else?</div>
+                <div class="input-section">
+                    <div class="option-group">
+                        <label class="option">
+                            <input type="radio" name="q6" value="daily-user" onchange="setQ6('daily-user')">
+                            <label>I'd use it every day</label>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q6" value="team-evaluator" onchange="setQ6('team-evaluator')">
+                            <label>I'm evaluating for my team</label>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q6" value="leadership" onchange="setQ6('leadership')">
+                            <label>I'm exploring for leadership</label>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q6" value="unsure" onchange="setQ6('unsure')">
+                            <label>Not sure yet</label>
+                        </label>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button class="btn-secondary" onclick="goToScreen(6)">← Back</button>
+                    <button class="btn-primary" onclick="answerQuestion(6)">Continue →</button>
+                </div>
+            </div>
+
+            <!-- Screen 8: Q7 - Budget -->
+            <div id="screen-8" class="screen hidden fade-in">
+                <div class="header">
+                    <div class="stage-indicator">Question 7 of 9</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 77%;"></div>
+                    </div>
+                </div>
+                <div class="title">What Order of Magnitude Makes Sense?</div>
+                <div class="subtitle">When you think about investing in something like this, what feels right?</div>
+                <div class="input-section">
+                    <div class="option-group">
+                        <label class="option">
+                            <input type="radio" name="q7" value="under-500" onchange="setQ7('under-500')">
+                            <label>Under $500/month</label>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q7" value="500-2000" onchange="setQ7('500-2000')">
+                            <label>$500–2,000/month</label>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q7" value="2000-5000" onchange="setQ7('2000-5000')">
+                            <label>$2,000–5,000/month</label>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q7" value="5000-plus" onchange="setQ7('5000-plus')">
+                            <label>$5,000+/month</label>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q7" value="unsure-budget" onchange="setQ7('unsure-budget')">
+                            <label>Not sure yet</label>
+                        </label>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button class="btn-secondary" onclick="goToScreen(7)">← Back</button>
+                    <button class="btn-primary" onclick="answerQuestion(7)">Continue →</button>
+                </div>
+            </div>
+
+            <!-- Screen 9: Q8 - Timeline -->
+            <div id="screen-9" class="screen hidden fade-in">
+                <div class="header">
+                    <div class="stage-indicator">Question 8 of 9</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 88%;"></div>
+                    </div>
+                </div>
+                <div class="title">When Does This Need to Happen?</div>
+                <div class="subtitle">Pick the timeframe that feels right.</div>
+                <div class="input-section">
+                    <div class="option-group">
+                        <label class="option">
+                            <input type="radio" name="q8" value="asap" onchange="setQ8('asap')">
+                            <label><strong>ASAP</strong> (next 30 days)</label>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q8" value="next-quarter" onchange="setQ8('next-quarter')">
+                            <label><strong>Next quarter</strong> (60–90 days)</label>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q8" value="6-months" onchange="setQ8('6-months')">
+                            <label><strong>Within 6 months</strong></label>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q8" value="exploring" onchange="setQ8('exploring')">
+                            <label><strong>Exploring for now</strong></label>
+                        </label>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button class="btn-secondary" onclick="goToScreen(8)">← Back</button>
+                    <button class="btn-primary" onclick="answerQuestion(8)">Final Question →</button>
+                </div>
+            </div>
+
+            <!-- Screen 10: Q9 - Other -->
+            <div id="screen-10" class="screen hidden fade-in">
+                <div class="header">
+                    <div class="stage-indicator">Question 9 of 9</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%;"></div>
+                    </div>
+                </div>
+                <div class="title">Anything Else?</div>
+                <div class="subtitle">Things I should know? Concerns? Specific constraints? Anything that matters to how this works?</div>
+                <div class="input-section">
+                    <textarea id="q9-answer" placeholder="If nothing comes to mind, that's fine. Leave it blank." autocomplete="off"></textarea>
+                </div>
+                <div class="button-group">
+                    <button class="btn-secondary" onclick="goToScreen(9)">← Back</button>
+                    <button class="btn-primary" onclick="answerQuestion(9)">See Your Clarity Mirror →</button>
+                </div>
+            </div>
+
+            <!-- Screen 11: Final Clarity Mirror -->
+            <div id="screen-11" class="screen hidden fade-in">
+                <div class="header">
+                    <div class="stage-indicator">Your Week Now vs. Your Week With AI</div>
+                </div>
+                <div id="final-mirror-content"></div>
+                <div style="margin-top: 24px;">
+                    <button class="btn-primary" onclick="showContactForm()">This Is It. Let's Talk →</button>
+                </div>
+            </div>
+
+            <!-- Screen 12: Contact Form -->
+            <div id="screen-12" class="screen hidden fade-in">
+                <div class="header">
+                    <div class="stage-indicator">Almost Done</div>
+                </div>
+                <div class="title">A Couple Quick Things</div>
+                <div class="subtitle">So we know who to talk to.</div>
+                <div class="input-section">
+                    <div class="contact-field">
+                        <div>
+                            <div class="input-label">First Name</div>
+                            <input type="text" id="contact-first" placeholder="First name" autocomplete="given-name">
+                        </div>
+                        <div>
+                            <div class="input-label">Last Name</div>
+                            <input type="text" id="contact-last" placeholder="Last name" autocomplete="family-name">
+                        </div>
+                    </div>
+                    <div class="input-section" style="flex: 0;">
+                        <div class="input-label">Email</div>
+                        <input type="text" id="contact-email" placeholder="your@email.com" autocomplete="email">
+                    </div>
+                    <div class="input-section" style="flex: 0;">
+                        <div class="input-label">Company</div>
+                        <input type="text" id="contact-company" placeholder="Your company name" autocomplete="organization">
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button class="btn-secondary" onclick="goToScreen(11)">← Back</button>
+                    <button class="btn-primary" onclick="submitForm()">Submit →</button>
+                </div>
+            </div>
+
+            <!-- Screen 13: Success -->
+            <div id="screen-13" class="screen hidden fade-in">
+                <div class="success-screen">
+                    <div class="success-icon">✓</div>
+                    <div class="success-title">Got It</div>
+                    <div class="success-text">
+                        Thanks for taking the time. We're reviewing everything you shared. You'll hear from our strategist within 24 hours with what we're seeing and what's next.
+                    </div>
+                    <div style="background: #f0f7ff; border-left: 3px solid #1E3A5F; padding: 16px; border-radius: 6px; text-align: left; font-size: 13px; line-height: 1.6; color: #333;">
+                        <strong style="color: #1E3A5F;">What happens now:</strong>
+                        <ul style="margin: 8px 0 0 20px; padding: 0;">
+                            <li>We synthesize what you told us</li>
+                            <li>We map exactly how your AI would work</li>
+                            <li>We send you a proposal (not a generic template — specific to your situation)</li>
+                        </ul>
+                    </div>
+                    <div class="coherent-note">
+                        Check your email. It's on the way.
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        const form = document.getElementById('discoveryForm');
-        const synthesisSection = document.getElementById('synthesisSection');
-        const synthesisContent = document.getElementById('synthesisContent');
-        const synthesizeBtn = document.getElementById('synthesizeBtn');
-
-        // Configuration
-        const API_URL = 'http://206.189.169.142/api/synthesize';
-
-        // Handle form submission
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const q1 = document.getElementById('q1').value.trim();
-            const q2 = document.getElementById('q2').value.trim();
-            const q3 = document.getElementById('q3').value.trim();
-            const q4 = document.getElementById('q4').value.trim();
-
-            // Validate
-            if (!q1 || !q2 || !q3 || !q4) {
-                showError('Please fill in all four fields.');
-                return;
+        // State management
+        const state = {
+            q1: '', // time killer
+            q2: '', // magic wand
+            q3: '', // weekly pattern
+            q4: '', // the leak
+            q5: [], // past constraint (multi-select)
+            q5Other: '', // if q5 is 'other'
+            q6: '', // decision maker
+            q7: '', // budget
+            q8: '', // timeline
+            q9: '', // anything else
+            mirrorAdjustment: '', // their feedback on clarity mirror
+            contact: {
+                firstName: '',
+                lastName: '',
+                email: '',
+                company: ''
             }
+        };
 
-            // Show thinking state
-            showThinking();
+        function goToScreen(screenNum) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.add('hidden');
+                screen.classList.remove('fade-in');
+            });
+            // Show target screen
+            const targetScreen = document.getElementById(`screen-${screenNum}`);
+            if (targetScreen) {
+                targetScreen.classList.remove('hidden');
+                targetScreen.classList.add('fade-in');
+                window.scrollTo(0, 0);
+            }
+        }
 
+        function answerQuestion(num) {
+            const answer = document.getElementById(`q${num}-answer`);
+            
+            // Text input questions (1-4, 9) require an answer
+            if ([1, 2, 3, 4, 9].includes(num)) {
+                if (answer && !answer.value.trim()) {
+                    alert('Please share something before continuing.');
+                    return;
+                }
+            }
+            
+            // Radio button questions (5-8) require a selection
+            if (num === 5 && (!state.q5 || (Array.isArray(state.q5) && state.q5.length === 0))) { alert('Pick at least one.'); return; }
+            if (num === 6 && !state.q6) { alert('Pick one that fits.'); return; }
+            if (num === 7 && !state.q7) { alert('Pick one that fits.'); return; }
+            if (num === 8 && !state.q8) { alert('Pick one that fits.'); return; }
+            
+            if (num === 1) state.q1 = answer.value;
+            if (num === 2) state.q2 = answer.value;
+            if (num === 3) state.q3 = answer.value;
+            if (num === 4) state.q4 = answer.value;
+            if (num === 9) state.q9 = document.getElementById('q9-answer') ? document.getElementById('q9-answer').value : '';
+
+            if (num === 4) {
+                // Generate clarity mirror
+                generateClarityMirror();
+                goToScreen(5);
+            } else if (num === 5) {
+                goToScreen(6);
+            } else if (num === 6) {
+                goToScreen(7);
+            } else if (num === 7) {
+                goToScreen(8);
+            } else if (num === 8) {
+                goToScreen(9);
+            } else if (num === 9) {
+                generateFinalMirror();
+                goToScreen(11);
+            } else {
+                goToScreen(num + 1);
+            }
+        }
+
+        function toggleQ5(value) {
+            if (!Array.isArray(state.q5)) state.q5 = [];
+            const idx = state.q5.indexOf(value);
+            if (idx > -1) {
+                state.q5.splice(idx, 1);
+            } else {
+                state.q5.push(value);
+            }
+            const otherField = document.getElementById('q5-other');
+            otherField.style.display = state.q5.includes('other') ? 'block' : 'none';
+        }
+
+        function setQ6(value) {
+            state.q6 = value;
+        }
+
+        function setQ7(value) {
+            state.q7 = value;
+        }
+
+        function setQ8(value) {
+            state.q8 = value;
+        }
+
+        function generateClarityMirror() {
+            // Show loading state
+            document.getElementById('clarity-mirror-1').innerHTML = `
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <span>Processing what you told me...</span>
+                </div>
+            `;
+            
+            // Call API and update content
+            synthesizeResponse(state.q1, state.q2, state.q3, state.q4)
+                .then(html => {
+                    document.getElementById('clarity-mirror-1').innerHTML = html;
+                })
+                .catch(err => {
+                    console.error('API Error:', err);
+                    // Fallback to local synthesis
+                    const fallbackHtml = generateFallbackMirror(state.q1, state.q2, state.q3, state.q4);
+                    document.getElementById('clarity-mirror-1').innerHTML = fallbackHtml;
+                });
+        }
+
+        async function synthesizeResponse(q1, q2, q3, q4) {
             try {
-                // Call the API
-                const response = await fetch(API_URL, {
+                const response = await fetch('http://206.189.169.142/api/synthesize', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ q1, q2, q3, q4 }),
+                    body: JSON.stringify({ q1, q2, q3, q4 })
                 });
 
                 if (!response.ok) {
-                    throw new Error(`API error: ${response.status}`);
+                    throw new Error(`API returned ${response.status}`);
                 }
 
                 const data = await response.json();
 
-                if (data.success) {
-                    // Display the real synthesis
-                    displaySynthesis(data.synthesis);
-                } else {
-                    throw new Error('Synthesis failed');
+                if (!data.success || !data.synthesis) {
+                    throw new Error('Invalid API response');
                 }
+
+                // Wrap synthesis in container if not already wrapped
+                return `<div class="clarity-section">${data.synthesis}</div>`;
+
             } catch (error) {
                 console.error('Synthesis error:', error);
-                // Fallback: API is down or unreachable
-                showFallback();
+                throw error;
             }
-        });
+        }
 
-        function showThinking() {
-            synthesisSection.classList.add('active');
-            synthesisContent.innerHTML = `
-                <div class="thinking-container">
-                    <div class="thinking-text">Processing what you told me...</div>
-                    <div class="thinking-animation">
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
+        function generateFallbackMirror(q1, q2, q3, q4) {
+            // Fallback synthesis when API fails
+            let diagnosis = '';
+
+            if (q1.toLowerCase().includes('lead') || q1.toLowerCase().includes('customer')) {
+                diagnosis = '<strong>You\'re chasing leads instead of closing them.</strong> Time goes to routing, tracking, and remembering what\'s supposed to happen next — not to actual business.';
+            } else if (q1.toLowerCase().includes('data') || q1.toLowerCase().includes('entry')) {
+                diagnosis = '<strong>Manual work is eating your strategic time.</strong> Hours per week on typing and shuffling data instead of decisions that move the business.';
+            } else if (q1.toLowerCase().includes('team') || q1.toLowerCase().includes('coordin')) {
+                diagnosis = '<strong>Your team\'s not on the same page.</strong> Time gets lost to figuring out who\'s handling what, repeating work, and cleaning up after miscommunication.';
+            } else {
+                diagnosis = '<strong>You\'re split between doing work and managing work.</strong> Your time goes to keeping the machine running, not driving it forward.';
+            }
+
+            let html = `
+                <div class="error-state" style="margin-bottom: 16px;">
+                    <strong>Note:</strong> Processing your response locally due to connectivity. Our team will provide full analysis.
+                </div>
+                <h3>Here's What I'm Seeing</h3>
+                <div class="clarity-section">
+                    <p>${diagnosis}</p>
+                </div>
+                <div class="clarity-section">
+                    <p><strong>The Pattern:</strong> You mentioned ${q3.split(' ').slice(0, 15).join(' ')}... That's not random. That's a system breaking under pressure.</p>
+                </div>
+                <div class="clarity-section">
+                    <p><strong>The Real Cost:</strong> Time and opportunities. Every week, some of both are disappearing into this — and you know it.</p>
+                </div>
+                <div class="clarity-section">
+                    <p><strong>What Changes:</strong> Your AI watches what matters and handles the chaos. You focus on what only you can do.</p>
+                </div>
+            `;
+
+            return html;
+        }
+
+        function showMirrorAdjust() {
+            document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+            document.getElementById('screen-5b').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function regenerateMirror() {
+            const adjust = document.getElementById('mirror-adjust').value;
+            if (!adjust.trim()) {
+                alert('Help me understand what I missed.');
+                return;
+            }
+            state.mirrorAdjustment = adjust;
+            
+            // Show loading state
+            document.getElementById('clarity-mirror-1').innerHTML = `
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <span>Processing your adjustment...</span>
+                </div>
+            `;
+            
+            // Call API with adjusted answers
+            synthesizeResponse(state.q1, state.q2, state.q3, state.q4 + ' ' + adjust)
+                .then(html => {
+                    document.getElementById('clarity-mirror-1').innerHTML = html;
+                    goToScreen(5);
+                })
+                .catch(err => {
+                    console.error('API Error:', err);
+                    // Fallback to local synthesis
+                    const fallbackHtml = generateFallbackMirror(state.q1, state.q2, state.q3, state.q4 + ' ' + adjust);
+                    document.getElementById('clarity-mirror-1').innerHTML = fallbackHtml;
+                    goToScreen(5);
+                });
+        }
+
+        function continuePastMirror() {
+            goToScreen(6);
+        }
+
+        function generateFinalMirror() {
+            let html = `
+                <div class="week-comparison">
+                    <h4>Your Week Right Now</h4>
+                    <div class="week-now">
+                        <p><strong>Monday:</strong> Fresh start, but already worried something will slip.</p>
+                        <p><strong>Tuesday–Wednesday:</strong> Chaos hits. You're juggling ${state.q1.split(' ').slice(0, 5).join(' ')}... and trying to do actual work at the same time.</p>
+                        <p><strong>Thursday:</strong> Something fell through. Recovery mode. Scrambling.</p>
+                        <p><strong>Friday:</strong> Exhausted. Planning next week but bracing for the same cycle.</p>
+                        <p style="margin-top: 12px; border-top: 1px solid #ddd; padding-top: 12px;"><strong>The cost:</strong> Time, opportunities, and energy — disappearing into chaos every single week.</p>
+                    </div>
+                </div>
+
+                <div class="week-comparison">
+                    <h4>Your Week With Your AI Working</h4>
+                    <div class="week-with-ai">
+                        <p><strong>Monday:</strong> Priorities are clear. Nothing slipping. You know what matters today.</p>
+                        <p><strong>Tuesday–Wednesday:</strong> You do actual work. Your AI watches for what matters and handles the rest quietly in the background. Momentum.</p>
+                        <p><strong>Thursday:</strong> Nothing fell through. Your AI caught what would have disappeared. Every opportunity stays warm.</p>
+                        <p><strong>Friday:</strong> You're prepared. Leading your business instead of being run by it. Relief.</p>
+                        <p style="margin-top: 12px; border-top: 1px solid #C47D3A; padding-top: 12px;"><strong>The shift:</strong> Time and opportunities come back. The chaos is handled. You lead.</p>
                     </div>
                 </div>
             `;
-            synthesizeBtn.disabled = true;
+
+            document.getElementById('final-mirror-content').innerHTML = html;
         }
 
-        function displaySynthesis(html) {
-            synthesisContent.innerHTML = html;
-            synthesizeBtn.disabled = false;
+        function showContactForm() {
+            goToScreen(12);
         }
 
-        function showError(message) {
-            synthesisSection.classList.add('active');
-            synthesisContent.innerHTML = `<div class="error-message">⚠️ ${message}</div>`;
-            synthesizeBtn.disabled = false;
+        function submitForm() {
+            const first = document.getElementById('contact-first').value.trim();
+            const last = document.getElementById('contact-last').value.trim();
+            const email = document.getElementById('contact-email').value.trim();
+            const company = document.getElementById('contact-company').value.trim();
+
+            if (!first || !last || !email || !company) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            // Validate email basic format
+            if (!email.includes('@')) {
+                alert('Please enter a valid email.');
+                return;
+            }
+
+            state.contact = { firstName: first, lastName: last, email, company };
+
+            // Save to localStorage for demo purposes
+            const finalData = {
+                timestamp: new Date().toISOString(),
+                prospect: {
+                    firstName: state.contact.firstName,
+                    lastName: state.contact.lastName,
+                    email: state.contact.email,
+                    company: state.contact.company
+                },
+                responses: {
+                    q1_time_killer: state.q1,
+                    q2_priority: state.q2,
+                    q3_weekly_pattern: state.q3,
+                    q4_info_leak: state.q4,
+                    q5_past_constraint: state.q5,
+                    q6_decision_maker: state.q6,
+                    q7_budget: state.q7,
+                    q8_timeline: state.q8,
+                    q9_other: state.q9,
+                    mirror_adjustment: state.mirrorAdjustment
+                },
+                metadata: {
+                    urgencyScore: calculateUrgency(),
+                    fitScore: calculateFit(),
+                    completedAt: new Date().toISOString()
+                }
+            };
+
+            console.log('SUBMISSION:', finalData);
+            localStorage.setItem('discovery-submission', JSON.stringify(finalData));
+
+            // Show success
+            goToScreen(13);
         }
 
-        function showFallback() {
-            synthesisSection.classList.add('active');
-            synthesisContent.innerHTML = `
-                <div class="fallback-message">
-                    <div class="success-checkmark">✓</div>
-                    <p>We captured your answers — our team will follow up with real insights shortly.</p>
-                </div>
-            `;
-            synthesizeBtn.disabled = false;
+        function calculateUrgency() {
+            if (state.q8 === 'asap') return 100;
+            if (state.q8 === 'next-quarter') return 75;
+            if (state.q8 === '6-months') return 50;
+            return 25;
         }
 
-        // Initial state
-        synthesisSection.classList.remove('active');
+        function calculateFit() {
+            let score = 70; // baseline
+            if (state.q6 === 'daily-user') score += 20;
+            if (state.q7 === '500-2000' || state.q7 === '2000-5000') score += 15;
+            if (state.q8 === 'asap') score += 10;
+            if (state.q1.length > 50) score += 5;
+            return Math.min(score, 100);
+        }
+
+        // Initialize
+        goToScreen(0);
     </script>
 </body>
 </html>
