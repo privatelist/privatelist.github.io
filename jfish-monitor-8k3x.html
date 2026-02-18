@@ -9,8 +9,8 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 100%);
-            color: #eee; 
+            background: linear-gradient(135deg, #0F2841 0%, #1E3A5F 100%);
+            color: #F7F8F8; 
             padding: 20px;
             min-height: 100vh;
         }
@@ -20,14 +20,14 @@
             margin-bottom: 30px;
         }
         .header h1 { 
-            color: #00d4ff; 
+            color: #C47D3A; 
             font-size: 2.5em; 
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 15px;
         }
-        .header p { color: #888; margin-top: 10px; font-size: 1.1em; }
+        .header p { color: #5A7E7E; margin-top: 10px; font-size: 1.1em; }
         .fish-emoji { font-size: 1.2em; }
         .grid { 
             display: grid; 
@@ -37,44 +37,44 @@
             margin: 0 auto;
         }
         .card { 
-            background: rgba(22, 33, 62, 0.8);
+            background: rgba(15, 40, 65, 0.9);
             backdrop-filter: blur(10px);
             border-radius: 16px; 
             padding: 24px;
-            border: 1px solid rgba(0, 212, 255, 0.2);
+            border: 1px solid rgba(90, 126, 126, 0.3);
             transition: transform 0.2s, box-shadow 0.2s;
         }
         .card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.15);
+            box-shadow: 0 8px 30px rgba(196, 125, 58, 0.15);
         }
         .card h2 { 
-            color: #00d4ff; 
+            color: #C47D3A; 
             font-size: 1.2em; 
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
             padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(90, 126, 126, 0.3);
         }
-        .status-ok { color: #00ff88; }
-        .status-warn { color: #ffaa00; }
-        .status-err { color: #ff4444; }
+        .status-ok { color: #5A7E7E; }
+        .status-warn { color: #C47D3A; }
+        .status-err { color: #B36E2E; }
         .metric { 
             display: flex; 
             justify-content: space-between; 
             align-items: center;
             padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(90, 126, 126, 0.15);
         }
         .metric:last-child { border-bottom: none; }
-        .metric-label { color: #aaa; }
-        .metric-value { font-weight: 600; font-size: 1.05em; }
+        .metric-label { color: #5A7E7E; }
+        .metric-value { font-weight: 600; font-size: 1.05em; color: #F7F8F8; }
         .progress-bar {
             width: 100%;
             height: 8px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(90, 126, 126, 0.2);
             border-radius: 4px;
             overflow: hidden;
             margin-top: 8px;
@@ -84,39 +84,39 @@
             border-radius: 4px;
             transition: width 0.5s ease;
         }
-        .progress-ok { background: linear-gradient(90deg, #00ff88, #00d4ff); }
-        .progress-warn { background: linear-gradient(90deg, #ffaa00, #ff6600); }
-        .progress-err { background: linear-gradient(90deg, #ff4444, #ff0000); }
+        .progress-ok { background: linear-gradient(90deg, #5A7E7E, #C47D3A); }
+        .progress-warn { background: linear-gradient(90deg, #C47D3A, #B36E2E); }
+        .progress-err { background: linear-gradient(90deg, #B36E2E, #8B4513); }
         .cron-item {
-            background: rgba(0,0,0,0.2);
+            background: rgba(30, 58, 95, 0.5);
             padding: 12px;
             border-radius: 8px;
             margin-bottom: 10px;
         }
         .cron-item:last-child { margin-bottom: 0; }
-        .cron-name { font-weight: 600; color: #fff; }
-        .cron-schedule { color: #888; font-size: 0.9em; margin-top: 4px; }
-        .cron-next { color: #00d4ff; font-size: 0.9em; margin-top: 4px; }
+        .cron-name { font-weight: 600; color: #F7F8F8; }
+        .cron-schedule { color: #5A7E7E; font-size: 0.9em; margin-top: 4px; }
+        .cron-next { color: #C47D3A; font-size: 0.9em; margin-top: 4px; }
         .alert-item {
-            background: rgba(255, 68, 68, 0.1);
-            border-left: 3px solid #ff4444;
+            background: rgba(179, 110, 46, 0.1);
+            border-left: 3px solid #B36E2E;
             padding: 12px;
             border-radius: 0 8px 8px 0;
             margin-bottom: 10px;
         }
         .alert-item.warn {
-            background: rgba(255, 170, 0, 0.1);
-            border-left-color: #ffaa00;
+            background: rgba(196, 125, 58, 0.1);
+            border-left-color: #C47D3A;
         }
         .alert-item.ok {
-            background: rgba(0, 255, 136, 0.1);
-            border-left-color: #00ff88;
+            background: rgba(90, 126, 126, 0.1);
+            border-left-color: #5A7E7E;
         }
         .source-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: rgba(0, 212, 255, 0.1);
+            background: rgba(196, 125, 58, 0.15);
             padding: 6px 12px;
             border-radius: 20px;
             margin: 4px;
@@ -126,12 +126,12 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #00ff88;
+            background: #5A7E7E;
         }
         .time-display {
             font-size: 2em;
             font-weight: 700;
-            color: #00d4ff;
+            color: #C47D3A;
             text-align: center;
             margin: 10px 0;
         }
@@ -139,13 +139,13 @@
             text-align: center;
             margin-top: 40px;
             padding: 20px;
-            color: #555;
+            color: #5A7E7E;
             font-size: 0.9em;
         }
         .refresh-btn {
-            background: rgba(0, 212, 255, 0.2);
-            border: 1px solid #00d4ff;
-            color: #00d4ff;
+            background: rgba(196, 125, 58, 0.2);
+            border: 1px solid #C47D3A;
+            color: #C47D3A;
             padding: 8px 20px;
             border-radius: 20px;
             cursor: pointer;
@@ -153,8 +153,8 @@
             transition: all 0.2s;
         }
         .refresh-btn:hover {
-            background: #00d4ff;
-            color: #000;
+            background: #C47D3A;
+            color: #0F2841;
         }
         .big-stat {
             text-align: center;
@@ -163,10 +163,10 @@
         .big-stat .number {
             font-size: 3em;
             font-weight: 700;
-            color: #00d4ff;
+            color: #C47D3A;
         }
         .big-stat .label {
-            color: #888;
+            color: #5A7E7E;
             margin-top: 5px;
         }
         @media (max-width: 600px) {
@@ -187,18 +187,18 @@
             <h2>🧠 Context Status</h2>
             <div class="metric">
                 <span class="metric-label">Current Usage</span>
-                <span class="metric-value status-ok">71%</span>
+                <span class="metric-value status-ok">11%</span>
             </div>
             <div class="progress-bar">
-                <div class="progress-fill progress-ok" style="width: 71%"></div>
+                <div class="progress-fill progress-ok" style="width: 11%"></div>
             </div>
             <div class="metric">
                 <span class="metric-label">Tokens</span>
-                <span class="metric-value">143k / 200k</span>
+                <span class="metric-value">22k / 200k</span>
             </div>
             <div class="metric">
                 <span class="metric-label">Compactions Today</span>
-                <span class="metric-value">5</span>
+                <span class="metric-value">6</span>
             </div>
             <div class="metric">
                 <span class="metric-label">Session Status</span>
@@ -212,7 +212,7 @@
             <div class="cron-item">
                 <div class="cron-name">PLC Daily Email Intelligence</div>
                 <div class="cron-schedule">Daily @ 7:00 AM Phoenix</div>
-                <div class="cron-next">Next: ~4 hours</div>
+                <div class="cron-next">Next: Tomorrow 7:00 AM</div>
             </div>
             <div class="cron-item">
                 <div class="cron-name">Heartbeat Check</div>
@@ -232,11 +232,11 @@
             </div>
             <div class="metric" style="margin-top: 15px;">
                 <span class="metric-label">Last Report</span>
-                <span class="metric-value">Feb 17, 11:54 PM</span>
+                <span class="metric-value">Feb 18, 7:15 AM</span>
             </div>
             <div class="metric">
                 <span class="metric-label">Reports Today</span>
-                <span class="metric-value">3</span>
+                <span class="metric-value">1</span>
             </div>
         </div>
 
@@ -249,7 +249,7 @@
             </div>
             <div class="metric">
                 <span class="metric-label">Daily Logs</span>
-                <span class="metric-value">2026-02-17.md</span>
+                <span class="metric-value">2026-02-18.md</span>
             </div>
             <div class="metric">
                 <span class="metric-label">Product Docs</span>
@@ -265,7 +265,7 @@
         <div class="card">
             <h2>💰 API Costs</h2>
             <div class="big-stat">
-                <div class="number">~$0.15</div>
+                <div class="number">~$0.05</div>
                 <div class="label">Estimated Today</div>
             </div>
             <div class="metric">
@@ -312,7 +312,7 @@
             </div>
             <div class="metric">
                 <span class="metric-label">Last Delivery</span>
-                <span class="metric-value">2 hrs ago</span>
+                <span class="metric-value">7:16 AM</span>
             </div>
             <div class="metric">
                 <span class="metric-label">Success Rate</span>
@@ -327,9 +327,9 @@
                 <strong>All Systems Operational</strong><br>
                 <small>No issues detected</small>
             </div>
-            <div class="alert-item warn">
-                <strong>Context at 71%</strong><br>
-                <small>Consider /compact if extended session</small>
+            <div class="alert-item ok">
+                <strong>Context Healthy at 11%</strong><br>
+                <small>Fresh after compaction</small>
             </div>
         </div>
     </div>
@@ -339,7 +339,7 @@
             <button class="refresh-btn" onclick="location.reload()">↻ Refresh Dashboard</button>
         </p>
         <p>jFISH 🐟 • Private List Consulting</p>
-        <p style="color: #444; margin-top: 5px;">Last updated: <span id="updateTime"></span></p>
+        <p style="color: #2C2C2C; margin-top: 5px;">Last updated: <span id="updateTime"></span></p>
     </div>
 
     <script>
