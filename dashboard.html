@@ -11,23 +11,24 @@
             font-family: 'Inter', sans-serif;
             background: #F7F8F8; 
             color: #2C2C2C; 
-            padding: 20px;
+            padding: 24px;
             min-height: 100vh;
         }
         .header { 
             text-align: center; 
-            padding: 30px 20px; 
+            padding: 32px 24px; 
             background: #FFFFFF;
             border-radius: 12px;
-            margin-bottom: 30px;
-            border: 1px solid #E8EAEA;
+            margin-bottom: 24px;
+            border: 2px solid #E8EAEA;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
         }
         .header h1 { 
             color: #1E3A5F; 
             font-size: 2em; 
             font-weight: 700;
         }
-        .header p { color: #5A7E7E; margin-top: 8px; }
+        .header p { color: #5A7E7E; margin-top: 8px; font-size: 1.05em; }
         .grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
@@ -39,66 +40,86 @@
             background: #FFFFFF; 
             border-radius: 12px; 
             padding: 24px;
-            border: 1px solid #E8EAEA;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            transition: box-shadow 0.2s;
+            border: 2px solid #E8EAEA;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            transition: box-shadow 0.2s, transform 0.2s;
         }
         .card:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
         }
         .card h2 { 
             color: #1E3A5F; 
-            font-size: 1.1em;
+            font-size: 1.15em;
             font-weight: 600;
             margin-bottom: 18px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #E8EAEA;
+            padding-bottom: 14px;
+            border-bottom: 2px solid #F7F8F8;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .status-ok { color: #5A7E7E; }
-        .status-warn { color: #C47D3A; }
-        .status-err { color: #B36E2E; }
+        .status-ok { color: #5A7E7E; font-weight: 600; }
+        .status-warn { color: #C47D3A; font-weight: 600; }
+        .status-err { color: #B36E2E; font-weight: 600; }
         .metric { 
             display: flex; 
             justify-content: space-between; 
-            padding: 12px 0;
-            border-bottom: 1px solid #F7F8F8;
+            padding: 14px 0;
+            border-bottom: 1px solid #F0F1F1;
         }
         .metric:last-child { border-bottom: none; }
         .metric-label { color: #5A7E7E; }
         .metric-value { font-weight: 600; color: #2C2C2C; }
         .source-list { list-style: none; }
         .source-list li { 
-            padding: 10px 0; 
-            border-bottom: 1px solid #F7F8F8;
+            padding: 12px 0; 
+            border-bottom: 1px solid #F0F1F1;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         .source-list li:last-child { border-bottom: none; }
         .dot { 
-            width: 8px; 
-            height: 8px; 
+            width: 10px; 
+            height: 10px; 
             border-radius: 50%; 
             background: #5A7E7E;
         }
         .schedule { 
             background: #F7F8F8; 
-            padding: 15px; 
+            padding: 16px; 
             border-radius: 8px;
-            margin-top: 12px;
+            margin-top: 14px;
             color: #2C2C2C;
+            border: 1px solid #E8EAEA;
         }
         .schedule small { color: #5A7E7E; }
         .footer {
             text-align: center;
             margin-top: 40px;
+            padding: 24px;
             color: #5A7E7E;
-            font-size: 0.9em;
+            font-size: 0.95em;
         }
-        .footer a { color: #C47D3A; }
+        .refresh-btn {
+            background: #FFFFFF;
+            border: 2px solid #C47D3A;
+            color: #C47D3A;
+            padding: 12px 28px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+            margin-bottom: 20px;
+        }
+        .refresh-btn:hover {
+            background: #C47D3A;
+            color: #FFFFFF;
+        }
+        .timestamp { color: #C47D3A; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -191,14 +212,16 @@
     </div>
 
     <div class="footer">
+        <button class="refresh-btn" onclick="location.reload()">↻ Refresh Dashboard</button>
         <p>Private List Consulting • Built by jFISH 🐟</p>
-        <p style="margin-top: 8px; color: #C47D3A;">Dashboard v1.2 • Feb 18, 2026</p>
+        <p class="timestamp">Last updated: <span id="updateTime"></span></p>
     </div>
 
     <script>
         document.getElementById('lastReport').textContent = 
             new Date().toLocaleDateString() + ' ' + 
             new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        document.getElementById('updateTime').textContent = new Date().toLocaleString();
     </script>
 </body>
 </html>
