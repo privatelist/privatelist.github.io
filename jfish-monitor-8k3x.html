@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>jFISH System Monitor</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 100%);
+            color: #eee; 
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .header { 
+            text-align: center; 
+            padding: 30px 20px; 
+            margin-bottom: 30px;
+        }
+        .header h1 { 
+            color: #00d4ff; 
+            font-size: 2.5em; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .header p { color: #888; margin-top: 10px; font-size: 1.1em; }
+        .fish-emoji { font-size: 1.2em; }
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 20px; 
+            max-width: 1400px; 
+            margin: 0 auto;
+        }
+        .card { 
+            background: rgba(22, 33, 62, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px; 
+            padding: 24px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.15);
+        }
+        .card h2 { 
+            color: #00d4ff; 
+            font-size: 1.2em; 
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .status-ok { color: #00ff88; }
+        .status-warn { color: #ffaa00; }
+        .status-err { color: #ff4444; }
+        .metric { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .metric:last-child { border-bottom: none; }
+        .metric-label { color: #aaa; }
+        .metric-value { font-weight: 600; font-size: 1.05em; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        .progress-ok { background: linear-gradient(90deg, #00ff88, #00d4ff); }
+        .progress-warn { background: linear-gradient(90deg, #ffaa00, #ff6600); }
+        .progress-err { background: linear-gradient(90deg, #ff4444, #ff0000); }
+        .cron-item {
+            background: rgba(0,0,0,0.2);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .cron-item:last-child { margin-bottom: 0; }
+        .cron-name { font-weight: 600; color: #fff; }
+        .cron-schedule { color: #888; font-size: 0.9em; margin-top: 4px; }
+        .cron-next { color: #00d4ff; font-size: 0.9em; margin-top: 4px; }
+        .alert-item {
+            background: rgba(255, 68, 68, 0.1);
+            border-left: 3px solid #ff4444;
+            padding: 12px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 10px;
+        }
+        .alert-item.warn {
+            background: rgba(255, 170, 0, 0.1);
+            border-left-color: #ffaa00;
+        }
+        .alert-item.ok {
+            background: rgba(0, 255, 136, 0.1);
+            border-left-color: #00ff88;
+        }
+        .source-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 212, 255, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin: 4px;
+            font-size: 0.9em;
+        }
+        .source-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ff88;
+        }
+        .time-display {
+            font-size: 2em;
+            font-weight: 700;
+            color: #00d4ff;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #555;
+            font-size: 0.9em;
+        }
+        .refresh-btn {
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid #00d4ff;
+            color: #00d4ff;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+        .refresh-btn:hover {
+            background: #00d4ff;
+            color: #000;
+        }
+        .big-stat {
+            text-align: center;
+            padding: 20px;
+        }
+        .big-stat .number {
+            font-size: 3em;
+            font-weight: 700;
+            color: #00d4ff;
+        }
+        .big-stat .label {
+            color: #888;
+            margin-top: 5px;
+        }
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.8em; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><span class="fish-emoji">🐟</span> jFISH System Monitor</h1>
+        <p>Private List Consulting • AI Operations Dashboard</p>
+    </div>
+
+    <div class="grid">
+        <!-- Context Status -->
+        <div class="card">
+            <h2>🧠 Context Status</h2>
+            <div class="metric">
+                <span class="metric-label">Current Usage</span>
+                <span class="metric-value status-ok">71%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill progress-ok" style="width: 71%"></div>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Tokens</span>
+                <span class="metric-value">143k / 200k</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Compactions Today</span>
+                <span class="metric-value">5</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Session Status</span>
+                <span class="metric-value status-ok">● Active</span>
+            </div>
+        </div>
+
+        <!-- Cron Jobs -->
+        <div class="card">
+            <h2>⏰ Scheduled Jobs</h2>
+            <div class="cron-item">
+                <div class="cron-name">PLC Daily Email Intelligence</div>
+                <div class="cron-schedule">Daily @ 7:00 AM Phoenix</div>
+                <div class="cron-next">Next: ~4 hours</div>
+            </div>
+            <div class="cron-item">
+                <div class="cron-name">Heartbeat Check</div>
+                <div class="cron-schedule">Every 30 minutes</div>
+                <div class="cron-next">Status: <span class="status-ok">OK</span></div>
+            </div>
+        </div>
+
+        <!-- Data Sources -->
+        <div class="card">
+            <h2>📡 Data Sources</h2>
+            <div style="display: flex; flex-wrap: wrap; margin-top: 10px;">
+                <span class="source-badge"><span class="dot"></span> Email (4 accounts)</span>
+                <span class="source-badge"><span class="dot"></span> Google Calendar</span>
+                <span class="source-badge"><span class="dot"></span> Slack DMs</span>
+                <span class="source-badge"><span class="dot"></span> Telegram</span>
+            </div>
+            <div class="metric" style="margin-top: 15px;">
+                <span class="metric-label">Last Report</span>
+                <span class="metric-value">Feb 17, 11:54 PM</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Reports Today</span>
+                <span class="metric-value">3</span>
+            </div>
+        </div>
+
+        <!-- Memory Status -->
+        <div class="card">
+            <h2>📝 Memory Health</h2>
+            <div class="metric">
+                <span class="metric-label">MEMORY.md</span>
+                <span class="metric-value status-ok">● Updated</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Daily Logs</span>
+                <span class="metric-value">2026-02-17.md</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Product Docs</span>
+                <span class="metric-value">6 files</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Credentials</span>
+                <span class="metric-value status-ok">3 active</span>
+            </div>
+        </div>
+
+        <!-- Costs -->
+        <div class="card">
+            <h2>💰 API Costs</h2>
+            <div class="big-stat">
+                <div class="number">~$0.15</div>
+                <div class="label">Estimated Today</div>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Per Report</span>
+                <span class="metric-value">~$0.03</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Monthly Est.</span>
+                <span class="metric-value">~$5-10</span>
+            </div>
+        </div>
+
+        <!-- Clients -->
+        <div class="card">
+            <h2>👥 Clients</h2>
+            <div class="metric">
+                <span class="metric-label">Active</span>
+                <span class="metric-value" style="font-size: 1.5em;">1</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">PLC (Internal)</span>
+                <span class="metric-value status-ok">● Live</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Ginger (Test)</span>
+                <span class="metric-value status-warn">● Planned</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Milestone</span>
+                <span class="metric-value">5 → Dashboard</span>
+            </div>
+        </div>
+
+        <!-- Delivery -->
+        <div class="card">
+            <h2>📬 Delivery Status</h2>
+            <div class="metric">
+                <span class="metric-label">Telegram</span>
+                <span class="metric-value status-ok">● Connected</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Email (Himalaya)</span>
+                <span class="metric-value status-ok">● Connected</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Last Delivery</span>
+                <span class="metric-value">2 hrs ago</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Success Rate</span>
+                <span class="metric-value status-ok">100%</span>
+            </div>
+        </div>
+
+        <!-- Alerts -->
+        <div class="card">
+            <h2>🚨 Alerts</h2>
+            <div class="alert-item ok">
+                <strong>All Systems Operational</strong><br>
+                <small>No issues detected</small>
+            </div>
+            <div class="alert-item warn">
+                <strong>Context at 71%</strong><br>
+                <small>Consider /compact if extended session</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p style="margin-bottom: 15px;">
+            <button class="refresh-btn" onclick="location.reload()">↻ Refresh Dashboard</button>
+        </p>
+        <p>jFISH 🐟 • Private List Consulting</p>
+        <p style="color: #444; margin-top: 5px;">Last updated: <span id="updateTime"></span></p>
+    </div>
+
+    <script>
+        document.getElementById('updateTime').textContent = new Date().toLocaleString();
+    </script>
+</body>
+</html>
