@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Medical Practice AI System - No-show prevention, prior auth automation, and claim visibility">
+    <title>Medical Practice AI System | Private List Consulting</title>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <style>
+        .icon {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        .icon-large {
+            width: 28px;
+            height: 28px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1E3A5F 0%, #2d4a73 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(30, 58, 95, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header .tagline {
+            font-size: 1.1em;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        header .subtitle {
+            font-size: 1.3em;
+            color: #C47D3A;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        .brand {
+            display: inline-block;
+            font-size: 0.8em;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin-top: 20px;
+        }
+
+        nav {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #1E3A5F;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #C47D3A;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 60px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #1E3A5F;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 1.4em;
+            color: #1E3A5F;
+            margin: 30px 0 15px 0;
+        }
+
+        h4 {
+            color: #1E3A5F;
+            margin-bottom: 10px;
+        }
+
+        .intro-text {
+            font-size: 1.1em;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        /* Comparison Section */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin: 30px 0;
+        }
+
+        .comparison-table th {
+            background: #1E3A5F;
+            color: white;
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .comparison-table td {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .metric-left {
+            font-weight: 600;
+            color: #666;
+            width: 200px;
+        }
+
+        .metric-old {
+            color: #d35400;
+        }
+
+        .metric-new {
+            color: #27ae60;
+            font-weight: 600;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid #C47D3A;
+        }
+
+        .feature-box h4 {
+            margin-bottom: 15px;
+        }
+
+        .feature-box p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        /* Benefits List */
+        .benefits-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .benefit-item {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid #C47D3A;
+        }
+
+        .benefit-item h4 {
+            margin-bottom: 10px;
+        }
+
+        .benefit-item p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        /* ROI Section */
+        .roi-section {
+            background: linear-gradient(135deg, #fef8f4 0%, #fef0e6 100%);
+            padding: 40px;
+            border-radius: 8px;
+            border: 2px solid #C47D3A;
+            margin: 40px 0;
+        }
+
+        .roi-calculation {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .roi-item {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 3px solid #C47D3A;
+        }
+
+        .roi-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+
+        .roi-value {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #C47D3A;
+        }
+
+        /* Workflow */
+        .workflow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .workflow-step {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid #C47D3A;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #1E3A5F;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .workflow-step h4 {
+            margin: 15px 0 10px 0;
+        }
+
+        .workflow-step p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        /* Sample Dashboard */
+        .dashboard-sample {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin: 40px 0;
+        }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, #1E3A5F 0%, #2d4a73 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .dashboard-content {
+            padding: 40px 30px;
+        }
+
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric {
+            background: #f0f4f8;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            border-left: 3px solid #C47D3A;
+        }
+
+        .metric-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: #1E3A5F;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.85em;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sample-item {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border-left: 3px solid #e0e0e0;
+        }
+
+        .sample-item.urgent {
+            border-left-color: #e74c3c;
+            background: #fef5f5;
+        }
+
+        .sample-item.warning {
+            border-left-color: #f39c12;
+            background: #fef8e7;
+        }
+
+        .sample-item.success {
+            border-left-color: #27ae60;
+            background: #eafaf1;
+        }
+
+        .sample-item h5 {
+            color: #1E3A5F;
+            font-size: 1em;
+            margin-bottom: 8px;
+        }
+
+        .sample-item p {
+            color: #666;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 500;
+            margin-right: 8px;
+        }
+
+        .badge-urgent {
+            background: #fadbd8;
+            color: #c0392b;
+        }
+
+        .badge-warning {
+            background: #fdebd0;
+            color: #d35400;
+        }
+
+        .badge-success {
+            background: #d5f4e6;
+            color: #27ae60;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            background: #C47D3A;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .cta-button:hover {
+            background: #a86a30;
+            transform: translateY(-2px);
+        }
+
+        .text-center {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        /* Highlight boxes */
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        .highlight-box p {
+            color: #856404;
+            margin: 0;
+        }
+
+        footer {
+            background: #1E3A5F;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.9em;
+        }
+
+        footer a {
+            color: #C47D3A;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .comparison-table {
+                font-size: 0.9em;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits-list {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 40px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i data-lucide="heart-pulse" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 15px;"></i>Medical Practice AI System</h1>
+        <p class="tagline">No-show prevention, prior auth automation, and claim visibility. Protect patient care AND your revenue.</p>
+        <div class="subtitle">$31K+ Annual Recovery from No-Show Prevention Alone</div>
+        <div class="brand">Private List Consulting</div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#problem">The Problem</a></li>
+            <li><a href="#solution">Solution</a></li>
+            <li><a href="#noshow">No-Show Prevention</a></li>
+            <li><a href="#roi">ROI</a></li>
+            <li><a href="demos.html">Back to Demos</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <section id="problem">
+            <h2>The Three Revenue Killers</h2>
+            <p class="intro-text">
+                Medical practices lose over $100K annually to preventable operational chaos. Prior auth hell, claim black holes, and no-show losses compound daily. This system stops all three.
+            </p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Problem</th>
+                        <th class="metric-old">Without AI System</th>
+                        <th class="metric-new">With AI System</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="metric-left">Prior Authorization</td>
+                        <td>20-30 min hold times per auth</td>
+                        <td class="metric-new">Automated submission + tracking</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-left">Claim Follow-Up</td>
+                        <td>Claims disappear into black hole</td>
+                        <td class="metric-new">Real-time status visibility</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-left">No-Show Rate</td>
+                        <td>15-20% average no-show rate</td>
+                        <td class="metric-new">5-8% with ML prediction</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-left">Annual Revenue Loss</td>
+                        <td>$100K+ in grey areas</td>
+                        <td class="metric-new">$31K+ recovered from no-shows alone</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <p><strong>The Reality:</strong> "You're spending hours on hold with insurance while patients wait. Claims vanish. No-shows drain your schedule. This is fixable."</p>
+            </div>
+        </section>
+
+        <section id="solution">
+            <h2>Three Integrated Solutions</h2>
+            <p class="intro-text">Each component works independently but together they transform practice operations.</p>
+
+            <div class="features-grid">
+                <div class="feature-box">
+                    <h4><i data-lucide="phone-off" class="icon"></i>Prior Auth Automation</h4>
+                    <p>Your AI submits prior authorization requests automatically. Tracks status in real-time. Alerts staff before patient appointments if authorization is pending or denied.</p>
+                    <p style="margin-top: 15px; font-weight: 600; color: #1E3A5F;">Result: No more hold-time calls. No more delayed treatments.</p>
+                </div>
+
+                <div class="feature-box">
+                    <h4><i data-lucide="eye" class="icon"></i>Claim Visibility</h4>
+                    <p>Insurance claims submitted automatically with tracking. AI monitors status daily across all carriers. Denials flagged immediately with auto-corrected information.</p>
+                    <p style="margin-top: 15px; font-weight: 600; color: #1E3A5F;">Result: No more black holes. You see exactly where every claim stands.</p>
+                </div>
+
+                <div class="feature-box">
+                    <h4><i data-lucide="calendar-check" class="icon"></i>No-Show Prevention</h4>
+                    <p>ML predicts which patients will no-show based on history and behavior. Intelligently times reminders. Identifies at-risk appointments 24+ hours in advance.</p>
+                    <p style="margin-top: 15px; font-weight: 600; color: #1E3A5F;">Result: Saves practices $31K+ per year in no-show recovery.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="noshow">
+            <h2>No-Show Prevention Deep Dive</h2>
+            <p class="intro-text">
+                The average practice loses $31,000+ per year to no-shows. Our ML-powered system cuts no-show rates by 50-60% through predictive intervention.
+            </p>
+
+            <h3><i data-lucide="brain" class="icon icon-large"></i>How It Works</h3>
+
+            <div class="workflow">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <h4>Patient History Analysis</h4>
+                    <p>AI analyzes past appointment behavior, cancellation patterns, time-of-day preferences, and demographic factors.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <h4>Risk Scoring</h4>
+                    <p>Each appointment receives a no-show probability score. High-risk appointments (70%+ likelihood) get flagged 48 hours out.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <h4>Smart Reminders</h4>
+                    <p>Behavior-triggered SMS/email reminders timed for maximum effectiveness. Different messaging for different risk levels.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <h4>Waitlist Backfill</h4>
+                    <p>When high-risk appointments are identified, waitlist patients are automatically contacted to fill potential gaps.</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;"><i data-lucide="bar-chart-3" class="icon icon-large"></i>Prediction Factors</h3>
+
+            <div class="benefits-list">
+                <div class="benefit-item">
+                    <h4><i data-lucide="history" class="icon"></i>Past Behavior</h4>
+                    <p>Patients with previous no-shows are 3x more likely to no-show again. AI weights this heavily.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h4><i data-lucide="clock" class="icon"></i>Appointment Timing</h4>
+                    <p>Monday morning and Friday afternoon slots have 40% higher no-show rates. Time-aware predictions.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h4><i data-lucide="calendar" class="icon"></i>Lead Time</h4>
+                    <p>Appointments booked 3+ weeks out have 2x no-show rates vs. same-week bookings.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h4><i data-lucide="message-square" class="icon"></i>Response Patterns</h4>
+                    <p>Patients who don't respond to confirmation requests are 5x more likely to no-show.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h4><i data-lucide="cloud-rain" class="icon"></i>External Factors</h4>
+                    <p>Weather, local events, school schedules — AI factors in environmental variables.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h4><i data-lucide="user" class="icon"></i>Patient Demographics</h4>
+                    <p>Age, insurance type, distance from office — all contribute to risk scoring.</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;"><i data-lucide="message-circle" class="icon icon-large"></i>Smart Reminder System</h3>
+
+            <div class="dashboard-sample">
+                <div class="dashboard-header">
+                    <h4>Sample Reminder Sequence</h4>
+                    <p>High-risk patient (78% no-show probability)</p>
+                </div>
+                <div class="dashboard-content">
+                    <div class="sample-item warning">
+                        <h5>48 Hours Before — Initial Contact</h5>
+                        <p>"Hi Sarah, this is a reminder about your appointment with Dr. Martinez on Thursday at 2:30 PM. Reply YES to confirm or call us to reschedule."</p>
+                        <span class="badge badge-warning">No Response</span>
+                    </div>
+
+                    <div class="sample-item warning">
+                        <h5>24 Hours Before — Follow-Up</h5>
+                        <p>"Sarah, we haven't heard back about your appointment tomorrow at 2:30 PM. We have patients on our waitlist — please confirm or let us know if you need to reschedule."</p>
+                        <span class="badge badge-warning">No Response</span>
+                    </div>
+
+                    <div class="sample-item urgent">
+                        <h5>System Action — Waitlist Activation</h5>
+                        <p>AI automatically contacts top 3 waitlist patients for this time slot. First to confirm gets the appointment if Sarah doesn't show.</p>
+                        <span class="badge badge-urgent">Backup Scheduled</span>
+                    </div>
+
+                    <div class="sample-item success">
+                        <h5>Morning Of — Final Reminder</h5>
+                        <p>"Sarah, your appointment is today at 2:30 PM with Dr. Martinez. See you soon!"</p>
+                        <span class="badge badge-success">Patient Confirmed</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roi">
+            <h2>ROI & Financial Impact</h2>
+
+            <h3><i data-lucide="dollar-sign" class="icon icon-large"></i>No-Show Cost Calculator</h3>
+
+            <div class="roi-section">
+                <h4 style="color: #1E3A5F; margin-top: 0;">Typical Practice Assumptions:</h4>
+                <ul style="color: #666; line-height: 1.9; margin-left: 20px;">
+                    <li>20 appointments per day</li>
+                    <li>15% no-show rate (industry average)</li>
+                    <li>$150 average revenue per appointment</li>
+                    <li>250 working days per year</li>
+                </ul>
+
+                <div class="roi-calculation">
+                    <div class="roi-item">
+                        <div class="roi-label">Daily No-Shows</div>
+                        <div class="roi-value">3</div>
+                        <p style="color: #666; font-size: 0.85em; margin-top: 10px;">20 appts × 15% = 3 no-shows/day</p>
+                    </div>
+
+                    <div class="roi-item">
+                        <div class="roi-label">Daily Lost Revenue</div>
+                        <div class="roi-value">$450</div>
+                        <p style="color: #666; font-size: 0.85em; margin-top: 10px;">3 no-shows × $150 = $450/day</p>
+                    </div>
+
+                    <div class="roi-item">
+                        <div class="roi-label">Annual No-Show Loss</div>
+                        <div class="roi-value">$112,500</div>
+                        <p style="color: #666; font-size: 0.85em; margin-top: 10px;">$450 × 250 days = $112,500/year</p>
+                    </div>
+                </div>
+
+                <div style="background: white; padding: 20px; border-radius: 6px; margin-top: 20px;">
+                    <p style="color: #1E3A5F; font-weight: 600; margin-bottom: 10px;">With AI No-Show Prevention (50% reduction):</p>
+                    <p style="color: #666; font-size: 0.95em;">
+                        No-show rate drops from 15% to 7.5%<br>
+                        <strong>Annual Recovery: $56,250</strong><br>
+                        Conservative estimate: <strong>$31,000+ guaranteed</strong>
+                    </p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;"><i data-lucide="trending-up" class="icon icon-large"></i>Additional Revenue Streams</h3>
+
+            <div class="benefits-list">
+                <div class="benefit-item">
+                    <h4><i data-lucide="phone" class="icon"></i>Prior Auth Time Savings</h4>
+                    <p><strong>20+ hours/week</strong> saved on hold with insurance. Staff can focus on patient care instead of phone queues.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h4><i data-lucide="file-check" class="icon"></i>Faster Claim Resolution</h4>
+                    <p><strong>15-30 days faster</strong> claim processing. Better cash flow, less money stuck in limbo.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h4><i data-lucide="users" class="icon"></i>Patient Satisfaction</h4>
+                    <p><strong>Higher retention</strong> — patients appreciate proactive communication and shorter wait times.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h4><i data-lucide="shield" class="icon"></i>Compliance Protection</h4>
+                    <p><strong>HIPAA-compliant</strong> automation. Audit trails for every patient communication.</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;"><i data-lucide="rocket" class="icon icon-large"></i>Implementation Timeline</h3>
+
+            <div class="workflow">
+                <div class="workflow-step">
+                    <h4>Week 1: Setup</h4>
+                    <p>EHR/PMS integration<br>Historical data import<br>ML model training on your patient patterns</p>
+                </div>
+
+                <div class="workflow-step">
+                    <h4>Week 2: Configuration</h4>
+                    <p>Reminder templates<br>Risk thresholds<br>Staff training<br>Workflow integration</p>
+                </div>
+
+                <div class="workflow-step">
+                    <h4>Week 3-4: Go Live</h4>
+                    <p>Soft launch with monitoring<br>Optimize messaging<br>Full deployment<br>ROI tracking begins</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Ready to Recover $31K+?</h2>
+            <p class="intro-text">
+                The Medical Practice AI System pays for itself in the first quarter. No-show prevention alone delivers 10x ROI. Add prior auth automation and claim visibility, and you're looking at a transformed practice.
+            </p>
+
+            <div class="text-center">
+                <button class="cta-button">Start Discovery Session</button>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Private List Consulting. Medical Practice AI System.</p>
+        <p>Protect patient care and practice revenue. | <a href="demos.html">← Back to Demos</a></p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
