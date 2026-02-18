@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLC Intelligence Dashboard</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e; 
+            color: #eee; 
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .header { 
+            text-align: center; 
+            padding: 20px; 
+            border-bottom: 1px solid #333;
+            margin-bottom: 30px;
+        }
+        .header h1 { color: #00d4ff; font-size: 2em; }
+        .header p { color: #888; margin-top: 5px; }
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 20px; 
+            max-width: 1200px; 
+            margin: 0 auto;
+        }
+        .card { 
+            background: #16213e; 
+            border-radius: 12px; 
+            padding: 20px;
+            border: 1px solid #333;
+        }
+        .card h2 { 
+            color: #00d4ff; 
+            font-size: 1.1em; 
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .status-ok { color: #00ff88; }
+        .status-warn { color: #ffaa00; }
+        .status-err { color: #ff4444; }
+        .metric { 
+            display: flex; 
+            justify-content: space-between; 
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+        }
+        .metric:last-child { border-bottom: none; }
+        .metric-label { color: #888; }
+        .metric-value { font-weight: bold; }
+        .source-list { list-style: none; }
+        .source-list li { 
+            padding: 8px 0; 
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .source-list li:last-child { border-bottom: none; }
+        .dot { 
+            width: 8px; 
+            height: 8px; 
+            border-radius: 50%; 
+            background: #00ff88;
+        }
+        .schedule { 
+            background: #0f3460; 
+            padding: 15px; 
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #555;
+            font-size: 0.9em;
+        }
+        .refresh-time { color: #00d4ff; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🐟 PLC Intelligence Dashboard</h1>
+        <p>Email Intelligence System Monitor</p>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h2>📊 System Status</h2>
+            <div class="metric">
+                <span class="metric-label">Overall</span>
+                <span class="metric-value status-ok">● Operational</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Last Report</span>
+                <span class="metric-value" id="lastReport">Loading...</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Next Report</span>
+                <span class="metric-value">7:00 AM Phoenix</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">API Cost (Est.)</span>
+                <span class="metric-value">~$0.03/day</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📡 Data Sources</h2>
+            <ul class="source-list">
+                <li><span class="dot"></span> Email (4 accounts) <span class="status-ok">✓</span></li>
+                <li><span class="dot"></span> Google Calendar <span class="status-ok">✓</span></li>
+                <li><span class="dot"></span> Slack DMs <span class="status-ok">✓</span></li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>👥 Clients</h2>
+            <div class="metric">
+                <span class="metric-label">Active</span>
+                <span class="metric-value">1</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">PLC (Internal)</span>
+                <span class="metric-value status-ok">Active</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Ginger (Test)</span>
+                <span class="metric-value status-warn">Planned</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📬 Delivery</h2>
+            <ul class="source-list">
+                <li><span class="dot"></span> Telegram → Joseph <span class="status-ok">✓</span></li>
+                <li><span class="dot"></span> Email → joseph@conradtax.com <span class="status-ok">✓</span></li>
+            </ul>
+            <div class="schedule">
+                <strong>Schedule:</strong> Daily 7:00 AM Phoenix<br>
+                <small>Cron: 0 7 * * * America/Phoenix</small>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📈 Scaling Status</h2>
+            <div class="metric">
+                <span class="metric-label">Current Stage</span>
+                <span class="metric-value">MVP (1-5 clients)</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Next Milestone</span>
+                <span class="metric-value">5 clients → Dashboard</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Infrastructure</span>
+                <span class="metric-value">OpenClaw VPS</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📁 Recent Reports</h2>
+            <ul class="source-list" id="recentReports">
+                <li><span class="dot"></span> plc_20260217_2354.md</li>
+                <li><span class="dot"></span> plc_20260217_2315.md</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Private List Consulting • Built by jFISH 🐟</p>
+        <p class="refresh-time">Dashboard v1.0 • Feb 18, 2026</p>
+    </div>
+
+    <script>
+        // Simple time display
+        document.getElementById('lastReport').textContent = 
+            new Date().toLocaleDateString() + ' ' + 
+            new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    </script>
+</body>
+</html>
