@@ -174,9 +174,13 @@ export class GeminiClient {
     }
 
     sendImage(imageData) {
-        if (!this.isConnected) return;
+        if (!this.isConnected) {
+            console.log('Cannot send image - not connected');
+            return;
+        }
         
         // imageData should be base64 JPEG
+        console.log('Sending image frame:', imageData.length, 'chars');
         const message = {
             realtimeInput: {
                 mediaChunks: [{
