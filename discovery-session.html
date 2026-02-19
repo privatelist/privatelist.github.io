@@ -668,6 +668,23 @@ My job is to understand your business well enough that we can build exactly what
         function generateResponse(userMessage) {
             const stage = sessionState.stage;
             const userName = sessionState.userName;
+            const lowerMsg = userMessage.toLowerCase().trim();
+            
+            // Check for session-ending responses at stage 6
+            if (stage === 6 || sessionState.complete) {
+                const endingPhrases = ['no', 'nope', 'bye', 'goodbye', 'thanks', 'thank you', 'all good', 'no questions', 'that\'s all', 'i\'m good', 'nothing'];
+                const isEnding = endingPhrases.some(phrase => lowerMsg.includes(phrase) || lowerMsg === phrase);
+                
+                if (isEnding || sessionState.complete) {
+                    sessionState.complete = true;
+                    showSessionComplete();
+                    return `Perfect, ${userName}. Thanks for taking the time — this was a great conversation.
+
+You'll hear from Joseph within 24-48 hours with a detailed proposal for ${sessionState.businessName}.
+
+Welcome to the future of your operations.`;
+                }
+            }
             
             // Demo responses based on stage
             const responses = {
@@ -734,6 +751,32 @@ Thanks for your time — you just experienced what working with an AI team membe
 
             const stageResponses = responses[sessionState.stage] || responses[6];
             return stageResponses[Math.floor(Math.random() * stageResponses.length)];
+        }
+        
+        // Show session complete UI
+        function showSessionComplete() {
+            const inputContainer = document.querySelector('.chat-input-container');
+            inputContainer.innerHTML = `
+                <div style="text-align: center; padding: 20px;">
+                    <div style="background: #d4edda; color: #155724; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <strong>Session Complete</strong><br>
+                        Your discovery session has been recorded.
+                    </div>
+                    <button onclick="location.reload()" style="background: #1E3A5F; color: white; border: none; padding: 12px 30px; border-radius: 6px; cursor: pointer; margin-right: 10px; font-size: 1em;">
+                        Start New Session
+                    </button>
+                    <a href="demos.html" style="background: #C47D3A; color: white; border: none; padding: 12px 30px; border-radius: 6px; cursor: pointer; text-decoration: none; display: inline-block; font-size: 1em;">
+                        View Demos
+                    </a>
+                </div>
+            `;
+            
+            // Mark all stages complete
+            updateProgress(6);
+            document.querySelectorAll('.progress-stages span').forEach(span => {
+                span.classList.remove('active');
+                span.classList.add('complete');
+            });
         }
 
         // Handle Enter key
