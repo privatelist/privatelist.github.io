@@ -83,8 +83,14 @@ export class AudioManager {
 
         try {
             // Gemini sends audio/pcm at 24kHz, 16-bit signed little-endian
+            // Handle odd byte lengths by truncating (Int16Array needs even bytes)
+            let buffer = audioData;
+            if (buffer.byteLength % 2 !== 0) {
+                buffer = buffer.slice(0, buffer.byteLength - 1);
+            }
+            
             // Convert PCM to AudioBuffer
-            const pcmData = new Int16Array(audioData);
+            const pcmData = new Int16Array(buffer);
             const floatData = new Float32Array(pcmData.length);
             
             for (let i = 0; i < pcmData.length; i++) {
