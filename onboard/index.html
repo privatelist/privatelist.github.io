@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Onboarding | Private List Consulting</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">PRIVATE LIST CONSULTING</div>
+            <div class="status" id="status">
+                <span class="status-dot"></span>
+                <span class="status-text">Ready</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Welcome Screen -->
+            <div class="screen welcome-screen" id="welcomeScreen">
+                <h1>Welcome to Your AI Onboarding</h1>
+                <p>I'm an AI assistant that can see your screen and help you get set up.</p>
+                
+                <div class="instructions">
+                    <h3>How this works:</h3>
+                    <ul>
+                        <li>You'll share your screen with me</li>
+                        <li>We'll talk through voice — like a phone call</li>
+                        <li>I'll guide you step-by-step through the setup</li>
+                        <li>I can see what you see, so just ask if you're stuck</li>
+                    </ul>
+                </div>
+
+                <div class="permissions-note">
+                    <p>You'll need to allow screen sharing and microphone access when prompted.</p>
+                </div>
+
+                <button class="btn btn-primary" id="startBtn">Start Session</button>
+            </div>
+
+            <!-- Session Screen -->
+            <div class="screen session-screen hidden" id="sessionScreen">
+                <div class="session-layout">
+                    <!-- Preview Panel -->
+                    <div class="preview-panel">
+                        <div class="preview-label">Your Screen (AI can see this)</div>
+                        <div class="preview-container">
+                            <video id="screenPreview" autoplay muted playsinline></video>
+                            <div class="preview-placeholder" id="previewPlaceholder">
+                                Screen share not active
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Panel -->
+                    <div class="chat-panel">
+                        <div class="transcript" id="transcript">
+                            <!-- Messages will appear here -->
+                        </div>
+                        
+                        <div class="controls">
+                            <div class="audio-indicator" id="audioIndicator">
+                                <div class="mic-icon" id="micIcon">🎤</div>
+                                <div class="speaking-indicator hidden" id="speakingIndicator">
+                                    <span></span><span></span><span></span>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-secondary" id="muteBtn">Mute</button>
+                            <button class="btn btn-danger" id="endBtn">End Session</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- End Screen -->
+            <div class="screen end-screen hidden" id="endScreen">
+                <h1>Session Complete</h1>
+                <p>Thank you for completing your onboarding session.</p>
+                <button class="btn btn-primary" id="restartBtn">Start New Session</button>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Powered by AI — Your conversation is private and secure.</p>
+        </footer>
+    </div>
+
+    <!-- Config (will be replaced with actual config) -->
+    <script>
+        window.ONBOARDING_CONFIG = {
+            geminiApiKey: '', // Set via environment or config
+            geminiModel: 'gemini-2.0-flash-exp',
+            openClawHost: '',
+            openClawPort: 18789,
+            openClawToken: '',
+            systemPrompt: `You are an AI onboarding assistant for Private List Consulting.
+
+You can see the client's screen in real-time. Your job is to guide them through setting up their AI-powered business intelligence system.
+
+Be conversational and helpful. When you see something on their screen:
+- Describe what you see to confirm you're looking at the right thing
+- Give clear, step-by-step instructions
+- Wait for them to complete each step before moving on
+
+When you need to take an action (like searching, sending a message, or setting something up), use the execute tool to delegate to the system.
+
+Keep your responses concise and spoken naturally — this is a voice conversation.
+
+Start by greeting the client warmly and asking what they'd like to accomplish today.`
+        };
+    </script>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
