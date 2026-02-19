@@ -672,7 +672,7 @@ My job is to understand your business well enough that we can build exactly what
             
             // Check for session-ending responses at stage 6
             if (stage === 6 || sessionState.complete) {
-                const endingPhrases = ['no', 'nope', 'bye', 'goodbye', 'thanks', 'thank you', 'all good', 'no questions', 'that\'s all', 'i\'m good', 'nothing'];
+                const endingPhrases = ['no', 'nope', 'bye', 'goodbye', 'thanks', 'thank you', 'all good', 'all done', 'done', 'no questions', 'that\'s all', 'i\'m good', 'nothing', 'wrap up', 'finish'];
                 const isEnding = endingPhrases.some(phrase => lowerMsg.includes(phrase) || lowerMsg === phrase);
                 
                 if (isEnding || sessionState.complete) {
@@ -735,12 +735,14 @@ Quick questions: Who controls access to your key systems? Any compliance require
 
 I've captured your tech stack, workflows, and access requirements. Joseph will review this and follow up with specifics on what we can build, timeline, and investment.
 
-Expect to hear from him within 24-48 hours. Any final questions for me?`,
+Expect to hear from him within 24-48 hours.
+
+Any final questions? Or type "All done" to wrap up.`,
                     `That's everything I need, ${userName}.
 
 I now have a clear picture of ${sessionState.businessName}'s operations, tools, and requirements. This goes to Joseph for review, and he'll be in touch within a day or two with a specific proposal.
 
-Thanks for your time — you just experienced what working with an AI team member feels like. Questions?`
+Any questions before we wrap up? Or type "All done" to finish.`
                 ]
             };
 
