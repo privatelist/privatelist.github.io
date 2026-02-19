@@ -13,6 +13,7 @@ export class ScreenManager {
         this.onFrame = null;
         this.frameRate = 1; // 1 fps - sufficient for screen content
         this.loggedFirstFrame = false;
+        this.loggedBlankWarning = false;
     }
 
     async start() {
@@ -102,6 +103,14 @@ export class ScreenManager {
 
         // Draw video frame to canvas
         this.ctx.drawImage(video, 0, 0, width, height);
+
+        // Test if canvas has actual pixel data
+        const imageData = this.ctx.getImageData(0, 0, Math.min(10, width), Math.min(10, height));
+        const pixelSum = imageData.data.reduce((sum, val) => sum + val, 0);
+        if (pixelSum === 0 && !this.loggedBlankWarning) {
+            console.warn('Canvas pixels are all black! DisplayMedia might be blocked from canvas.');
+            this.loggedBlankWarning = true;
+        }
 
         // Convert to JPEG base64 (quality 0.7 for balance of size/quality)
         const dataUrl = this.canvas.toDataURL('image/jpeg', 0.7);
