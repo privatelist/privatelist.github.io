@@ -12,6 +12,7 @@ export class ScreenManager {
         this.frameInterval = null;
         this.onFrame = null;
         this.frameRate = 1; // 1 fps - sufficient for screen content
+        this.loggedFirstFrame = false;
     }
 
     async start() {
@@ -78,6 +79,12 @@ export class ScreenManager {
 
         const video = this.videoElement;
         
+        // Debug: log video state
+        if (video.videoWidth === 0 || video.videoHeight === 0) {
+            console.warn('Video has no dimensions yet:', video.videoWidth, 'x', video.videoHeight);
+            return null;
+        }
+        
         // Scale down for efficiency while maintaining readability
         // Max dimension of 1280px should be enough for screen content
         const maxDimension = 1280;
@@ -101,6 +108,12 @@ export class ScreenManager {
         
         // Extract just the base64 data (remove data:image/jpeg;base64, prefix)
         const base64Data = dataUrl.split(',')[1];
+        
+        // Debug first frame
+        if (!this.loggedFirstFrame) {
+            console.log('First frame captured:', width, 'x', height, '=', base64Data.length, 'chars');
+            this.loggedFirstFrame = true;
+        }
         
         return base64Data;
     }
