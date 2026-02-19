@@ -20,8 +20,8 @@ export class GeminiClient {
 
     async connect() {
         return new Promise((resolve, reject) => {
-            // Use v1alpha API (v1beta rejected setup)
-            const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${this.apiKey}`;
+            // Use v1beta API with native audio model
+            const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${this.apiKey}`;
             
             console.log('Connecting to Gemini...');
             this.ws = new WebSocket(wsUrl);
