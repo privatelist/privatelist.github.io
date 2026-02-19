@@ -6,7 +6,7 @@
 export class GeminiClient {
     constructor(options) {
         this.apiKey = options.apiKey;
-        this.model = options.model || 'gemini-2.0-flash-exp';
+        this.model = options.model || 'gemini-2.0-flash-live-001';
         this.systemPrompt = options.systemPrompt || '';
         this.onAudio = options.onAudio || (() => {});
         this.onTranscript = options.onTranscript || (() => {});
@@ -15,24 +15,30 @@ export class GeminiClient {
         
         this.ws = null;
         this.isConnected = false;
-        this.sessionId = null;
+        this.isReady = false;
     }
 
     async connect() {
         return new Promise((resolve, reject) => {
-            const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${this.apiKey}`;
+            // Use v1beta API
+            const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${this.apiKey}`;
             
+            console.log('Connecting to Gemini...');
             this.ws = new WebSocket(wsUrl);
             
             this.ws.onopen = () => {
                 console.log('Gemini WebSocket connected');
-                this.sendSetup();
                 this.isConnected = true;
-                resolve();
+                this.sendSetup();
             };
             
             this.ws.onmessage = (event) => {
                 this.handleMessage(event.data);
+                // Resolve on first successful message (setup complete)
+                if (!this.isReady) {
+                    this.isReady = true;
+                    resolve();
+                }
             };
             
             this.ws.onerror = (error) => {
@@ -41,27 +47,30 @@ export class GeminiClient {
                 reject(error);
             };
             
-            this.ws.onclose = () => {
-                console.log('Gemini WebSocket closed');
+            this.ws.onclose = (event) => {
+                console.log('Gemini WebSocket closed', event.code, event.reason);
                 this.isConnected = false;
+                this.isReady = false;
+                if (!this.isReady) {
+                    reject(new Error(`WebSocket closed: ${event.code} ${event.reason}`));
+                }
             };
+
+            // Timeout after 15 seconds
+            setTimeout(() => {
+                if (!this.isReady) {
+                    reject(new Error('Connection timeout'));
+                }
+            }, 15000);
         });
     }
 
     sendSetup() {
-        // Send initial setup message
         const setupMessage = {
             setup: {
                 model: `models/${this.model}`,
                 generationConfig: {
-                    responseModalities: ['AUDIO'],
-                    speechConfig: {
-                        voiceConfig: {
-                            prebuiltVoiceConfig: {
-                                voiceName: 'Aoede' // Natural sounding voice
-                            }
-                        }
-                    }
+                    responseModalities: ['AUDIO']
                 },
                 systemInstruction: {
                     parts: [{ text: this.systemPrompt }]
@@ -81,21 +90,26 @@ export class GeminiClient {
                             required: ['task']
                         }
                     }]
-                }]
+                }],
+                realtimeInputConfig: {
+                    automaticActivityDetection: {
+                        disabled: false
+                    }
+                }
             }
         };
         
+        console.log('Sending setup message');
         this.send(setupMessage);
     }
 
     handleMessage(data) {
         try {
-            // Handle both text and binary messages
             if (typeof data === 'string') {
                 const message = JSON.parse(data);
+                console.log('Received message:', Object.keys(message));
                 this.processMessage(message);
             } else if (data instanceof Blob) {
-                // Binary audio data
                 data.arrayBuffer().then(buffer => {
                     this.onAudio(buffer);
                 });
@@ -120,11 +134,9 @@ export class GeminiClient {
             if (content.modelTurn) {
                 const parts = content.modelTurn.parts || [];
                 for (const part of parts) {
-                    // Text response
                     if (part.text) {
                         this.onTranscript(part.text, false);
                     }
-                    // Audio response
                     if (part.inlineData && part.inlineData.mimeType.startsWith('audio/')) {
                         const audioData = this.base64ToArrayBuffer(part.inlineData.data);
                         this.onAudio(audioData);
@@ -132,7 +144,11 @@ export class GeminiClient {
                 }
             }
 
-            // Handle turn complete
+            // Handle input transcript
+            if (content.inputTranscript) {
+                this.onTranscript(content.inputTranscript, true);
+            }
+
             if (content.turnComplete) {
                 console.log('Turn complete');
             }
@@ -149,15 +165,10 @@ export class GeminiClient {
                 });
             }
         }
-
-        // Handle user transcript (what was heard)
-        if (message.serverContent?.inputTranscript) {
-            this.onTranscript(message.serverContent.inputTranscript, true);
-        }
     }
 
     sendAudio(audioData) {
-        if (!this.isConnected) return;
+        if (!this.isConnected || !this.isReady) return;
         
         const base64Audio = this.arrayBufferToBase64(audioData);
         
@@ -174,9 +185,8 @@ export class GeminiClient {
     }
 
     sendImage(imageData) {
-        if (!this.isConnected) return;
+        if (!this.isConnected || !this.isReady) return;
         
-        // imageData should be base64 JPEG
         const message = {
             realtimeInput: {
                 mediaChunks: [{
@@ -216,9 +226,9 @@ export class GeminiClient {
             this.ws = null;
         }
         this.isConnected = false;
+        this.isReady = false;
     }
 
-    // Utility functions
     arrayBufferToBase64(buffer) {
         const bytes = new Uint8Array(buffer);
         let binary = '';
