@@ -452,19 +452,23 @@
             <li>If something doesn't make sense, tell me</li>
         </ul>
 
-        <div class="start-form" style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-            <div class="form-group">
-                <label for="userName">Your Name</label>
-                <input type="text" id="userName" placeholder="First and last name">
+        <div class="start-form" style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border: 1px solid #e8e8e8;">
+            <p style="text-align: center; color: #1E3A5F; font-weight: 600; margin-bottom: 25px; font-size: 1.1em;">Before we begin:</p>
+            
+            <div class="form-group" style="margin-bottom: 25px;">
+                <label for="userName" style="font-weight: 600;">Your Name</label>
+                <input type="text" id="userName" placeholder="First and last name" style="background: #fafafa;">
             </div>
-            <div class="form-group" style="background: #f0f7ff; padding: 20px; margin: 0 -20px 20px -20px; border-left: 4px solid #1E3A5F;">
+            
+            <div class="form-group" style="margin-bottom: 25px; padding: 20px; background: linear-gradient(135deg, #f8fbff 0%, #f0f7ff 100%); border-radius: 8px; border: 2px solid #1E3A5F;">
                 <label for="businessName" style="font-size: 1.1em; font-weight: 700; color: #1E3A5F;">Business Name</label>
-                <span style="display: block; font-size: 0.85em; color: #666; margin-bottom: 10px;">Your company name — this is how I'll refer to your business</span>
-                <input type="text" id="businessName" placeholder="e.g. Acme Law Firm, Smith Medical Group" style="border-color: #1E3A5F;">
+                <span style="display: block; font-size: 0.85em; color: #666; margin: 6px 0 12px 0;">Your company name — I'll use this throughout our conversation</span>
+                <input type="text" id="businessName" placeholder="e.g. Acme Law Firm, Smith Medical" style="border: 2px solid #1E3A5F; background: white;">
             </div>
-            <div class="form-group">
-                <label for="industry">Industry</label>
-                <select id="industry">
+            
+            <div class="form-group" style="margin-bottom: 30px;">
+                <label for="industry" style="font-weight: 600;">Industry</label>
+                <select id="industry" style="background: #fafafa;">
                     <option value="">Select your industry</option>
                     <option value="law">Law Firm</option>
                     <option value="medical">Medical Practice</option>
@@ -472,8 +476,9 @@
                     <option value="other">Other</option>
                 </select>
             </div>
+            
             <button class="start-button" onclick="startSession()">
-                Start Discovery Session
+                Let's Start
             </button>
         </div>
     </div>
