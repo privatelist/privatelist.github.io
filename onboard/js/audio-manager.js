@@ -30,8 +30,10 @@ export class AudioManager {
             // Create capture context at 16kHz
             this.captureContext = new AudioContext({ sampleRate: 16000 });
             
-            // Create playback context at 24kHz
+            // Create playback context at 24kHz (Gemini output rate)
+            // Note: Browser may resample to device rate automatically
             this.playbackContext = new AudioContext({ sampleRate: 24000 });
+            console.log('Playback context sample rate:', this.playbackContext.sampleRate);
 
             // Set up audio processing
             const source = this.captureContext.createMediaStreamSource(this.mediaStream);
@@ -59,8 +61,10 @@ export class AudioManager {
     }
 
     play(audioData, mimeType = 'audio/pcm') {
-        // Log for debugging
-        console.log('Queueing audio:', mimeType, 'bytes:', audioData.byteLength);
+        // Log for debugging - show first few sample values to diagnose format
+        const preview = new Int16Array(audioData.slice(0, Math.min(20, audioData.byteLength)));
+        const previewStr = Array.from(preview.slice(0, 5)).join(', ');
+        console.log('Queueing audio:', mimeType, 'bytes:', audioData.byteLength, 'first samples:', previewStr);
         
         // Queue the audio for playback
         this.playbackQueue.push({ data: audioData, mimeType });
@@ -97,8 +101,11 @@ export class AudioManager {
                 floatData[i] = pcmData[i] / 32768.0;
             }
 
-            // Create audio buffer at 24kHz (Gemini's output rate)
-            const audioBuffer = this.playbackContext.createBuffer(1, floatData.length, 24000);
+            // Try 24kHz first (Gemini's documented output rate)
+            // If audio sounds wrong, might need to try 16000 or 48000
+            const sampleRate = 24000;
+            const audioBuffer = this.playbackContext.createBuffer(1, floatData.length, sampleRate);
+            console.log('Audio buffer: samples=' + floatData.length + ', rate=' + sampleRate + ', duration=' + (floatData.length/sampleRate*1000).toFixed(1) + 'ms');
             audioBuffer.getChannelData(0).set(floatData);
 
             // Create gain node to boost volume
