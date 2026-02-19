@@ -6,7 +6,7 @@
 export class GeminiClient {
     constructor(options) {
         this.apiKey = options.apiKey;
-        this.model = options.model || 'gemini-2.0-flash-live-001';
+        this.model = options.model || 'gemini-2.0-flash-exp';
         this.systemPrompt = options.systemPrompt || '';
         this.onAudio = options.onAudio || (() => {});
         this.onTranscript = options.onTranscript || (() => {});
