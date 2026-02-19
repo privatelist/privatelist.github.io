@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discovery Session Intro | Private List Consulting</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1E3A5F 0%, #2d4a73 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            padding: 60px;
+            text-align: center;
+        }
+
+        .line {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+            margin-bottom: 30px;
+        }
+
+        .line.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .line.fade-out {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .hey {
+            font-size: 4em;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            margin-bottom: 50px;
+        }
+
+        .intro {
+            font-size: 1.8em;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .intro strong {
+            color: #C47D3A;
+            font-weight: 600;
+        }
+
+        .preview {
+            font-size: 1.4em;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .bullets {
+            font-size: 1.3em;
+            line-height: 2;
+            text-align: left;
+            display: inline-block;
+        }
+
+        .bullets li {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s ease-out;
+            list-style: none;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .bullets li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #C47D3A;
+        }
+
+        .bullets li.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .ready {
+            font-size: 2em;
+            font-weight: 500;
+            color: #C47D3A;
+        }
+
+        .play-button {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #C47D3A;
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.2em;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .play-button:hover {
+            background: #a86a30;
+            transform: translateX(-50%) scale(1.05);
+        }
+
+        .play-button.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .logo {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            font-size: 0.9em;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 1px;
+        }
+
+        .progress {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: #C47D3A;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">PRIVATE LIST CONSULTING</div>
+    <div class="progress" id="progress"></div>
+
+    <div class="container">
+        <!-- Scene 1: Hey -->
+        <div class="line hey" id="line1">Hey.</div>
+
+        <!-- Scene 2: I'm an AI agent -->
+        <div class="line intro" id="line2">
+            <strong>I'm an AI agent.</strong><br>
+            Not a form. Not a chatbot trained on the internet.<br>
+            An AI built by Private List Consulting to understand your business.
+        </div>
+
+        <!-- Scene 3: Preview -->
+        <div class="line preview" id="line3">
+            You're about to talk with me — not a human.<br>
+            If we end up working together, your AI Agent will work a lot like this.<br>
+            Think of this as a glimpse into your world of AI.
+        </div>
+
+        <!-- Scene 4: Curious -->
+        <div class="line preview" id="line4">
+            I might not get everything right,<br>
+            but I'm genuinely curious about your business<br>
+            so we can design an innovative system for you.
+        </div>
+
+        <!-- Scene 5: Bullets -->
+        <div class="line" id="line5">
+            <p style="margin-bottom: 20px; font-size: 1.3em;">A few things to know:</p>
+            <ul class="bullets">
+                <li id="bullet1">I'll ask you questions one at a time</li>
+                <li id="bullet2">Real questions — not a form you're filling out</li>
+                <li id="bullet3">And if something doesn't make sense, just tell me</li>
+            </ul>
+        </div>
+
+        <!-- Scene 6: Ready -->
+        <div class="line ready" id="line6">Ready? Let's start.</div>
+    </div>
+
+    <button class="play-button" id="playBtn" onclick="startIntro()">Play Intro</button>
+
+    <audio id="audio" preload="auto">
+        <source src="audio/discovery-intro.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const audio = document.getElementById('audio');
+        const playBtn = document.getElementById('playBtn');
+        const progress = document.getElementById('progress');
+
+        // Timeline (seconds) - synced to audio
+        const timeline = [
+            { time: 0, action: () => show('line1') },
+            { time: 2, action: () => { hide('line1'); show('line2'); } },
+            { time: 10, action: () => { hide('line2'); show('line3'); } },
+            { time: 19, action: () => { hide('line3'); show('line4'); } },
+            { time: 26, action: () => { hide('line4'); show('line5'); } },
+            { time: 27, action: () => document.getElementById('bullet1').classList.add('visible') },
+            { time: 29, action: () => document.getElementById('bullet2').classList.add('visible') },
+            { time: 32, action: () => document.getElementById('bullet3').classList.add('visible') },
+            { time: 35, action: () => { hide('line5'); show('line6'); } },
+        ];
+
+        let timelineIndex = 0;
+
+        function show(id) {
+            document.getElementById(id).classList.add('visible');
+            document.getElementById(id).classList.remove('fade-out');
+        }
+
+        function hide(id) {
+            document.getElementById(id).classList.add('fade-out');
+            document.getElementById(id).classList.remove('visible');
+        }
+
+        function startIntro() {
+            playBtn.classList.add('hidden');
+            audio.play();
+            timelineIndex = 0;
+            
+            // Reset all lines
+            document.querySelectorAll('.line').forEach(el => {
+                el.classList.remove('visible', 'fade-out');
+            });
+            document.querySelectorAll('.bullets li').forEach(el => {
+                el.classList.remove('visible');
+            });
+        }
+
+        audio.addEventListener('timeupdate', () => {
+            const currentTime = audio.currentTime;
+            const duration = audio.duration;
+            
+            // Update progress bar
+            progress.style.width = (currentTime / duration * 100) + '%';
+            
+            // Check timeline
+            while (timelineIndex < timeline.length && currentTime >= timeline[timelineIndex].time) {
+                timeline[timelineIndex].action();
+                timelineIndex++;
+            }
+        });
+
+        audio.addEventListener('ended', () => {
+            setTimeout(() => {
+                playBtn.classList.remove('hidden');
+                playBtn.textContent = 'Play Again';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
