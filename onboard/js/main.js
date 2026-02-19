@@ -2,10 +2,10 @@
  * PLC Screen Share Onboarding - Main Entry Point
  */
 
-import { GeminiClient } from './gemini-client.js';
-import { AudioManager } from './audio-manager.js';
-import { ScreenManager } from './screen-manager.js';
-import { OpenClawBridge } from './openclaw-bridge.js';
+import { GeminiClient } from './gemini-client.js?v=3';
+import { AudioManager } from './audio-manager.js?v=3';
+import { ScreenManager } from './screen-manager.js?v=3';
+import { OpenClawBridge } from './openclaw-bridge.js?v=3';
 
 class OnboardingApp {
     constructor() {
