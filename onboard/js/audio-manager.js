@@ -77,8 +77,15 @@ export class AudioManager {
         const audioData = this.playbackQueue.shift();
 
         try {
+            // Ensure byte length is even for Int16Array
+            let buffer = audioData;
+            if (audioData.byteLength % 2 !== 0) {
+                // Trim to even length
+                buffer = audioData.slice(0, audioData.byteLength - 1);
+            }
+            
             // Convert PCM to AudioBuffer
-            const pcmData = new Int16Array(audioData);
+            const pcmData = new Int16Array(buffer);
             const floatData = new Float32Array(pcmData.length);
             
             for (let i = 0; i < pcmData.length; i++) {
