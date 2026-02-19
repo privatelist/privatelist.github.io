@@ -68,23 +68,7 @@ export class GeminiClient {
                 },
                 systemInstruction: {
                     parts: [{ text: this.systemPrompt }]
-                },
-                tools: [{
-                    functionDeclarations: [{
-                        name: 'execute',
-                        description: 'Execute a task using the connected AI system. Use this when you need to take an action on behalf of the client.',
-                        parameters: {
-                            type: 'OBJECT',
-                            properties: {
-                                task: {
-                                    type: 'STRING',
-                                    description: 'Description of the task to execute'
-                                }
-                            },
-                            required: ['task']
-                        }
-                    }]
-                }]
+                }
             }
         };
         
