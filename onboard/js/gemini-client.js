@@ -6,7 +6,7 @@
 export class GeminiClient {
     constructor(options) {
         this.apiKey = options.apiKey;
-        this.model = options.model || 'gemini-2.0-flash-live-001';
+        this.model = options.model || 'gemini-2.0-flash-exp';
         this.systemPrompt = options.systemPrompt || '';
         this.onAudio = options.onAudio || (() => {});
         this.onTranscript = options.onTranscript || (() => {});
@@ -20,8 +20,8 @@ export class GeminiClient {
 
     async connect() {
         return new Promise((resolve, reject) => {
-            // Use v1beta API for native audio models
-            const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${this.apiKey}`;
+            // Use v1alpha API (v1beta rejected setup)
+            const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${this.apiKey}`;
             
             console.log('Connecting to Gemini...');
             this.ws = new WebSocket(wsUrl);
@@ -43,8 +43,8 @@ export class GeminiClient {
                 reject(error);
             };
             
-            this.ws.onclose = () => {
-                console.log('Gemini WebSocket closed');
+            this.ws.onclose = (event) => {
+                console.log('Gemini WebSocket closed', event.code, event.reason);
                 this.isConnected = false;
             };
         });
