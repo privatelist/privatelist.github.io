@@ -12,6 +12,7 @@ export class AudioManager {
         this.onAudioData = null;
         this.playbackQueue = [];
         this.isPlaying = false;
+        this.nextPlayTime = 0;
     }
 
     async start() {
@@ -30,14 +31,14 @@ export class AudioManager {
             // Create capture context at 16kHz
             this.captureContext = new AudioContext({ sampleRate: 16000 });
             
-            // Create playback context at 24kHz
+            // Create playback context at 24kHz for Gemini output
             this.playbackContext = new AudioContext({ sampleRate: 24000 });
+            this.nextPlayTime = this.playbackContext.currentTime;
 
             // Set up audio processing
             const source = this.captureContext.createMediaStreamSource(this.mediaStream);
             
-            // Use ScriptProcessor for capturing (deprecated but widely supported)
-            // Buffer size of 4096 samples = ~256ms at 16kHz
+            // Use ScriptProcessor for capturing
             this.processor = this.captureContext.createScriptProcessor(4096, 1, 1);
             
             this.processor.onaudioprocess = (event) => {
@@ -59,32 +60,30 @@ export class AudioManager {
     }
 
     play(audioData) {
-        // Queue the audio for playback
-        this.playbackQueue.push(audioData);
-        
-        if (!this.isPlaying) {
-            this.processPlaybackQueue();
-        }
-    }
-
-    async processPlaybackQueue() {
-        if (this.playbackQueue.length === 0) {
-            this.isPlaying = false;
+        if (!audioData || audioData.byteLength === 0) {
             return;
         }
-
-        this.isPlaying = true;
-        const audioData = this.playbackQueue.shift();
 
         try {
             // Ensure byte length is even for Int16Array
             let buffer = audioData;
-            if (audioData.byteLength % 2 !== 0) {
-                // Trim to even length
-                buffer = audioData.slice(0, audioData.byteLength - 1);
+            if (buffer instanceof ArrayBuffer) {
+                // Already ArrayBuffer
+            } else if (buffer.buffer instanceof ArrayBuffer) {
+                buffer = buffer.buffer;
             }
             
-            // Convert PCM to AudioBuffer
+            let byteLength = buffer.byteLength;
+            if (byteLength % 2 !== 0) {
+                buffer = buffer.slice(0, byteLength - 1);
+                byteLength = buffer.byteLength;
+            }
+
+            if (byteLength < 2) {
+                return;
+            }
+
+            // Convert PCM Int16 to Float32
             const pcmData = new Int16Array(buffer);
             const floatData = new Float32Array(pcmData.length);
             
@@ -92,22 +91,25 @@ export class AudioManager {
                 floatData[i] = pcmData[i] / 32768.0;
             }
 
+            // Create AudioBuffer at 24kHz
             const audioBuffer = this.playbackContext.createBuffer(1, floatData.length, 24000);
             audioBuffer.getChannelData(0).set(floatData);
 
-            // Play the audio
+            // Schedule playback
             const source = this.playbackContext.createBufferSource();
             source.buffer = audioBuffer;
             source.connect(this.playbackContext.destination);
             
-            source.onended = () => {
-                this.processPlaybackQueue();
-            };
+            // Schedule at next available time to avoid gaps/overlaps
+            const now = this.playbackContext.currentTime;
+            const startTime = Math.max(now, this.nextPlayTime);
+            source.start(startTime);
             
-            source.start();
+            // Update next play time
+            this.nextPlayTime = startTime + audioBuffer.duration;
+
         } catch (error) {
             console.error('Audio playback error:', error);
-            this.processPlaybackQueue();
         }
     }
 
