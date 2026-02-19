@@ -101,30 +101,26 @@ export class ScreenManager {
         this.canvas.width = width;
         this.canvas.height = height;
 
-        // Draw video frame to canvas
+        // Draw video frame to canvas and convert to JPEG
         this.ctx.drawImage(video, 0, 0, width, height);
-
-        // Test if canvas has actual pixel data
-        const imageData = this.ctx.getImageData(0, 0, Math.min(10, width), Math.min(10, height));
-        const pixelSum = imageData.data.reduce((sum, val) => sum + val, 0);
-        if (pixelSum === 0 && !this.loggedBlankWarning) {
-            console.warn('Canvas pixels are all black! DisplayMedia might be blocked from canvas.');
-            this.loggedBlankWarning = true;
+        
+        try {
+            const dataUrl = this.canvas.toDataURL('image/jpeg', 0.7);
+            
+            // Extract just the base64 data (remove data:image/jpeg;base64, prefix)
+            const base64Data = dataUrl.split(',')[1];
+            
+            // Debug first frame
+            if (!this.loggedFirstFrame) {
+                console.log('First frame captured:', width, 'x', height, '=', base64Data.length, 'chars');
+                this.loggedFirstFrame = true;
+            }
+            
+            return base64Data;
+        } catch (error) {
+            console.error('Failed to capture frame:', error);
+            return null;
         }
-
-        // Convert to JPEG base64 (quality 0.7 for balance of size/quality)
-        const dataUrl = this.canvas.toDataURL('image/jpeg', 0.7);
-        
-        // Extract just the base64 data (remove data:image/jpeg;base64, prefix)
-        const base64Data = dataUrl.split(',')[1];
-        
-        // Debug first frame
-        if (!this.loggedFirstFrame) {
-            console.log('First frame captured:', width, 'x', height, '=', base64Data.length, 'chars');
-            this.loggedFirstFrame = true;
-        }
-        
-        return base64Data;
     }
 
     stop() {
