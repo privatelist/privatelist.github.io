@@ -94,12 +94,21 @@ export class AudioManager {
             }
             
             // Convert PCM to AudioBuffer
-            const pcmData = new Int16Array(buffer);
-            const floatData = new Float32Array(pcmData.length);
+            // Try big-endian interpretation (swap bytes)
+            const bytes = new Uint8Array(buffer);
+            const pcmData = new Int16Array(bytes.length / 2);
+            for (let i = 0; i < pcmData.length; i++) {
+                // Swap bytes: big-endian to little-endian
+                pcmData[i] = (bytes[i*2] << 8) | bytes[i*2 + 1];
+            }
             
+            const floatData = new Float32Array(pcmData.length);
             for (let i = 0; i < pcmData.length; i++) {
                 floatData[i] = pcmData[i] / 32768.0;
             }
+            
+            // Log converted samples for comparison
+            console.log('Converted first samples:', Array.from(pcmData.slice(0, 5)).join(', '));
 
             // Try 24kHz first (Gemini's documented output rate)
             // If audio sounds wrong, might need to try 16000 or 48000
