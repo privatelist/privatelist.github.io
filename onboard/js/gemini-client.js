@@ -66,6 +66,9 @@ export class GeminiClient {
                         }
                     }
                 },
+                realtimeInputConfig: {
+                    mediaResolution: 'MEDIA_RESOLUTION_LOW'
+                },
                 systemInstruction: {
                     parts: [{ text: this.systemPrompt }]
                 }
