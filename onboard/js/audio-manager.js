@@ -61,10 +61,13 @@ export class AudioManager {
     }
 
     play(audioData, mimeType = 'audio/pcm') {
-        // Log for debugging - show first few sample values to diagnose format
-        const preview = new Int16Array(audioData.slice(0, Math.min(20, audioData.byteLength)));
-        const previewStr = Array.from(preview.slice(0, 5)).join(', ');
-        console.log('Queueing audio:', mimeType, 'bytes:', audioData.byteLength, 'first samples:', previewStr);
+        // Log for debugging - show raw bytes as hex and ASCII
+        const rawBytes = new Uint8Array(audioData.slice(0, Math.min(40, audioData.byteLength)));
+        const hexStr = Array.from(rawBytes.slice(0, 20)).map(b => b.toString(16).padStart(2, '0')).join(' ');
+        const asciiStr = Array.from(rawBytes.slice(0, 20)).map(b => (b >= 32 && b < 127) ? String.fromCharCode(b) : '.').join('');
+        console.log('Queueing audio:', mimeType, 'bytes:', audioData.byteLength);
+        console.log('  Hex:', hexStr);
+        console.log('  ASCII:', asciiStr);
         
         // Queue the audio for playback
         this.playbackQueue.push({ data: audioData, mimeType });
