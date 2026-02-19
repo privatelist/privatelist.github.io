@@ -96,22 +96,16 @@ export class AudioManager {
                 buffer = buffer.slice(0, buffer.byteLength - 1);
             }
             
-            // Convert PCM to AudioBuffer
-            // Try big-endian interpretation (swap bytes)
-            const bytes = new Uint8Array(buffer);
-            const pcmData = new Int16Array(bytes.length / 2);
-            for (let i = 0; i < pcmData.length; i++) {
-                // Swap bytes: big-endian to little-endian
-                pcmData[i] = (bytes[i*2] << 8) | bytes[i*2 + 1];
-            }
-            
+            // Convert PCM to AudioBuffer - use directly as little-endian (standard PCM)
+            const pcmData = new Int16Array(buffer);
             const floatData = new Float32Array(pcmData.length);
+            
             for (let i = 0; i < pcmData.length; i++) {
                 floatData[i] = pcmData[i] / 32768.0;
             }
             
-            // Log converted samples for comparison
-            console.log('Converted first samples:', Array.from(pcmData.slice(0, 5)).join(', '));
+            // Log samples
+            console.log('PCM first samples:', Array.from(pcmData.slice(0, 5)).join(', '));
 
             // Try 24kHz first (Gemini's documented output rate)
             // If audio sounds wrong, might need to try 16000 or 48000
@@ -120,15 +114,10 @@ export class AudioManager {
             console.log('Audio buffer: samples=' + floatData.length + ', rate=' + sampleRate + ', duration=' + (floatData.length/sampleRate*1000).toFixed(1) + 'ms');
             audioBuffer.getChannelData(0).set(floatData);
 
-            // Create gain node to boost volume
-            const gainNode = this.playbackContext.createGain();
-            gainNode.gain.value = 2.0; // Boost volume
-            gainNode.connect(this.playbackContext.destination);
-
-            // Play the audio
+            // Play the audio (no gain boost)
             const source = this.playbackContext.createBufferSource();
             source.buffer = audioBuffer;
-            source.connect(gainNode);
+            source.connect(this.playbackContext.destination);
             
             source.onended = () => {
                 this.processPlaybackQueue();
