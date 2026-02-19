@@ -115,7 +115,10 @@ class OnboardingApp {
                 apiKey: this.config.geminiApiKey,
                 model: this.config.geminiModel,
                 systemPrompt: this.config.systemPrompt,
-                onAudio: (audioData, mimeType) => this.audio.play(audioData, mimeType),
+                onAudio: (audioData, mimeType) => {
+                    // Skip audio playback for now (garbled) - just log
+                    console.log('Audio received (skipping playback):', audioData.byteLength, 'bytes');
+                },
                 onTranscript: (text, isUser) => this.addMessage(text, isUser ? 'user' : 'ai'),
                 onToolCall: (tool) => this.handleToolCall(tool),
                 onError: (error) => this.handleError(error)

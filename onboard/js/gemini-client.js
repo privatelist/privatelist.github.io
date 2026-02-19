@@ -57,7 +57,14 @@ export class GeminiClient {
             setup: {
                 model: `models/${this.model}`,
                 generationConfig: {
-                    responseModalities: ['TEXT']
+                    responseModalities: ['AUDIO', 'TEXT'],
+                    speechConfig: {
+                        voiceConfig: {
+                            prebuiltVoiceConfig: {
+                                voiceName: 'Aoede'
+                            }
+                        }
+                    }
                 },
                 systemInstruction: {
                     parts: [{ text: this.systemPrompt }]
