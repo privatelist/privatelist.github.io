@@ -59,67 +59,18 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 40px 20px;
-            max-width: 700px;
+            padding: 50px 20px;
+            max-width: 600px;
             margin: 0 auto;
-            text-align: center;
+            text-align: left;
         }
 
         .welcome-screen.hidden {
             display: none;
         }
 
-        .welcome-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #1E3A5F, #2d4a73);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(30, 58, 95, 0.3);
-        }
-
-        .welcome-icon svg {
-            width: 40px;
-            height: 40px;
-            stroke: white;
-        }
-
         .welcome-screen h2 {
             color: #1E3A5F;
-            font-size: 1.8em;
-            margin-bottom: 15px;
-        }
-
-        .welcome-screen p {
-            color: #666;
-            font-size: 1.1em;
-            line-height: 1.7;
-            margin-bottom: 30px;
-        }
-
-        .transparency-note {
-            background: #fff3cd;
-            border-left: 4px solid #C47D3A;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: left;
-            margin-bottom: 30px;
-            max-width: 500px;
-        }
-
-        .transparency-note h4 {
-            color: #1E3A5F;
-            margin-bottom: 8px;
-            font-size: 1em;
-        }
-
-        .transparency-note p {
-            color: #666;
-            font-size: 0.95em;
-            margin: 0;
         }
 
         .start-form {
@@ -426,60 +377,56 @@
 
     <!-- Welcome Screen -->
     <div class="welcome-screen" id="welcomeScreen">
-        <div class="welcome-icon">
-            <i data-lucide="bot"></i>
-        </div>
         
-        <h2>Hey.</h2>
-        
-        <div class="transparency-note" style="margin-bottom: 20px;">
-            <p style="margin: 0;">
-                <strong>I'm an AI agent.</strong> Not a form, not a chatbot trained on the internet. 
+        <div style="max-width: 500px; margin: 0 auto;">
+            
+            <h2 style="font-size: 2.2em; margin-bottom: 25px;">Hey.</h2>
+            
+            <p style="font-size: 1.15em; color: #333; line-height: 1.7; margin-bottom: 25px;">
+                <strong style="color: #1E3A5F;">I'm an AI agent.</strong> Not a form, not a chatbot trained on the internet. 
                 An AI built by Private List Consulting to understand your business.
             </p>
-        </div>
 
-        <p style="margin-bottom: 20px;">
-            You're about to talk with me — not a human. If we end up working together, 
-            your AI will work a lot like this. So think of this as a preview. 
-            I might not get everything right, but I'm genuinely curious about your business.
-        </p>
+            <p style="color: #555; line-height: 1.7; margin-bottom: 25px;">
+                You're about to talk with me — not a human. If we end up working together, 
+                your AI will work a lot like this. So think of this as a preview. 
+                I might not get everything right, but I'm genuinely curious about your business.
+            </p>
 
-        <p style="margin-bottom: 10px;"><strong>A few things to know:</strong></p>
-        <ul style="margin-left: 20px; margin-bottom: 30px; color: #666; line-height: 1.8;">
-            <li>I'll ask you questions one at a time</li>
-            <li>Real questions, not a form you're filling out</li>
-            <li>If something doesn't make sense, tell me</li>
-        </ul>
+            <p style="color: #555; margin-bottom: 8px;"><strong style="color: #333;">A few things to know:</strong></p>
+            <ul style="margin: 0 0 35px 20px; color: #555; line-height: 2;">
+                <li>I'll ask you questions one at a time</li>
+                <li>Real questions, not a form you're filling out</li>
+                <li>If something doesn't make sense, tell me</li>
+            </ul>
 
-        <div class="start-form" style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border: 1px solid #e8e8e8;">
-            <p style="text-align: center; color: #1E3A5F; font-weight: 600; margin-bottom: 25px; font-size: 1.1em;">Before we begin:</p>
-            
-            <div class="form-group" style="margin-bottom: 25px;">
-                <label for="userName" style="font-weight: 600;">Your Name</label>
-                <input type="text" id="userName" placeholder="First and last name" style="background: #fafafa;">
+            <div style="border-top: 1px solid #e0e0e0; padding-top: 30px;">
+                
+                <div class="form-group">
+                    <label for="userName">Your Name</label>
+                    <input type="text" id="userName" placeholder="First and last name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="businessName" style="font-weight: 700; color: #1E3A5F;">Business Name <span style="font-weight: 400; color: #888; font-size: 0.85em;">— your company</span></label>
+                    <input type="text" id="businessName" placeholder="e.g. Acme Law Firm, Smith Medical">
+                </div>
+                
+                <div class="form-group">
+                    <label for="industry">Industry</label>
+                    <select id="industry">
+                        <option value="">Select your industry</option>
+                        <option value="law">Law Firm</option>
+                        <option value="medical">Medical Practice</option>
+                        <option value="realestate">Real Estate</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <button class="start-button" onclick="startSession()">
+                    Let's Start
+                </button>
             </div>
-            
-            <div class="form-group" style="margin-bottom: 25px; padding: 20px; background: linear-gradient(135deg, #f8fbff 0%, #f0f7ff 100%); border-radius: 8px; border: 2px solid #1E3A5F;">
-                <label for="businessName" style="font-size: 1.1em; font-weight: 700; color: #1E3A5F;">Business Name</label>
-                <span style="display: block; font-size: 0.85em; color: #666; margin: 6px 0 12px 0;">Your company name — I'll use this throughout our conversation</span>
-                <input type="text" id="businessName" placeholder="e.g. Acme Law Firm, Smith Medical" style="border: 2px solid #1E3A5F; background: white;">
-            </div>
-            
-            <div class="form-group" style="margin-bottom: 30px;">
-                <label for="industry" style="font-weight: 600;">Industry</label>
-                <select id="industry" style="background: #fafafa;">
-                    <option value="">Select your industry</option>
-                    <option value="law">Law Firm</option>
-                    <option value="medical">Medical Practice</option>
-                    <option value="realestate">Real Estate</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
-            
-            <button class="start-button" onclick="startSession()">
-                Let's Start
-            </button>
         </div>
     </div>
 
