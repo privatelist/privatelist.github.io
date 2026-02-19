@@ -12,7 +12,6 @@ export class AudioManager {
         this.onAudioData = null;
         this.playbackQueue = [];
         this.isPlaying = false;
-        this.nextPlayTime = 0;
     }
 
     async start() {
@@ -31,14 +30,14 @@ export class AudioManager {
             // Create capture context at 16kHz
             this.captureContext = new AudioContext({ sampleRate: 16000 });
             
-            // Create playback context at 24kHz for Gemini output
+            // Create playback context at 24kHz
             this.playbackContext = new AudioContext({ sampleRate: 24000 });
-            this.nextPlayTime = this.playbackContext.currentTime;
 
             // Set up audio processing
             const source = this.captureContext.createMediaStreamSource(this.mediaStream);
             
-            // Use ScriptProcessor for capturing
+            // Use ScriptProcessor for capturing (deprecated but widely supported)
+            // Buffer size of 4096 samples = ~256ms at 16kHz
             this.processor = this.captureContext.createScriptProcessor(4096, 1, 1);
             
             this.processor.onaudioprocess = (event) => {
@@ -59,57 +58,62 @@ export class AudioManager {
         }
     }
 
-    play(audioData) {
-        if (!audioData || audioData.byteLength === 0) {
+    play(audioData, mimeType = 'audio/pcm') {
+        // Log for debugging
+        console.log('Queueing audio:', mimeType, 'bytes:', audioData.byteLength);
+        
+        // Queue the audio for playback
+        this.playbackQueue.push({ data: audioData, mimeType });
+        
+        if (!this.isPlaying) {
+            this.processPlaybackQueue();
+        }
+    }
+
+    async processPlaybackQueue() {
+        if (this.playbackQueue.length === 0) {
+            this.isPlaying = false;
             return;
         }
 
+        this.isPlaying = true;
+        const item = this.playbackQueue.shift();
+        const audioData = item.data;
+        const mimeType = item.mimeType;
+
         try {
-            // Ensure byte length is even for Int16Array
-            let buffer = audioData;
-            if (buffer instanceof ArrayBuffer) {
-                // Already ArrayBuffer
-            } else if (buffer.buffer instanceof ArrayBuffer) {
-                buffer = buffer.buffer;
-            }
-            
-            let byteLength = buffer.byteLength;
-            if (byteLength % 2 !== 0) {
-                buffer = buffer.slice(0, byteLength - 1);
-                byteLength = buffer.byteLength;
-            }
-
-            if (byteLength < 2) {
-                return;
-            }
-
-            // Convert PCM Int16 to Float32
-            const pcmData = new Int16Array(buffer);
+            // Gemini sends audio/pcm at 24kHz, 16-bit signed little-endian
+            // Convert PCM to AudioBuffer
+            const pcmData = new Int16Array(audioData);
             const floatData = new Float32Array(pcmData.length);
             
             for (let i = 0; i < pcmData.length; i++) {
                 floatData[i] = pcmData[i] / 32768.0;
             }
 
-            // Create AudioBuffer at 24kHz
+            // Create audio buffer at 24kHz (Gemini's output rate)
             const audioBuffer = this.playbackContext.createBuffer(1, floatData.length, 24000);
             audioBuffer.getChannelData(0).set(floatData);
 
-            // Schedule playback
+            // Create gain node to boost volume
+            const gainNode = this.playbackContext.createGain();
+            gainNode.gain.value = 2.0; // Boost volume
+            gainNode.connect(this.playbackContext.destination);
+
+            // Play the audio
             const source = this.playbackContext.createBufferSource();
             source.buffer = audioBuffer;
-            source.connect(this.playbackContext.destination);
+            source.connect(gainNode);
             
-            // Schedule at next available time to avoid gaps/overlaps
-            const now = this.playbackContext.currentTime;
-            const startTime = Math.max(now, this.nextPlayTime);
-            source.start(startTime);
+            source.onended = () => {
+                this.processPlaybackQueue();
+            };
             
-            // Update next play time
-            this.nextPlayTime = startTime + audioBuffer.duration;
-
+            source.start();
+            console.log('Playing audio chunk:', pcmData.length, 'samples');
         } catch (error) {
             console.error('Audio playback error:', error);
+            this.processPlaybackQueue();
         }
     }
 
