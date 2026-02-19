@@ -82,9 +82,19 @@ export class GeminiClient {
                 const message = JSON.parse(data);
                 this.processMessage(message);
             } else if (data instanceof Blob) {
-                // Binary audio data
-                data.arrayBuffer().then(buffer => {
-                    this.onAudio(buffer);
+                // Blob might be JSON (sent as binary) - try parsing as text first
+                data.text().then(text => {
+                    try {
+                        const message = JSON.parse(text);
+                        console.log('Parsed Blob as JSON');
+                        this.processMessage(message);
+                    } catch (e) {
+                        // If not JSON, treat as raw binary audio
+                        console.log('Blob is raw binary, not JSON');
+                        data.arrayBuffer().then(buffer => {
+                            this.onAudio(buffer);
+                        });
+                    }
                 });
             }
         } catch (error) {
