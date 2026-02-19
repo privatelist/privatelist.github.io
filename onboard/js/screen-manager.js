@@ -32,11 +32,29 @@ export class ScreenManager {
             this.videoElement.srcObject = this.mediaStream;
             this.videoElement.autoplay = true;
             this.videoElement.muted = true;
+            this.videoElement.playsInline = true;
 
-            // Wait for video to be ready
+            // Wait for video to be ready with metadata
             await new Promise((resolve) => {
                 this.videoElement.onloadedmetadata = resolve;
             });
+
+            // CRITICAL: Wait for video to actually start playing with real frames
+            // Without this, canvas draws black frames
+            await this.videoElement.play();
+            
+            // Extra safety: wait for first real frame to be available
+            await new Promise((resolve) => {
+                if ('requestVideoFrameCallback' in this.videoElement) {
+                    // Modern browsers - wait for actual video frame
+                    this.videoElement.requestVideoFrameCallback(resolve);
+                } else {
+                    // Fallback - short delay to let first frame render
+                    setTimeout(resolve, 100);
+                }
+            });
+
+            console.log('Video ready with real frames:', this.videoElement.videoWidth, 'x', this.videoElement.videoHeight);
 
             // Create canvas for frame capture
             this.canvas = document.createElement('canvas');
