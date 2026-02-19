@@ -57,14 +57,7 @@ export class GeminiClient {
             setup: {
                 model: `models/${this.model}`,
                 generationConfig: {
-                    responseModalities: ['AUDIO'],
-                    speechConfig: {
-                        voiceConfig: {
-                            prebuiltVoiceConfig: {
-                                voiceName: 'Aoede'
-                            }
-                        }
-                    }
+                    responseModalities: ['TEXT']
                 },
                 systemInstruction: {
                     parts: [{ text: this.systemPrompt }]
@@ -125,6 +118,7 @@ export class GeminiClient {
                 for (const part of parts) {
                     // Text response
                     if (part.text) {
+                        console.log('AI text response:', part.text.substring(0, 100) + (part.text.length > 100 ? '...' : ''));
                         this.onTranscript(part.text, false);
                     }
                     // Audio response
@@ -156,6 +150,7 @@ export class GeminiClient {
 
         // Handle user transcript (what was heard)
         if (message.serverContent?.inputTranscript) {
+            console.log('User transcript:', message.serverContent.inputTranscript);
             this.onTranscript(message.serverContent.inputTranscript, true);
         }
     }
