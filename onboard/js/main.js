@@ -90,7 +90,22 @@ class OnboardingApp {
             this.startBtn.disabled = true;
             this.startBtn.textContent = 'Starting...';
 
+            // Fetch ephemeral token from our secure backend
+            this.updateStatus('Getting secure token...', false);
+            const tokenResponse = await fetch(this.config.tokenServiceUrl, {
+                headers: {
+                    'Authorization': `Bearer ${this.config.tokenServiceSecret}`
+                }
+            });
+            if (!tokenResponse.ok) {
+                const error = await tokenResponse.json().catch(() => ({ error: 'Unknown error' }));
+                throw new Error(`Failed to get token: ${error.message || tokenResponse.statusText}`);
+            }
+            const { token, expiresAt } = await tokenResponse.json();
+            console.log('Ephemeral token received, expires:', expiresAt);
+
             // Initialize screen capture
+            this.updateStatus('Starting screen capture...', false);
             this.screen = new ScreenManager();
             const stream = await this.screen.start();
             
@@ -100,6 +115,7 @@ class OnboardingApp {
             }
 
             // Initialize audio
+            this.updateStatus('Starting audio...', false);
             this.audio = new AudioManager();
             await this.audio.start();
 
@@ -110,9 +126,10 @@ class OnboardingApp {
                 this.config.openClawToken
             );
 
-            // Initialize Gemini
+            // Initialize Gemini with ephemeral token
+            this.updateStatus('Connecting to AI...', false);
             this.gemini = new GeminiClient({
-                apiKey: this.config.geminiApiKey,
+                apiKey: token, // Use ephemeral token instead of permanent key
                 model: this.config.geminiModel,
                 systemPrompt: this.config.systemPrompt,
                 onAudio: (audioData, mimeType) => this.audio.play(audioData, mimeType),
