@@ -24,7 +24,8 @@ export class GeminiClient {
             const isEphemeralToken = this.apiKey.startsWith('auth_tokens/');
             const endpoint = isEphemeralToken ? 'BidiGenerateContentConstrained' : 'BidiGenerateContent';
             const paramName = isEphemeralToken ? 'access_token' : 'key';
-            const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.${endpoint}?${paramName}=${this.apiKey}`;
+            const encodedToken = encodeURIComponent(this.apiKey);
+            const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.${endpoint}?${paramName}=${encodedToken}`;
             
             console.log('Connecting to Gemini...', isEphemeralToken ? '(ephemeral token)' : '(API key)');
             this.ws = new WebSocket(wsUrl);
