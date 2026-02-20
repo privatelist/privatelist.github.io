@@ -1,0 +1,368 @@
+/* PLC Screen Share Onboarding - Styles */
+
+:root {
+    --plc-navy: #1E3A5F;
+    --plc-gold: #C47D3A;
+    --plc-light: #F5F5F5;
+    --plc-white: #FFFFFF;
+    --plc-text: #333333;
+    --plc-muted: #666666;
+    --plc-success: #28a745;
+    --plc-danger: #dc3545;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--plc-light);
+    color: var(--plc-text);
+    min-height: 100vh;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header {
+    background: var(--plc-navy);
+    color: var(--plc-white);
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--plc-muted);
+}
+
+.status-dot.connected {
+    background: var(--plc-success);
+}
+
+.status-dot.active {
+    background: var(--plc-success);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Main */
+.main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+/* Screens */
+.screen {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.screen.hidden {
+    display: none;
+}
+
+/* Welcome Screen */
+.welcome-screen {
+    text-align: center;
+    max-width: 600px;
+}
+
+.welcome-screen h1 {
+    font-size: 2em;
+    margin-bottom: 16px;
+    color: var(--plc-navy);
+}
+
+.welcome-screen > p {
+    font-size: 1.1em;
+    color: var(--plc-muted);
+    margin-bottom: 32px;
+}
+
+.instructions {
+    background: var(--plc-white);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.instructions h3 {
+    margin-bottom: 12px;
+    color: var(--plc-navy);
+}
+
+.instructions ul {
+    list-style: none;
+}
+
+.instructions li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+}
+
+.instructions li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--plc-gold);
+}
+
+.permissions-note {
+    color: var(--plc-muted);
+    font-size: 0.9em;
+    margin-bottom: 24px;
+}
+
+/* Buttons */
+.btn {
+    padding: 14px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: var(--plc-gold);
+    color: var(--plc-white);
+}
+
+.btn-primary:hover {
+    background: #a86a30;
+}
+
+.btn-secondary {
+    background: var(--plc-navy);
+    color: var(--plc-white);
+}
+
+.btn-secondary:hover {
+    background: #152d4a;
+}
+
+.btn-danger {
+    background: var(--plc-danger);
+    color: var(--plc-white);
+}
+
+.btn-danger:hover {
+    background: #c82333;
+}
+
+/* Session Screen */
+.session-layout {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 24px;
+    height: calc(100vh - 200px);
+    min-height: 500px;
+}
+
+/* Preview Panel */
+.preview-panel {
+    background: var(--plc-white);
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.preview-label {
+    font-size: 12px;
+    color: var(--plc-muted);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.preview-container {
+    flex: 1;
+    background: #000;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#screenPreview {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.preview-placeholder {
+    color: var(--plc-muted);
+    font-size: 14px;
+}
+
+.preview-placeholder.hidden {
+    display: none;
+}
+
+/* Chat Panel */
+.chat-panel {
+    background: var(--plc-white);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.transcript {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.message {
+    padding: 12px 16px;
+    border-radius: 12px;
+    max-width: 85%;
+    line-height: 1.5;
+}
+
+.message.ai {
+    background: var(--plc-light);
+    align-self: flex-start;
+}
+
+.message.user {
+    background: var(--plc-navy);
+    color: var(--plc-white);
+    align-self: flex-end;
+}
+
+.message.system {
+    background: transparent;
+    color: var(--plc-muted);
+    font-size: 0.85em;
+    text-align: center;
+    align-self: center;
+}
+
+/* Controls */
+.controls {
+    padding: 16px;
+    border-top: 1px solid var(--plc-light);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.audio-indicator {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mic-icon {
+    font-size: 24px;
+}
+
+.mic-icon.muted {
+    opacity: 0.3;
+}
+
+.speaking-indicator {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+}
+
+.speaking-indicator.hidden {
+    display: none;
+}
+
+.speaking-indicator span {
+    width: 4px;
+    height: 16px;
+    background: var(--plc-gold);
+    border-radius: 2px;
+    animation: speak 0.5s infinite alternate;
+}
+
+.speaking-indicator span:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.speaking-indicator span:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+@keyframes speak {
+    from { height: 8px; }
+    to { height: 20px; }
+}
+
+/* End Screen */
+.end-screen {
+    text-align: center;
+    max-width: 500px;
+}
+
+.end-screen h1 {
+    color: var(--plc-navy);
+    margin-bottom: 16px;
+}
+
+.end-screen p {
+    color: var(--plc-muted);
+    margin-bottom: 32px;
+}
+
+/* Footer */
+.footer {
+    padding: 16px 24px;
+    text-align: center;
+    color: var(--plc-muted);
+    font-size: 12px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .session-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+}

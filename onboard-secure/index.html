@@ -21,18 +21,11 @@
         <main class="main">
             <!-- Welcome Screen -->
             <div class="screen welcome-screen" id="welcomeScreen">
-                <h1>Welcome to Your AI Onboarding</h1>
+                <h1>Welcome to Your AI Onboarding (Secure Token Service)</h1>
                 <p>I'm an AI assistant that can see your screen and help you get set up.</p>
+                <p><strong>Note:</strong> This version uses an ephemeral token service (currently in development).</p>
                 
                 <div class="instructions">
-                    <h3>Setup (one-time):</h3>
-                    <ol>
-                        <li>Open browser console (F12 or Cmd+Option+J)</li>
-                        <li>Paste: <code>window.GEMINI_API_KEY = "your-api-key-here"</code></li>
-                        <li>Press Enter</li>
-                        <li>Click "Start Session" below</li>
-                    </ol>
-                    
                     <h3>How this works:</h3>
                     <ul>
                         <li>You'll share your screen with me</li>
@@ -100,12 +93,14 @@
 
     <!-- Config -->
     <script>
-        // CONSOLE METHOD: Before starting, set your API key in console:
-        // window.GEMINI_API_KEY = 'your-api-key-here'
-        
         window.ONBOARDING_CONFIG = {
-            useConsoleMethod: true, // No token service, use console API key
+            useConsoleMethod: false, // Use ephemeral token service (secure)
+            tokenServiceUrl: 'https://api.privatelistconsulting.com:8443/api/onboarding-token',
+            tokenServiceSecret: '74371c611692cdc6c805c88dcfbcd621c24c15fd537e6aa150ac585739cd11b5',
             geminiModel: 'gemini-2.5-flash-native-audio-preview-12-2025',
+            openClawHost: '',
+            openClawPort: 18789,
+            openClawToken: '',
             systemPrompt: `You are a friendly AI onboarding assistant for Private List Consulting. You can see the client's screen in real-time.
 
 Your job: Help them set up their business intelligence system through natural conversation.

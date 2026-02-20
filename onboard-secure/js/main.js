@@ -90,31 +90,19 @@ class OnboardingApp {
             this.startBtn.disabled = true;
             this.startBtn.textContent = 'Starting...';
 
-            // Get API key - either from console method or token service
-            let token;
-            if (this.config.useConsoleMethod) {
-                // Console method: use API key set in browser console
-                token = window.GEMINI_API_KEY;
-                if (!token) {
-                    throw new Error('API key not set. Open console and run: window.GEMINI_API_KEY = "your-api-key"');
+            // Fetch ephemeral token from our secure backend
+            this.updateStatus('Getting secure token...', false);
+            const tokenResponse = await fetch(this.config.tokenServiceUrl, {
+                headers: {
+                    'Authorization': `Bearer ${this.config.tokenServiceSecret}`
                 }
-                console.log('Using API key from console');
-            } else {
-                // Token service method: fetch ephemeral token from backend
-                this.updateStatus('Getting secure token...', false);
-                const tokenResponse = await fetch(this.config.tokenServiceUrl, {
-                    headers: {
-                        'Authorization': `Bearer ${this.config.tokenServiceSecret}`
-                    }
-                });
-                if (!tokenResponse.ok) {
-                    const error = await tokenResponse.json().catch(() => ({ error: 'Unknown error' }));
-                    throw new Error(`Failed to get token: ${error.message || tokenResponse.statusText}`);
-                }
-                const tokenData = await tokenResponse.json();
-                token = tokenData.token;
-                console.log('Ephemeral token received, expires:', tokenData.expiresAt);
+            });
+            if (!tokenResponse.ok) {
+                const error = await tokenResponse.json().catch(() => ({ error: 'Unknown error' }));
+                throw new Error(`Failed to get token: ${error.message || tokenResponse.statusText}`);
             }
+            const { token, expiresAt } = await tokenResponse.json();
+            console.log('Ephemeral token received, expires:', expiresAt);
 
             // Initialize screen capture
             this.updateStatus('Starting screen capture...', false);
