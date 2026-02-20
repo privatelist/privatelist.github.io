@@ -20,10 +20,13 @@ export class GeminiClient {
 
     async connect() {
         return new Promise((resolve, reject) => {
-            // Use v1beta API with native audio model
-            const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${this.apiKey}`;
+            // Use v1beta API with ephemeral token (BidiGenerateContentConstrained endpoint)
+            const isEphemeralToken = this.apiKey.startsWith('auth_tokens/');
+            const endpoint = isEphemeralToken ? 'BidiGenerateContentConstrained' : 'BidiGenerateContent';
+            const paramName = isEphemeralToken ? 'access_token' : 'key';
+            const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.${endpoint}?${paramName}=${this.apiKey}`;
             
-            console.log('Connecting to Gemini...');
+            console.log('Connecting to Gemini...', isEphemeralToken ? '(ephemeral token)' : '(API key)');
             this.ws = new WebSocket(wsUrl);
             
             this.ws.onopen = () => {
