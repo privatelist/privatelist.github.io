@@ -20,14 +20,16 @@ export class GeminiClient {
 
     async connect() {
         return new Promise((resolve, reject) => {
-            // Use v1beta API with ephemeral token (BidiGenerateContentConstrained endpoint)
+            // Ephemeral tokens use v1alpha + BidiGenerateContentConstrained
+            // Regular API keys use v1beta + BidiGenerateContent
             const isEphemeralToken = this.apiKey.startsWith('auth_tokens/');
+            const apiVersion = isEphemeralToken ? 'v1alpha' : 'v1beta';
             const endpoint = isEphemeralToken ? 'BidiGenerateContentConstrained' : 'BidiGenerateContent';
             const paramName = isEphemeralToken ? 'access_token' : 'key';
             const encodedToken = encodeURIComponent(this.apiKey);
-            const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.${endpoint}?${paramName}=${encodedToken}`;
+            const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.${apiVersion}.GenerativeService.${endpoint}?${paramName}=${encodedToken}`;
             
-            console.log('Connecting to Gemini...', isEphemeralToken ? '(ephemeral token)' : '(API key)');
+            console.log('Connecting to Gemini...', isEphemeralToken ? '(ephemeral token, v1alpha)' : '(API key, v1beta)');
             this.ws = new WebSocket(wsUrl);
             
             this.ws.onopen = () => {
