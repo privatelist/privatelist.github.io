@@ -112,6 +112,9 @@ export class GeminiClient {
         // Handle setup complete
         if (message.setupComplete) {
             console.log('Gemini setup complete');
+            // Send initial greeting trigger (ephemeral token workaround)
+            console.log('Sending initial greeting trigger');
+            this.sendText('Hello');
             return;
         }
 
@@ -173,6 +176,28 @@ export class GeminiClient {
                     mimeType: 'audio/pcm;rate=16000',
                     data: base64Audio
                 }]
+            }
+        };
+        
+        this.send(message);
+    }
+
+    sendText(text) {
+        if (!this.isConnected) {
+            console.log('Cannot send text - not connected');
+            return;
+        }
+        
+        console.log('Sending text:', text);
+        const message = {
+            clientContent: {
+                turns: [{
+                    role: 'user',
+                    parts: [{
+                        text: text
+                    }]
+                }],
+                turnComplete: true
             }
         };
         
