@@ -90,13 +90,22 @@ class OnboardingApp {
             this.startBtn.disabled = true;
             this.startBtn.textContent = 'Starting...';
 
-            // Fetch ephemeral token from our secure backend
+            // Extract access token from URL (Model 2 controlled onboarding)
+            const urlParams = new URLSearchParams(window.location.search);
+            const accessToken = urlParams.get('access');
+
+            if (!accessToken) {
+                throw new Error('Missing access token. Please use the link provided by your team.');
+            }
+
+            // Scrub URL immediately (remove token from browser history)
+            window.history.replaceState({}, '', window.location.pathname);
+
+            // Fetch ephemeral token using access token (no Authorization header)
             this.updateStatus('Getting secure token...', false);
-            const tokenResponse = await fetch(this.config.tokenServiceUrl, {
-                headers: {
-                    'Authorization': `Bearer ${this.config.tokenServiceSecret}`
-                }
-            });
+            const tokenResponse = await fetch(
+                `${this.config.tokenServiceUrl}?access=${encodeURIComponent(accessToken)}`
+            );
             if (!tokenResponse.ok) {
                 const error = await tokenResponse.json().catch(() => ({ error: 'Unknown error' }));
                 throw new Error(`Failed to get token: ${error.message || tokenResponse.statusText}`);
