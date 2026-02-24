@@ -3,17 +3,11 @@ Compiled: 2026-02-24 by joFish
 
 ---
 
-## ⚠️ NAMING CONFLICT — READ FIRST
+## ✅ NAMING — RESOLVED 2026-02-24
 
-"P1/P2/P3/P4" used two ways:
-
-**Original (P1–P5 files, Feb 10/12):** Strategic projects
-- P1 = Team Architecture | P2 = Quiet Revenue | P3 = Token Economy | P4 = Mesh Network | P5 = Execution
-
-**Later (project-knowledge.md, Feb 23 — most recent):** Market verticals
-- P1 = Law Firm | P2 = Medical | P3 = Real Estate
-
-**Resolution:** P1/P2/P3 labels retired. Going forward: **Core Principles** (strategic) and **Verticals** (Law Firm, Medical, Real Estate).
+"P1/P2/P3/P4" labels are **retired**. Going forward:
+- **Core Principles** — strategic projects (Team Architecture, Quiet Revenue, Token Economy, Mesh Network, Building the Thing)
+- **Verticals** — market segments (Law Firm, Medical, Real Estate)
 
 ---
 
@@ -71,7 +65,7 @@ Compiled: 2026-02-24 by joFish
 
 | Item | Owner |
 |---|---|
-| P1–P3 naming conflict | ✅ Resolved — labels retired |
+| Naming conflict (P1–P3) | ✅ Resolved — labels retired 2026-02-24 |
 | MLS Board decisions (SDAR, NTREIS, OneKey) | Joseph / Boards |
 | /demos/ link fix | ✅ DONE — PList2 2026-02-24 |
 | Medical deliverable polish | Scribe/joFish |
