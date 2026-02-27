@@ -3,7 +3,7 @@ name: PLC Morning Report
 on:
   schedule:
     - cron: "15 14 * * *"  # 7:15 AM Arizona (UTC-7, no DST)
-  workflow_dispatch:          # allow manual trigger
+  workflow_dispatch:
 
 jobs:
   morning-report:
@@ -22,15 +22,19 @@ jobs:
 
       - name: Run morning report
         env:
-          GMAIL_CLIENT_ID:      ${{ secrets.GMAIL_CLIENT_ID }}
-          GMAIL_CLIENT_SECRET:  ${{ secrets.GMAIL_CLIENT_SECRET }}
-          GMAIL_REFRESH_TOKEN:  ${{ secrets.GMAIL_REFRESH_TOKEN }}
-          GCAL_CLIENT_ID:       ${{ secrets.GCAL_CLIENT_ID }}
-          GCAL_CLIENT_SECRET:   ${{ secrets.GCAL_CLIENT_SECRET }}
-          GCAL_REFRESH_TOKEN:   ${{ secrets.GCAL_REFRESH_TOKEN }}
-          SLACK_BOT_TOKEN:      ${{ secrets.SLACK_BOT_TOKEN }}
-          TELEGRAM_BOT_TOKEN:   ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID:     ${{ secrets.TELEGRAM_CHAT_ID }}
+          GMAIL_CLIENT_ID:          ${{ secrets.GMAIL_CLIENT_ID }}
+          GMAIL_CLIENT_SECRET:      ${{ secrets.GMAIL_CLIENT_SECRET }}
+          GMAIL_REFRESH_TOKEN:      ${{ secrets.GMAIL_REFRESH_TOKEN }}
+          GCAL_CLIENT_ID:           ${{ secrets.GCAL_CLIENT_ID }}
+          GCAL_CLIENT_SECRET:       ${{ secrets.GCAL_CLIENT_SECRET }}
+          GCAL_REFRESH_TOKEN:       ${{ secrets.GCAL_REFRESH_TOKEN }}
+          SLACK_BOT_TOKEN:          ${{ secrets.SLACK_BOT_TOKEN }}
+          TELEGRAM_BOT_TOKEN:       ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:         ${{ secrets.TELEGRAM_CHAT_ID }}
+          NAMESECURE_SMTP_HOST:     ${{ secrets.NAMESECURE_SMTP_HOST }}
+          NAMESECURE_SUPPORT_PASS:  ${{ secrets.NAMESECURE_SUPPORT_PASS }}
+          REPORT_FROM_EMAIL:        ${{ secrets.REPORT_FROM_EMAIL }}
+          REPORT_TO_EMAIL:          ${{ secrets.REPORT_TO_EMAIL }}
         run: python scripts/morning_report.py
 
       - name: Notify on failure
