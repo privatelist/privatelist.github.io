@@ -181,7 +181,128 @@ def fetch_slack(bot_token: str) -> list[dict]:
     return results
 
 
-# ─── Telegram sender ──────────────────────────────────────────────────────────
+
+# ─── Telegram image sender ────────────────────────────────────────────────────
+
+def build_report_html(
+    emails: list[dict],
+    events: list[dict],
+    slack_msgs: list[dict],
+    phoenix_now,
+) -> str:
+    """Populate report-sample.html template with live data."""
+    date_str = phoenix_now.strftime("%b %-d, %Y")
+    time_str = phoenix_now.strftime("%-I:%M %p")
+
+    def li_items(items):
+        if not items:
+            return "<li>Nothing to report.</li>"
+        return "".join(f"<li>{item}</li>" for item in items)
+
+    cal_items = [f"{e['time']} — {e['summary']}" for e in events] or ["No events today."]
+
+    urgent_items = []
+    action_items = []
+    for em in emails[:10]:
+        subj = em["subject"][:70]
+        sender = em["sender"].split("<")[0].strip().strip('"'")[:30]
+        urgent_items.append(f"{subj} <span style='color:#888;font-size:12px;'>({sender})</span>")
+    if not urgent_items:
+        urgent_items = ["No urgent email."]
+    action_items = [f"{sm['channel']}: {sm['text'][:80]}" for sm in slack_msgs[:5]]
+    if not action_items:
+        action_items = ["No Slack activity."]
+
+    return f"""<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+        body {{
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #FFFFFF;
+            width: 500px;
+        }}
+        .header {{
+            background: #1E3A5F;
+            padding: 18px 24px;
+            color: white;
+        }}
+        .header h1 {{ font-size: 18px; font-weight: 700; margin-bottom: 4px; }}
+        .header .date {{ font-size: 12px; color: #AAC; }}
+        .content {{ padding: 20px 24px; }}
+        .section {{ margin-bottom: 18px; }}
+        .section h2 {{
+            font-size: 13px; font-weight: 700; color: #1E3A5F;
+            margin-bottom: 8px; letter-spacing: 0.5px;
+        }}
+        .section ul {{ list-style: none; }}
+        .section li {{
+            font-size: 13px; color: #2C2C2C;
+            padding: 3px 0 3px 16px; position: relative;
+        }}
+        .section li:before {{
+            content: "·"; position: absolute; left: 0;
+            color: #C47D3A; font-weight: bold;
+        }}
+        .footer {{
+            padding: 14px 24px; font-size: 11px; color: #5A7E7E;
+            border-top: 1px solid #eee;
+        }}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>PRIVATE LIST CONSULTING</h1>
+        <div class="date">Daily Intelligence Report &middot; {date_str} &middot; {time_str} Phoenix</div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <h2>CALENDAR TODAY</h2>
+            <ul>{li_items(cal_items)}</ul>
+        </div>
+        <div class="section">
+            <h2>EMAIL</h2>
+            <ul>{li_items(urgent_items)}</ul>
+        </div>
+        <div class="section">
+            <h2>SLACK</h2>
+            <ul>{li_items(action_items)}</ul>
+        </div>
+    </div>
+    <div class="footer">Private List Consulting — Delivered by jFISH</div>
+</body>
+</html>"""
+
+
+def send_telegram_image(html: str) -> None:
+    """Render HTML to screenshot and send as Telegram photo."""
+    import tempfile, os
+    from playwright.sync_api import sync_playwright
+
+    with tempfile.TemporaryDirectory() as tmp:
+        html_path  = os.path.join(tmp, "report.html")
+        img_path   = os.path.join(tmp, "report.png")
+
+        with open(html_path, "w") as f:
+            f.write(html)
+
+        with sync_playwright() as p:
+            browser = p.chromium.launch()
+            page    = browser.new_page(viewport={"width": 500, "height": 900})
+            page.goto(f"file://{html_path}")
+            page.wait_for_timeout(500)
+            page.locator("body").screenshot(path=img_path)
+            browser.close()
+
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendPhoto"
+        with open(img_path, "rb") as img_file:
+            import requests as req_lib
+            req_lib.post(url, data={"chat_id": TELEGRAM_CHAT_ID}, files={"photo": img_file}, timeout=30).raise_for_status()
+
+
+# ─── Telegram sender (plain text fallback) ──────────────────────────────────────────────────────────
 
 def send_telegram(text: str) -> None:
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
@@ -349,9 +470,10 @@ def main():
 
     report = format_report(emails, events, slack_msgs, phoenix_now)
 
-    print("Sending via Telegram...")
-    send_telegram(report)
-    print("  Telegram sent.")
+    print("Building Telegram image report...")
+    report_html = build_report_html(emails, events, slack_msgs, phoenix_now)
+    send_telegram_image(report_html)
+    print("  Telegram image sent.")
 
     print("Sending via email...")
     date_str = phoenix_now.strftime("%A, %B %-d, %Y")
