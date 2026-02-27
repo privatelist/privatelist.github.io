@@ -139,8 +139,8 @@ def build_report_html(emails, events, slack_msgs, phoenix_now):
 
     def li(items):
         if not items:
-            return "<li>Nothing to report.</li>"
-        return "".join(f"<li>{i}</li>" for i in items)
+            return '<li><span style="color:#C47D3A;font-weight:bold;margin-right:8px;">&#8212;</span>Nothing to report.</li>'
+        return "".join(f'<li><span style="color:#C47D3A;font-weight:bold;margin-right:8px;">&#8212;</span>{i}</li>' for i in items)
 
     cal_items   = [f"{e['time']} \u2014 {e['summary']}" for e in events] or ["No events today."]
     email_items = []
