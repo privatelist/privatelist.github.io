@@ -164,10 +164,7 @@ body {{ font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-seri
 .section h2 {{ font-size:13px; font-weight:700; color:#1E3A5F;
                margin-bottom:8px; letter-spacing:.5px; }}
 .section ul {{ list-style:none; }}
-.section li {{ font-size:13px; color:#2C2C2C;
-               padding:3px 0 3px 16px; position:relative; }}
-.section li:before {{ content:"\00b7"; position:absolute; left:0;
-                      color:#C47D3A; font-weight:bold; font-size:18px; }}
+.section li {{ font-size:13px; color:#2C2C2C; padding:3px 0; }}
 .footer {{ padding:14px 24px; font-size:11px; color:#5A7E7E;
            border-top:1px solid #eee; }}
 </style></head><body>
