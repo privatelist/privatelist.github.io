@@ -154,7 +154,7 @@ def build_report_html(emails, events, slack_msgs, phoenix_now):
     return f"""<!DOCTYPE html>
 <html><head><meta charset="UTF-8"><style>
 * {{ margin:0; padding:0; box-sizing:border-box; }}
-body {{ font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+body {{ font-family:'Lucida Grande','Lucida Sans Unicode','Lucida Sans',Arial,sans-serif;
        background:#fff; width:500px; }}
 .header {{ background:#1E3A5F; padding:18px 24px; color:#fff; }}
 .header h1 {{ font-size:18px; font-weight:700; margin-bottom:4px; }}
