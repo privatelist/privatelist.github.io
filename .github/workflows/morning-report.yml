@@ -1,0 +1,39 @@
+name: PLC Morning Report
+
+on:
+  schedule:
+    - cron: "15 14 * * *"  # 7:15 AM Arizona (UTC-7, no DST)
+  workflow_dispatch:          # allow manual trigger
+
+jobs:
+  morning-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Run morning report
+        env:
+          GMAIL_CLIENT_ID:      ${{ secrets.GMAIL_CLIENT_ID }}
+          GMAIL_CLIENT_SECRET:  ${{ secrets.GMAIL_CLIENT_SECRET }}
+          GMAIL_REFRESH_TOKEN:  ${{ secrets.GMAIL_REFRESH_TOKEN }}
+          GCAL_CLIENT_ID:       ${{ secrets.GCAL_CLIENT_ID }}
+          GCAL_CLIENT_SECRET:   ${{ secrets.GCAL_CLIENT_SECRET }}
+          GCAL_REFRESH_TOKEN:   ${{ secrets.GCAL_REFRESH_TOKEN }}
+          SLACK_BOT_TOKEN:      ${{ secrets.SLACK_BOT_TOKEN }}
+          TELEGRAM_BOT_TOKEN:   ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:     ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python scripts/morning_report.py
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"             -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}"             -d text="⚠️ PLC Morning Report workflow failed. Check GitHub Actions logs."
