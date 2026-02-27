@@ -7,6 +7,9 @@ Fetches Gmail, Google Calendar, Slack → formats → sends via Telegram
 import os
 import json
 import requests
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from datetime import datetime, timezone, timedelta
 
 # ─── Config ───────────────────────────────────────────────────────────────────
@@ -24,6 +27,12 @@ GCAL_REFRESH_TOKEN = os.environ["GCAL_REFRESH_TOKEN"]
 SLACK_BOT_TOKEN = os.environ["SLACK_BOT_TOKEN"]
 
 PHOENIX_TZ_OFFSET = timedelta(hours=-7)  # America/Phoenix (no DST)
+
+SMTP_HOST           = os.environ["NAMESECURE_SMTP_HOST"]
+NAMESECURE_PASS     = os.environ["NAMESECURE_SUPPORT_PASS"]
+REPORT_FROM         = os.environ["REPORT_FROM_EMAIL"]
+REPORT_TO           = os.environ["REPORT_TO_EMAIL"]
+
 
 # ─── OAuth helpers ─────────────────────────────────────────────────────────────
 
@@ -249,6 +258,72 @@ def format_report(
     return "\n".join(lines)
 
 
+
+# ─── Email sender ──────────────────────────────────────────────────────────────
+
+def build_email_html(
+    emails: list[dict],
+    events: list[dict],
+    slack_msgs: list[dict],
+    phoenix_now,
+) -> str:
+    """Populate a simple branded HTML email."""
+    date_str = phoenix_now.strftime("%A, %B %-d, %Y")
+
+    cal_rows = ""
+    for e in events:
+        cal_rows += f"<tr><td style='padding:4px 8px;color:#1E3A5F;'>&#9679;</td><td style='padding:4px 0;'>{e['time']} — {e['summary']}</td></tr>"
+    if not cal_rows:
+        cal_rows = "<tr><td colspan='2' style='padding:4px 0;color:#888;'>No events today.</td></tr>"
+
+    email_rows = ""
+    for em in emails[:8]:
+        sender = em["sender"].split("<")[0].strip().strip('"')[:40]
+        email_rows += f"<tr><td style='padding:4px 8px;color:#C47D3A;'>&#9679;</td><td style='padding:4px 0;'><strong>{em['subject'][:60]}</strong><br><small style='color:#666;'>from {sender}</small></td></tr>"
+    if not email_rows:
+        email_rows = "<tr><td colspan='2' style='padding:4px 0;color:#888;'>No new email.</td></tr>"
+
+    slack_rows = ""
+    for sm in slack_msgs[:5]:
+        slack_rows += f"<tr><td style='padding:4px 8px;color:#C47D3A;'>&#9679;</td><td style='padding:4px 0;'><strong>{sm['channel']}</strong>: {sm['text'][:100]}</td></tr>"
+    if not slack_rows:
+        slack_rows = "<tr><td colspan='2' style='padding:4px 0;color:#888;'>No recent Slack activity.</td></tr>"
+
+    return f"""<!DOCTYPE html>
+<html><body style="margin:0;padding:0;background:#f4f4f4;font-family:Arial,sans-serif;">
+<table width="550" cellpadding="0" cellspacing="0" style="margin:20px auto;background:#fff;border-radius:6px;overflow:hidden;">
+  <tr><td style="background:#1E3A5F;padding:24px 32px;">
+    <h1 style="margin:0;color:#fff;font-size:20px;">Private List Consulting</h1>
+    <p style="margin:4px 0 0;color:#C47D3A;font-size:13px;">Daily Intelligence Report &mdash; {date_str}</p>
+  </td></tr>
+  <tr><td style="padding:24px 32px;">
+    <h2 style="color:#1E3A5F;font-size:15px;border-bottom:2px solid #C47D3A;padding-bottom:6px;">&#128197; Calendar Today</h2>
+    <table width="100%">{cal_rows}</table>
+    <h2 style="color:#1E3A5F;font-size:15px;border-bottom:2px solid #C47D3A;padding-bottom:6px;margin-top:20px;">&#128140; Recent Email</h2>
+    <table width="100%">{email_rows}</table>
+    <h2 style="color:#1E3A5F;font-size:15px;border-bottom:2px solid #C47D3A;padding-bottom:6px;margin-top:20px;">&#128172; Slack</h2>
+    <table width="100%">{slack_rows}</table>
+  </td></tr>
+  <tr><td style="background:#f9f9f9;padding:12px 32px;text-align:center;color:#999;font-size:11px;">
+    Delivered by jFISH &middot; Private List Consulting
+  </td></tr>
+</table></body></html>"""
+
+
+def send_email(html_body: str, date_str: str) -> None:
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = f"PLC Daily Intelligence Report — {date_str}"
+    msg["From"]    = REPORT_FROM
+    msg["To"]      = REPORT_TO
+    msg.attach(MIMEText(html_body, "html"))
+
+    with smtplib.SMTP(SMTP_HOST, 587) as s:
+        s.ehlo()
+        s.starttls()
+        s.login(REPORT_FROM, NAMESECURE_PASS)
+        s.sendmail(REPORT_FROM, [REPORT_TO], msg.as_string())
+
+
 # ─── Main ─────────────────────────────────────────────────────────────────────
 
 def main():
@@ -276,6 +351,14 @@ def main():
 
     print("Sending via Telegram...")
     send_telegram(report)
+    print("  Telegram sent.")
+
+    print("Sending via email...")
+    date_str = phoenix_now.strftime("%A, %B %-d, %Y")
+    html_body = build_email_html(emails, events, slack_msgs, phoenix_now)
+    send_email(html_body, date_str)
+    print("  Email sent.")
+
     print("Done ✓")
 
 
