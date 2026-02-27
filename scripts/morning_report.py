@@ -227,7 +227,7 @@ def build_email_html(emails, events, slack_msgs, phoenix_now):
     slack_items = [f"<strong>{sm['channel']}</strong>: {sm['text'][:80]}" for sm in slack_msgs[:5]]
 
     return f"""<!DOCTYPE html><html><body style="margin:0;padding:0;background:#f4f4f4;font-family:Arial,sans-serif;">
-<table width="550" cellpadding="0" cellspacing="0" style="margin:20px auto;background:#fff;border-radius:6px;overflow:hidden;">
+<table width="550" cellpadding="0" cellspacing="0" style="margin:20px 0;background:#fff;border-radius:6px;overflow:hidden;">
   <tr><td style="background:#1E3A5F;padding:24px 32px;">
     <h1 style="margin:0;color:#fff;font-size:20px;">Private List Consulting</h1>
     <p style="margin:4px 0 0;color:#C47D3A;font-size:13px;">Daily Intelligence Report &mdash; {date_str}</p>
