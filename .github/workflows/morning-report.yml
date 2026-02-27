@@ -20,6 +20,9 @@ jobs:
       - name: Install dependencies
         run: pip install -r scripts/requirements.txt
 
+      - name: Install Playwright browser
+        run: playwright install chromium --with-deps
+
       - name: Run morning report
         env:
           GMAIL_CLIENT_ID:          ${{ secrets.GMAIL_CLIENT_ID }}
