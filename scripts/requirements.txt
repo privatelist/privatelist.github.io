@@ -1,1 +1,5 @@
-requests>=2.31.0
+requests
+google-auth
+google-auth-oauthlib
+slack-sdk
+playwright
