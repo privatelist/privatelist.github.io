@@ -20,7 +20,7 @@ If the sub-agent fails, fix the sub-agent — do not fall back to loading the tr
 ## The Workflow
 
 1. Joseph sends a YouTube URL
-2. Elle spawns a sub-agent (Haiku) with the URL and task
+2. Agent spawns a sub-agent (Haiku) with the URL and task
 3. Sub-agent runs `yt_transcript.py`, reads transcript, returns structured summary
 4. Sub-agent session ends — transcript is gone
 5. Main session receives summary only
@@ -40,7 +40,7 @@ Then return a structured summary with:
 - 1-paragraph overview of what the video is about
 - Key topics covered with approximate timestamps
 - Actionable takeaways or decisions relevant to PrivateList
-- The transcript file path from the TRANSCRIPT_SAVED line in the output
+- The transcript file path from the TRANSCRIPT_FILE line in the output
 
 IMPORTANT: Return the summary only. Do NOT include the full transcript text in your response.""",
     model="anthropic/claude-haiku-4-5",
@@ -63,7 +63,7 @@ Saves transcript to: `/data/.openclaw/workspace/transcripts/`
 ## If the Script Fails
 1. Check Supadata key: `/data/.openclaw/secrets/supadata.key`
 2. Check Supadata free tier limit (100 req/month)
-3. Try direct curl: `curl -s "https://api.supadata.ai/v1/youtube/transcript?url=<URL>&text=true" -H "x-api-key: $(cat /data/.openclaw/secrets/supadata.key)"`
+3. Try direct curl: `curl -s "https://api.supadata.ai/v1/transcript?url=<URL>&lang=en&text=true" -H "x-api-key: $(cat /data/.openclaw/secrets/supadata.key)"`
 4. If all methods fail — tell Joseph, do NOT dump raw content into main session
 
 ---
