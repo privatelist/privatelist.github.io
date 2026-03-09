@@ -1,75 +1,53 @@
 # PROJECT_STATUS.md
-Compiled: 2026-02-24 by joFish | Updated: 2026-02-24 by PList2
+Compiled: 2026-02-24 by joFish | Updated: 2026-03-09 by Claude/Joseph
 
----
+## AGENT TEAM - CURRENT STATE (2026-03-09)
 
-## ✅ NAMING — RESOLVED 2026-02-24
+| Agent | Server | Status | Version |
+|---|---|---|---|
+| Jetson AI | srv1473335 | LIVE - main coordinating agent | Native 3.7 |
+| Elle AI | srv1343301 | LIVE | Docker 2026.2.22-2 |
+| Reid AI | srv1414274 | LIVE | Docker 2026.2.22-2 |
+| Jon AI | srv1350208 | Needs repair session | Docker 2026.2.22-2 |
 
-"P1/P2/P3/P4" labels are **retired**. Going forward:
-- **Core Principles** — strategic projects (Team Architecture, Quiet Revenue, Token Economy, Mesh Network, Building the Thing)
-- **Verticals** — market segments (Law Firm, Medical, Real Estate)
+WARNING: Do NOT upgrade Elle, Reid, or Jon past 2026.2.22-2
+Hostinger crash bug in 2026.2.24 - all Docker agents pinned intentionally.
 
----
+## NAMING - RESOLVED 2026-02-24
+P1/P2/P3/P4 labels are retired. Use names only:
+- Core Principles: Team Architecture, Quiet Revenue, Token Economy, Mesh Network, Building the Thing
+- Verticals: Law Firm, Medical, Real Estate
 
-## 1. CORE STRATEGIC PROJECTS
+## CORE STRATEGIC PROJECTS
+- Team Architecture: OPERATIONAL
+- Quiet Revenue: In progress
+- Token Economy: Partial
+- Mesh Network: Design done, not built
+- Building the Thing: In progress
 
-| Project | Status |
-|---|---|
-| Team Architecture | ✅ Operational |
-| Quiet Revenue | 🔄 In progress |
-| Token Economy | 🔄 Partial |
-| Mesh Network | ⏳ Design done, not built |
-| Building the Thing | 🔄 In progress |
+## TARGET MARKETS
+- Law Firm Morning Briefing: Client-ready ($3,500 + $750-1,500/mo)
+- Real Estate Speed-to-Lead: Implementation-ready ($3,500-8,000 + retainer)
+- Medical No-Show Prediction: 2-3 hrs polish needed ($2,500-5,000 + retainer)
 
----
+## ACTIVE BUILDS
+- Law Firm Morning Briefing: DONE - demo-ready
+- Discovery Package v4.1: DONE - Upwork-ready
+- Real Estate Speed-to-Lead: DONE
+- Status Dashboard: LIVE (privatelist/status-dashboard)
+- Medical no-show prevention: needs client format polish
+- Morning Intelligence Report: GitHub Actions - broken since Mar 3, redesign pending
+- Token service for onboard-secure: pending
+- Jon AI repair: next priority
+- Reid rebuild on native 3.7: planned
 
-## 2. TARGET MARKETS (Verticals)
+## CORE BREAKTHROUGH
+Transparent AI Discovery - the discovery experience IS the product demo.
+Transparency is the competitive advantage. No exceptions.
 
-| Vertical | Status | Revenue |
-|---|---|---|
-| Law Firm — Morning Briefing | ✅ Client-ready | $3,500 + $750–1,500/mo |
-| Real Estate — Speed-to-Lead | ✅ Implementation-ready | $3,500–8,000 + retainer |
-| Medical — No-Show Prediction | 🔄 2–3 hrs polish needed | $2,500–5,000 + retainer |
-
----
-
-## 3. ACTIVE BUILDS
-
-- ✅ Law Firm Morning Briefing (n8n workflow, demo-ready)
-- ✅ Discovery Package v4.1 (8.5–9/10, Upwork-ready)
-- ✅ Real Estate Speed-to-Lead spec
-- 🔄 Medical no-show prevention (needs client format)
-- 🔄 HIPAA Webhook Architecture (needs client explanation)
-- ⏳ RESO Real Estate Adapter
-- ⏳ Discovery Portal (stub only)
-- ⏳ Intake Form (awaiting Pixel design)
-
----
-
-## 4. CORE BREAKTHROUGH
-
-**Transparent AI Discovery** — don't hide the AI, the discovery experience IS the product demo. Transparency is the competitive advantage. Applies to all prospect-facing interactions, no exceptions.
-
----
-
-## 5. GITHUB / LIVE URLS
-
+## LIVE URLS
 - Main site: https://privatelistconsulting.com
-- Demos: /demos.html (not /demos/ — 404s)
-- Onboard (internal): /onboard/
-- Onboard Secure (public): /onboard-secure/ — token service pending
-
----
-
-## 6. KEY BLOCKERS
-
-| Item | Owner |
-|---|---|
-| Naming conflict (P1–P3) | ✅ Resolved — labels retired 2026-02-24 |
-| MLS Board decisions (SDAR, NTREIS, OneKey) | Joseph / Boards |
-| /demos/ link fix | ✅ DONE — PList2 2026-02-24 |
-| Medical deliverable polish | Scribe/joFish |
-| Token service for onboard-secure | Team |
-| Mesh Network build | joFish |
-| YouTube transcript pipeline | ✅ DONE — all 3 agents operational 2026-02-24 |
-| Intake form (Pixel design → Scribe build) | Pixel then Scribe |
+- Demos: /demos.html
+- Onboard internal: /onboard/
+- Onboard Secure: /onboard-secure/ (token service pending)
+- Status Dashboard: https://status-dashboard-omega.vercel.app
