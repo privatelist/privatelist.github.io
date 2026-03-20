@@ -14,26 +14,52 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 # ─── Config ───────────────────────────────────────────────────────────────────
-TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
-TELEGRAM_CHAT_ID   = os.environ["TELEGRAM_CHAT_ID"]
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN"]
+TELEGRAM_CHAT_ID   = os.environ.get("TELEGRAM_CHAT_ID"]
 
-GMAIL_CLIENT_ID     = os.environ["GMAIL_CLIENT_ID"]
-GMAIL_CLIENT_SECRET = os.environ["GMAIL_CLIENT_SECRET"]
-GMAIL_REFRESH_TOKEN = os.environ["GMAIL_REFRESH_TOKEN"]
+GMAIL_CLIENT_ID     = os.environ.get("GMAIL_CLIENT_ID"]
+GMAIL_CLIENT_SECRET = os.environ.get("GMAIL_CLIENT_SECRET"]
+GMAIL_REFRESH_TOKEN = os.environ.get("GMAIL_REFRESH_TOKEN"]
 
-GCAL_CLIENT_ID     = os.environ["GCAL_CLIENT_ID"]
-GCAL_CLIENT_SECRET = os.environ["GCAL_CLIENT_SECRET"]
-GCAL_REFRESH_TOKEN = os.environ["GCAL_REFRESH_TOKEN"]
+GCAL_CLIENT_ID     = os.environ.get("GCAL_CLIENT_ID"]
+GCAL_CLIENT_SECRET = os.environ.get("GCAL_CLIENT_SECRET"]
+GCAL_REFRESH_TOKEN = os.environ.get("GCAL_REFRESH_TOKEN"]
 
-SLACK_BOT_TOKEN = os.environ["SLACK_BOT_TOKEN"]
+SLACK_BOT_TOKEN = os.environ.get("SLACK_BOT_TOKEN"]
 
-SMTP_HOST       = os.environ["NAMESECURE_SMTP_HOST"]
-SMTP_PASS       = os.environ["NAMESECURE_SUPPORT_PASS"]
-REPORT_FROM     = os.environ["REPORT_FROM_EMAIL"]
-REPORT_TO       = os.environ["REPORT_TO_EMAIL"]
+SMTP_HOST       = os.environ.get("NAMESECURE_SMTP_HOST"]
+SMTP_PASS       = os.environ.get("NAMESECURE_SUPPORT_PASS"]
+REPORT_FROM     = os.environ.get("REPORT_FROM_EMAIL"]
+REPORT_TO       = os.environ.get("REPORT_TO_EMAIL"]
 
 PHOENIX_TZ_OFFSET = timedelta(hours=-7)  # America/Phoenix (no DST)
 
+
+
+# ─── Preflight / helpers ────────────────────────────────────────────────────
+def required_envs_preflight():
+    """Return a list of missing required environment variable names.
+
+    This avoids a KeyError at import time and prints a clear message in CI.
+    """
+    required = [
+        "TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID",
+        "GMAIL_CLIENT_ID", "GMAIL_CLIENT_SECRET", "GMAIL_REFRESH_TOKEN",
+        "GCAL_CLIENT_ID", "GCAL_CLIENT_SECRET", "GCAL_REFRESH_TOKEN",
+        "SLACK_BOT_TOKEN",
+        "NAMESECURE_SMTP_HOST", "NAMESECURE_SUPPORT_PASS",
+        "REPORT_FROM_EMAIL", "REPORT_TO_EMAIL",
+    ]
+    missing = [k for k in required if not __import__('os').environ.get(k)]
+    return missing
+
+# When executed as a script, fail fast with a clear message about missing secrets.
+if __name__ == "__main__":
+    miss = required_envs_preflight()
+    if miss:
+        print("Missing required environment variables:", ", ".join(miss))
+        print("Please set the missing GitHub Secrets or environment variables and retry.")
+        raise SystemExit(2)
 
 # ─── OAuth helpers ─────────────────────────────────────────────────────────────
 def get_google_access_token(client_id, client_secret, refresh_token):
