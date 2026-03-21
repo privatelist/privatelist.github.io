@@ -23,6 +23,19 @@ jobs:
       - name: Install Playwright browser
         run: playwright install chromium --with-deps
 
+      - name: Echo secret presence
+        run: |
+          python - << 'PY'
+import os
+required=[
+  'GMAIL_CLIENT_ID','GMAIL_CLIENT_SECRET','GMAIL_REFRESH_TOKEN',
+  'GCAL_CLIENT_ID','GCAL_CLIENT_SECRET','GCAL_REFRESH_TOKEN',
+  'SLACK_BOT_TOKEN','TELEGRAM_BOT_TOKEN','TELEGRAM_CHAT_ID',
+  'NAMESECURE_SMTP_HOST','NAMESECURE_SUPPORT_PASS','REPORT_FROM_EMAIL','REPORT_TO_EMAIL'
+]
+missing=[k for k in required if not os.environ.get(k)]
+print('SECRETS_MISSING:' + (', '.join(missing) if missing else 'NONE'))
+PY
       - name: Run morning report
         env:
           GMAIL_CLIENT_ID:          ${{ secrets.GMAIL_CLIENT_ID }}
