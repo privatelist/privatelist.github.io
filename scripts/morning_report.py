@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 PLC Daily Intelligence Report
-Fetches Gmail, Google Calendar, Slack → formats → sends via Telegram image + email
+Fetches Gmail, Google Calendar, Slack â formats â sends via Telegram image + email
 """
 
 import os
@@ -13,30 +13,30 @@ from datetime import datetime, timezone, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-# ─── Config ───────────────────────────────────────────────────────────────────
-TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN"]
-TELEGRAM_CHAT_ID   = os.environ.get("TELEGRAM_CHAT_ID"]
+# âââ Config âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID   = os.environ.get("TELEGRAM_CHAT_ID")
 
-GMAIL_CLIENT_ID     = os.environ.get("GMAIL_CLIENT_ID"]
-GMAIL_CLIENT_SECRET = os.environ.get("GMAIL_CLIENT_SECRET"]
-GMAIL_REFRESH_TOKEN = os.environ.get("GMAIL_REFRESH_TOKEN"]
+GMAIL_CLIENT_ID     = os.environ.get("GMAIL_CLIENT_ID")
+GMAIL_CLIENT_SECRET = os.environ.get("GMAIL_CLIENT_SECRET")
+GMAIL_REFRESH_TOKEN = os.environ.get("GMAIL_REFRESH_TOKEN")
 
-GCAL_CLIENT_ID     = os.environ.get("GCAL_CLIENT_ID"]
-GCAL_CLIENT_SECRET = os.environ.get("GCAL_CLIENT_SECRET"]
-GCAL_REFRESH_TOKEN = os.environ.get("GCAL_REFRESH_TOKEN"]
+GCAL_CLIENT_ID     = os.environ.get("GCAL_CLIENT_ID")
+GCAL_CLIENT_SECRET = os.environ.get("GCAL_CLIENT_SECRET")
+GCAL_REFRESH_TOKEN = os.environ.get("GCAL_REFRESH_TOKEN")
 
-SLACK_BOT_TOKEN = os.environ.get("SLACK_BOT_TOKEN"]
+SLACK_BOT_TOKEN = os.environ.get("SLACK_BOT_TOKEN")
 
-SMTP_HOST       = os.environ.get("NAMESECURE_SMTP_HOST"]
-SMTP_PASS       = os.environ.get("NAMESECURE_SUPPORT_PASS"]
-REPORT_FROM     = os.environ.get("REPORT_FROM_EMAIL"]
-REPORT_TO       = os.environ.get("REPORT_TO_EMAIL"]
+SMTP_HOST       = os.environ.get("NAMESECURE_SMTP_HOST")
+SMTP_PASS       = os.environ.get("NAMESECURE_SUPPORT_PASS")
+REPORT_FROM     = os.environ.get("REPORT_FROM_EMAIL")
+REPORT_TO       = os.environ.get("REPORT_TO_EMAIL")
 
 PHOENIX_TZ_OFFSET = timedelta(hours=-7)  # America/Phoenix (no DST)
 
 
 
-# ─── Preflight / helpers ────────────────────────────────────────────────────
+# âââ Preflight / helpers ââââââââââââââââââââââââââââââââââââââââââââââââââââ
 def required_envs_preflight():
     """Return a list of missing required environment variable names.
 
@@ -61,7 +61,7 @@ if __name__ == "__main__":
         print("Please set the missing GitHub Secrets or environment variables and retry.")
         raise SystemExit(2)
 
-# ─── OAuth helpers ─────────────────────────────────────────────────────────────
+# âââ OAuth helpers âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 def get_google_access_token(client_id, client_secret, refresh_token):
     r = requests.post(
         "https://oauth2.googleapis.com/token",
@@ -73,7 +73,7 @@ def get_google_access_token(client_id, client_secret, refresh_token):
     return r.json()["access_token"]
 
 
-# ─── Gmail ────────────────────────────────────────────────────────────────────
+# âââ Gmail ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 def fetch_gmail(access_token):
     headers = {"Authorization": f"Bearer {access_token}"}
     cutoff  = int((datetime.now(timezone.utc) - timedelta(hours=24)).timestamp())
@@ -98,7 +98,7 @@ def fetch_gmail(access_token):
     return emails
 
 
-# ─── Google Calendar ──────────────────────────────────────────────────────────
+# âââ Google Calendar ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 def fetch_calendar(access_token):
     headers   = {"Authorization": f"Bearer {access_token}"}
     now_utc   = datetime.now(timezone.utc)
@@ -126,7 +126,7 @@ def fetch_calendar(access_token):
     return events
 
 
-# ─── Slack ────────────────────────────────────────────────────────────────────
+# âââ Slack ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 SLACK_CHANNELS_OF_INTEREST = ["general", "engineering", "alerts", "random"]
 
 def fetch_slack(bot_token):
@@ -158,7 +158,7 @@ def fetch_slack(bot_token):
     return results
 
 
-# ─── HTML report builder ──────────────────────────────────────────────────────
+# âââ HTML report builder ââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 def build_report_html(emails, events, slack_msgs, phoenix_now):
     date_str = phoenix_now.strftime("%b %-d, %Y")
     time_str = phoenix_now.strftime("%-I:%M %p")
@@ -207,7 +207,7 @@ body {{ font-family:'Lucida Grande','Lucida Sans Unicode','Lucida Sans',Arial,sa
 </body></html>"""
 
 
-# ─── Telegram image delivery ──────────────────────────────────────────────────
+# âââ Telegram image delivery ââââââââââââââââââââââââââââââââââââââââââââââââââ
 def send_telegram_image(html):
     from playwright.sync_api import sync_playwright
     with tempfile.TemporaryDirectory() as tmp:
@@ -230,7 +230,7 @@ def send_telegram_image(html):
                 timeout=30).raise_for_status()
 
 
-# ─── Email delivery ───────────────────────────────────────────────────────────
+# âââ Email delivery âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 def build_email_html(emails, events, slack_msgs, phoenix_now):
     date_str = phoenix_now.strftime("%A, %B %-d, %Y")
 
@@ -282,7 +282,7 @@ def send_email(html_body, date_str):
         s.sendmail(REPORT_FROM, [REPORT_TO], msg.as_string())
 
 
-# ─── Main ─────────────────────────────────────────────────────────────────────
+# âââ Main âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 def main():
     phoenix_now = datetime.now(timezone.utc) + PHOENIX_TZ_OFFSET
 
