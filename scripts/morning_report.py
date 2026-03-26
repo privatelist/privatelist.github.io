@@ -5,7 +5,7 @@ Fetches Gmail, Google Calendar, Slack — formats — sends via Telegram image +
 
 v2 — Resilient: each data source is independent. If one fails, the report
      still generates with whatever data IS available. Failures are shown
-     inline so the reader knows what’s missing and why.
+     inline so the reader knows what's missing and why.
 """
 
 import os
@@ -18,7 +18,7 @@ from datetime import datetime, timezone, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-# ─── Config ──────────────────────────────────────────────────────────────────────────────
+# ─── Config ──────────────────────────────────────────────────────────────────
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID   = os.environ.get("TELEGRAM_CHAT_ID")
 
@@ -38,8 +38,9 @@ REPORT_FROM = os.environ.get("REPORT_FROM_EMAIL")
 REPORT_TO   = os.environ.get("REPORT_TO_EMAIL")
 
 PHOENIX_TZ_OFFSET = timedelta(hours=-7)  # America/Phoenix (no DST)
+PHOENIX_TZ = timezone(timedelta(hours=-7))
 
-# ─── Preflight ─────────────────────────────────────────────────────────────────────
+# ─── Preflight ───────────────────────────────────────────────────────────────
 def required_envs_preflight():
     """Check for critical delivery secrets only. Data-source secrets are
     checked at fetch time so a missing source doesn't block the whole report."""
@@ -52,7 +53,7 @@ def required_envs_preflight():
     return missing
 
 
-# ─── OAuth helpers ─────────────────────────────────────────────────────────────────
+# ─── OAuth helpers ───────────────────────────────────────────────────────────
 def get_google_access_token(client_id, client_secret, refresh_token):
     """Exchange a refresh token for an access token. Raises on failure."""
     r = requests.post(
@@ -77,7 +78,7 @@ def get_google_access_token(client_id, client_secret, refresh_token):
     return r.json()["access_token"]
 
 
-# ─── Gmail ───────────────────────────────────────────────────────────────────────────────
+# ─── Gmail ───────────────────────────────────────────────────────────────────
 def fetch_gmail(access_token):
     headers = {"Authorization": f"Bearer {access_token}"}
     cutoff = int((datetime.now(timezone.utc) - timedelta(hours=24)).timestamp())
@@ -108,7 +109,7 @@ def fetch_gmail(access_token):
     return emails
 
 
-# ─── Google Calendar ─────────────────────────────────────────────────────────────
+# ─── Google Calendar ─────────────────────────────────────────────────────────
 def fetch_calendar(access_token):
     headers = {"Authorization": f"Bearer {access_token}"}
     now_utc = datetime.now(timezone.utc)
@@ -134,14 +135,14 @@ def fetch_calendar(access_token):
         start_dt = start.get("dateTime") or start.get("date", "")
         if "T" in start_dt:
             dt = datetime.fromisoformat(start_dt.replace("Z", "+00:00"))
-            time_str = (dt + PHOENIX_TZ_OFFSET).strftime("%I:%M %p").lstrip("0")
+            time_str = dt.astimezone(PHOENIX_TZ).strftime("%I:%M %p").lstrip("0")
         else:
             time_str = "All Day"
         events.append({"time": time_str, "summary": item.get("summary", "(no title)")})
     return events
 
 
-# ─── Slack ───────────────────────────────────────────────────────────────────────────────
+# ─── Slack ───────────────────────────────────────────────────────────────────
 SLACK_CHANNELS_OF_INTEREST = ["general", "engineering", "alerts", "random"]
 
 def fetch_slack(bot_token):
@@ -180,7 +181,7 @@ def fetch_slack(bot_token):
     return results
 
 
-# ─── Safe fetch wrappers ───────────────────────────────────────────────────────────
+# ─── Safe fetch wrappers ─────────────────────────────────────────────────────
 # Each returns (data_list, error_string_or_None)
 
 def safe_fetch_gmail():
@@ -218,7 +219,7 @@ def safe_fetch_slack():
         return [], f"Slack failed: {e}"
 
 
-# ─── HTML report builder (Telegram image) ─────────────────────────────────────────
+# ─── HTML report builder (Telegram image) ───────────────────────────────────
 def build_report_html(emails, events, slack_msgs, errors, phoenix_now):
     date_str = phoenix_now.strftime("%b %-d, %Y")
     time_str = phoenix_now.strftime("%-I:%M %p")
@@ -302,7 +303,7 @@ body {{ font-family:'Lucida Grande','Lucida Sans Unicode','Lucida Sans',Arial,sa
 </body></html>"""
 
 
-# ─── Telegram image delivery ────────────────────────────────────────────────────
+# ─── Telegram image delivery ────────────────────────────────────────────────
 def send_telegram_image(html):
     from playwright.sync_api import sync_playwright
 
@@ -327,7 +328,7 @@ def send_telegram_image(html):
             ).raise_for_status()
 
 
-# ─── Email delivery ───────────────────────────────────────────────────────────────
+# ─── Email delivery ─────────────────────────────────────────────────────────
 def build_email_html(emails, events, slack_msgs, errors, phoenix_now):
     date_str = phoenix_now.strftime("%A, %B %-d, %Y")
 
@@ -408,7 +409,7 @@ def send_email(html_body, date_str):
         s.sendmail(REPORT_FROM, [REPORT_TO], msg.as_string())
 
 
-# ─── Main ────────────────────────────────────────────────────────────────────────────────
+# ─── Main ────────────────────────────────────────────────────────────────────
 def main():
     phoenix_now = datetime.now(timezone.utc) + PHOENIX_TZ_OFFSET
 
