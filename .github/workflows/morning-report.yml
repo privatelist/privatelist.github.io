@@ -38,6 +38,7 @@ jobs:
           NAMESECURE_SUPPORT_PASS: ${{ secrets.NAMESECURE_SUPPORT_PASS }}
           REPORT_FROM_EMAIL: ${{ secrets.REPORT_FROM_EMAIL }}
           REPORT_TO_EMAIL: ${{ secrets.REPORT_TO_EMAIL }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           python3 -c "
           import os
@@ -49,6 +50,9 @@ jobs:
           ]
           missing=[k for k in required if not os.environ.get(k)]
           print('SECRETS_MISSING:' + (', '.join(missing) if missing else 'NONE'))
+          optional=['GEMINI_API_KEY']
+          opt_missing=[k for k in optional if not os.environ.get(k)]
+          print('OPTIONAL_MISSING:' + (', '.join(opt_missing) if opt_missing else 'NONE'))
           "
 
       - name: Run morning report
@@ -66,6 +70,7 @@ jobs:
           NAMESECURE_SUPPORT_PASS: ${{ secrets.NAMESECURE_SUPPORT_PASS }}
           REPORT_FROM_EMAIL: ${{ secrets.REPORT_FROM_EMAIL }}
           REPORT_TO_EMAIL: ${{ secrets.REPORT_TO_EMAIL }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python scripts/morning_report.py
 
       - name: Notify on failure
