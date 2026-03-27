@@ -268,7 +268,7 @@ def call_gemini(prompt):
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {
             "temperature": 0.3,
-            "maxOutputTokens": 800,
+            "maxOutputTokens": 8550,
         },
     }
     r = requests.post(
