@@ -1,0 +1,81 @@
+OpenClaw Token Service — Deploy instructions (for Claude)
+
+Purpose: install a minimal token service to support /onboard-secure/
+
+Files provided:
+- token-service.js  (place under /opt/openclaw-token-service/token-service.js)
+
+High-level steps (do these on the VPS host):
+
+1) Backup existing service files (if present)
+
+sudo mkdir -p /opt/openclaw-token-service.backup
+sudo cp -a /opt/openclaw-token-service/* /opt/openclaw-token-service.backup/ 2>/dev/null || true
+
+2) Copy new token-service files into place
+# (from the workspace). You may scp/upload, or paste the file.
+sudo mkdir -p /opt/openclaw-token-service
+sudo cp /data/.openclaw/workspace/openclaw-token-service/token-service.js /opt/openclaw-token-service/token-service.js
+sudo chown -R root:root /opt/openclaw-token-service
+sudo chmod 644 /opt/openclaw-token-service/token-service.js
+
+3) Ensure systemd unit exists (example). If there's already a unit file, edit accordingly.
+# Example unit (if not present, create /etc/systemd/system/openclaw-token-service.service)
+# [Unit]
+# Description=OpenClaw Token Service
+# After=network.target
+#
+# [Service]
+# Type=simple
+# ExecStart=/usr/bin/node /opt/openclaw-token-service/token-service.js
+# Restart=on-failure
+# Environment=NODE_ENV=production
+# Environment=SERVICE_SECRET=YOUR_SECRET_HERE
+# Environment=USE_MOCK=true  # set to true for smoke tests, false for real provider
+# SyslogIdentifier=openclaw-token-service
+#
+# [Install]
+# WantedBy=multi-user.target
+
+4) Set up environment and start
+# Generate/decide SERVICE_SECRET (rotate old if needed)
+# Put the secret in /opt/openclaw-token-service/.env.production or in the systemd unit as Environment=SERVICE_SECRET=...
+
+# For smoke tests, use a mock ephemeral token generator:
+# set USE_MOCK=true in environment (temporary)
+
+# Reload systemd and start
+sudo systemctl daemon-reload
+sudo systemctl enable --now openclaw-token-service
+sudo systemctl restart openclaw-token-service
+sudo systemctl status openclaw-token-service --no-pager
+
+5) Smoke tests (commands to run locally/on host)
+
+# 5.1 Admin generate (use SERVICE_SECRET value)
+curl -X POST https://api.privatelistconsulting.com:8443/api/admin/generate-access-url \
+  -H "Authorization: Bearer [NEW_SERVICE_SECRET]"
+
+# Response should be JSON with accessUrl (access token redacted)
+
+# 5.2 Redeem (replace [ACCESS_PARAM] with the access query parameter extracted from the URL)
+curl "https://api.privatelistconsulting.com:8443/api/onboarding-token?access=[ACCESS_PARAM]"
+
+# Should return JSON with token and expiresAt (in mock mode token is synthetic)
+
+# 5.3 Redeem again (same param) -> should fail with 401 invalid access token
+curl "https://api.privatelistconsulting.com:8443/api/onboarding-token?access=[ACCESS_PARAM]"
+
+# 5.4 Check logs
+sudo journalctl -u openclaw-token-service -n 200 --no-pager
+
+6) After verification
+- Turn off USE_MOCK (if used) and implement real createEphemeralToken() provider call.
+- Ensure Caddy or reverse proxy routes api.privatelistconsulting.com:8443 to localhost:3100
+
+Notes & security
+- Do NOT log full tokens. This code only logs fingerprints.
+- Remove any hard-coded secrets from the frontend repo (index.html). The front end should not include any SERVICE_SECRET.
+- For production: replace the mock createEphemeralToken() with a proper provider call to generate ephemeral Gemini tokens.
+
+If anything fails, restore backup and tell Jon the exact error lines from journalctl.

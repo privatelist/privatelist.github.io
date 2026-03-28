@@ -42,6 +42,17 @@
                     </ul>
                 </div>
 
+                <!-- Debug key input (debug mode only) -->
+                <div id="debugKey" style="margin:12px 0; display:none;">
+                    <label for="devKey">Developer API Key (debug mode):</label>
+                    <input id="devKey" type="password" placeholder="Paste API key here" style="width:100%; max-width:420px; margin:6px 0;" />
+                    <div>
+                        <button class="btn btn-secondary" id="setKeyBtn">Set Key (session)</button>
+                        <button class="btn btn-secondary" id="clearKeyBtn">Clear Key</button>
+                        <small style="display:block;color:#666;margin-top:6px;">Visible only when <code>?debug=true</code> is present in the URL. Keys are stored in session only.</small>
+                    </div>
+                </div>
+
                 <div class="permissions-note">
                     <p>You'll need to allow screen sharing and microphone access when prompted.</p>
                 </div>
@@ -120,6 +131,77 @@ Guidelines:
 
 Start by greeting them warmly and asking what they'd like help with today.`
         };
+
+        // Debug helper: show a small in-page key input when ?debug=true
+        (function(){
+            try {
+                const debug = new URLSearchParams(window.location.search).get('debug') === 'true';
+                if(debug){
+                    document.getElementById('debugKey').style.display = 'block';
+                    const keyInput = document.getElementById('devKey');
+                    const setBtn = document.getElementById('setKeyBtn');
+                    const clearBtn = document.getElementById('clearKeyBtn');
+                    // restore from session if present
+                    if(sessionStorage.getItem('onboard_gemini_key')){
+                        keyInput.value = sessionStorage.getItem('onboard_gemini_key');
+                        window.GEMINI_API_KEY = keyInput.value;
+                        console.log('Onboard debug: restored key from sessionStorage (masked).');
+                    }
+                    setBtn.addEventListener('click', ()=>{
+                        const k = keyInput.value.trim();
+                        if(!k){ alert('Paste a key first.'); return; }
+                        sessionStorage.setItem('onboard_gemini_key', k);
+                        window.GEMINI_API_KEY = k;
+                        alert('API key set for this session.');
+                        console.log('Onboard debug: API key set in session (masked).');
+                    });
+                    clearBtn.addEventListener('click', ()=>{
+                        sessionStorage.removeItem('onboard_gemini_key');
+                        delete window.GEMINI_API_KEY;
+                        keyInput.value = '';
+                        alert('API key cleared from session.');
+                    });
+
+                    // WS message logging (debug only)
+                    try{
+                        const origAdd = WebSocket.prototype.addEventListener;
+                        WebSocket.prototype.addEventListener = function(type, handler, ...rest){
+                            if(type === 'message'){
+                                const wrapped = function(ev){
+                                    try{
+                                        let preview = ev.data;
+                                        if(typeof preview === 'string') preview = preview.slice(0,200);
+                                        else if(ev.data instanceof Blob) preview = '[Blob]';
+                                        console.log('[WS IN]', preview);
+                                    }catch(e){console.warn('WS preview failed', e);} 
+                                    return handler.call(this, ev);
+                                };
+                                return origAdd.call(this, type, wrapped, ...rest);
+                            }
+                            return origAdd.call(this, type, handler, ...rest);
+                        };
+                        console.log('WS message logging enabled (debug mode).');
+                    }catch(e){ console.warn('WS logging init failed', e); }
+                }
+
+                // Audio resume & playback helper on Start button
+                const startBtn = document.getElementById('startBtn');
+                if(startBtn){
+                    startBtn.addEventListener('click', ()=>{
+                        try{
+                            const audioCandidates = [window.audioContext, window.actx, window.__audioContext, window.__appAudioContext];
+                            audioCandidates.forEach(c=>{
+                                if(c && c.state === 'suspended' && typeof c.resume === 'function'){
+                                    c.resume().then(()=>console.log('AudioContext resumed (candidate).')).catch(()=>{});
+                                }
+                            });
+                            Array.from(document.querySelectorAll('audio, video')).forEach(el=>{ el.muted = false; el.volume = 1; });
+                            console.log('Start pressed: attempted audio resume and unmute.');
+                        }catch(e){ console.warn('Audio resume attempt failed', e); }
+                    });
+                }
+            } catch(e){ console.warn('Debug UI init failed', e); }
+        })();
     </script>
 
     <script type="module" src="js/main.js?v=6"></script>
