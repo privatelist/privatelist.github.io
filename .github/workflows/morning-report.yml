@@ -28,6 +28,7 @@ jobs:
           GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
           GMAIL_CLIENT_SECRET: ${{ secrets.GMAIL_CLIENT_SECRET }}
           GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
+          GMAIL2_REFRESH_TOKEN: ${{ secrets.GMAIL2_REFRESH_TOKEN }}
           GCAL_CLIENT_ID: ${{ secrets.GCAL_CLIENT_ID }}
           GCAL_CLIENT_SECRET: ${{ secrets.GCAL_CLIENT_SECRET }}
           GCAL_REFRESH_TOKEN: ${{ secrets.GCAL_REFRESH_TOKEN }}
@@ -43,7 +44,7 @@ jobs:
           python3 -c "
           import os
           required=[
-            'GMAIL_CLIENT_ID','GMAIL_CLIENT_SECRET','GMAIL_REFRESH_TOKEN',
+            'GMAIL_CLIENT_ID','GMAIL_CLIENT_SECRET','GMAIL_REFRESH_TOKEN','GMAIL2_REFRESH_TOKEN',
             'GCAL_CLIENT_ID','GCAL_CLIENT_SECRET','GCAL_REFRESH_TOKEN',
             'SLACK_BOT_TOKEN','TELEGRAM_BOT_TOKEN','TELEGRAM_CHAT_ID',
             'NAMESECURE_SMTP_HOST','NAMESECURE_SUPPORT_PASS','REPORT_FROM_EMAIL','REPORT_TO_EMAIL'
@@ -60,6 +61,7 @@ jobs:
           GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
           GMAIL_CLIENT_SECRET: ${{ secrets.GMAIL_CLIENT_SECRET }}
           GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
+          GMAIL2_REFRESH_TOKEN: ${{ secrets.GMAIL2_REFRESH_TOKEN }}
           GCAL_CLIENT_ID: ${{ secrets.GCAL_CLIENT_ID }}
           GCAL_CLIENT_SECRET: ${{ secrets.GCAL_CLIENT_SECRET }}
           GCAL_REFRESH_TOKEN: ${{ secrets.GCAL_REFRESH_TOKEN }}
