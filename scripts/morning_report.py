@@ -31,6 +31,8 @@ GMAIL_CLIENT_ID     = os.environ.get("GMAIL_CLIENT_ID")
 GMAIL_CLIENT_SECRET = os.environ.get("GMAIL_CLIENT_SECRET")
 GMAIL_REFRESH_TOKEN = os.environ.get("GMAIL_REFRESH_TOKEN")
 
+GMAIL2_REFRESH_TOKEN = os.environ.get("GMAIL2_REFRESH_TOKEN")  # jhconrad2@gmail.com
+
 GCAL_CLIENT_ID     = os.environ.get("GCAL_CLIENT_ID")
 GCAL_CLIENT_SECRET = os.environ.get("GCAL_CLIENT_SECRET")
 GCAL_REFRESH_TOKEN = os.environ.get("GCAL_REFRESH_TOKEN")
@@ -213,7 +215,8 @@ def build_ai_prompt(emails, events, slack_msgs, errors, phoenix_now):
         email_lines = []
         for em in emails[:15]:
             sender = em["sender"].split("<")[0].strip().strip('"')[:40]
-            email_lines.append(f"  - From: {sender} | Subject: {em['subject'][:80]} | Preview: {em['snippet'][:100]}")
+            acct = em.get("account", "unknown")
+            email_lines.append(f"  - [{acct}] From: {sender} | Subject: {em['subject'][:80]} | Preview: {em['snippet'][:100]}")
         email_block = "EMAIL (last 24 hours):\n" + "\n".join(email_lines)
 
     # Slack section
@@ -353,15 +356,32 @@ def parse_ai_summary(raw_summary):
 # Each returns (data_list, error_string_or_None)
 
 def safe_fetch_gmail():
-    """Attempt Gmail fetch. Returns (emails, error)."""
+    """Attempt Gmail fetch (ginjoai@gmail.com). Returns (emails, error)."""
     if not all([GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL_REFRESH_TOKEN]):
         return [], "Gmail secrets not configured"
     try:
         token = get_google_access_token(GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL_REFRESH_TOKEN)
         emails = fetch_gmail(token)
+        # Tag each email with account label
+        for em in emails:
+            em["account"] = "ginjoai"
         return emails, None
     except Exception as e:
         return [], f"Gmail failed: {e}"
+
+
+def safe_fetch_gmail2():
+    """Attempt Gmail fetch (jhconrad2@gmail.com). Returns (emails, error)."""
+    if not all([GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL2_REFRESH_TOKEN]):
+        return [], "Gmail2 secrets not configured"
+    try:
+        token = get_google_access_token(GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL2_REFRESH_TOKEN)
+        emails = fetch_gmail(token)
+        for em in emails:
+            em["account"] = "jhconrad2"
+        return emails, None
+    except Exception as e:
+        return [], f"Gmail2 failed: {e}"
 
 
 def safe_fetch_calendar():
@@ -411,7 +431,9 @@ def build_report_html(emails, events, slack_msgs, errors, phoenix_now, ai_summar
     email_items = []
     for em in emails[:8]:
         sender = em["sender"].split("<")[0].strip().strip('"')[:35]
-        email_items.append(f"{em['subject'][:65]} — <em>{sender}</em>")
+        acct = em.get("account", "")
+        acct_tag = f'<span style="color:#1E3A5F;font-size:10px;">[{acct}]</span> ' if acct else ""
+        email_items.append(f"{acct_tag}{em['subject'][:65]} — <em>{sender}</em>")
     if not email_items:
         email_items = ["No new email."]
     slack_items = [f"{sm['channel']}: {sm['text'][:80]}" for sm in slack_msgs[:5]] or ["No Slack activity."]
@@ -485,6 +507,7 @@ body {{ font-family:'Lucida Grande','Lucida Sans Unicode','Lucida Sans',Arial,sa
 </div>
 <div class="status-bar">
   Sources: {'<span class="ok">Gmail ✓</span>' if 'gmail' not in errors else '<span class="err">Gmail ✗</span>'}
+  &nbsp;|&nbsp; {'<span class="ok">Gmail2 ✓</span>' if 'gmail2' not in errors else '<span class="err">Gmail2 ✗</span>'}
   &nbsp;|&nbsp; {'<span class="ok">Calendar ✓</span>' if 'calendar' not in errors else '<span class="err">Calendar ✗</span>'}
   &nbsp;|&nbsp; {'<span class="ok">Slack ✓</span>' if 'slack' not in errors else '<span class="err">Slack ✗</span>'}
   &nbsp;|&nbsp; {'<span class="ok">AI ✓</span>' if ai_summary else '<span class="err">AI ✗</span>'}
@@ -556,8 +579,10 @@ def build_email_html(emails, events, slack_msgs, errors, phoenix_now, ai_summary
     email_items = []
     for em in emails[:8]:
         sender = em["sender"].split("<")[0].strip().strip('"')[:35]
+        acct = em.get("account", "")
+        acct_tag = f"<span style='color:#1E3A5F;font-size:10px;'>[{acct}]</span> " if acct else ""
         email_items.append(
-            f"<strong>{em['subject'][:65]}</strong> &mdash; <span style='color:#666'>{sender}</span>"
+            f"{acct_tag}<strong>{em['subject'][:65]}</strong> &mdash; <span style='color:#666'>{sender}</span>"
         )
     slack_items = [
         f"<strong>{sm['channel']}</strong>: {sm['text'][:80]}" for sm in slack_msgs[:5]
@@ -569,7 +594,7 @@ def build_email_html(emails, events, slack_msgs, errors, phoenix_now, ai_summary
 
     # Status summary line
     source_status = []
-    for name, key in [("Gmail", "gmail"), ("Calendar", "calendar"), ("Slack", "slack")]:
+    for name, key in [("Gmail", "gmail"), ("Gmail2", "gmail2"), ("Calendar", "calendar"), ("Slack", "slack")]:
         if key in errors:
             source_status.append(f'<span style="color:#C44;">{name} ✗</span>')
         else:
@@ -662,13 +687,22 @@ def main():
     errors = {}
 
     # ── Fetch each source independently ──
-    print("Fetching Gmail...")
+    print("Fetching Gmail (ginjoai@gmail.com)...")
     emails, gmail_err = safe_fetch_gmail()
     if gmail_err:
         errors["gmail"] = gmail_err
         print(f"  ⚠️  {gmail_err}")
     else:
-        print(f"  {len(emails)} emails.")
+        print(f"  {len(emails)} emails from ginjoai.")
+
+    print("Fetching Gmail (jhconrad2@gmail.com)...")
+    emails2, gmail2_err = safe_fetch_gmail2()
+    if gmail2_err:
+        errors["gmail2"] = gmail2_err
+        print(f"  ⚠️  {gmail2_err}")
+    else:
+        print(f"  {len(emails2)} emails from jhconrad2.")
+        emails = emails + emails2  # Merge into single list
 
     print("Fetching Google Calendar...")
     events, gcal_err = safe_fetch_calendar()
@@ -687,7 +721,7 @@ def main():
         print(f"  {len(slack_msgs)} Slack messages.")
 
     # ── Report summary ──
-    total_sources = 3
+    total_sources = 4  # gmail, gmail2, calendar, slack
     failed_sources = len(errors)
     print(f"\nData sources: {total_sources - failed_sources}/{total_sources} OK")
     if errors:
