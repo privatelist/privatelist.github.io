@@ -418,7 +418,7 @@ def get_m365_access_token(client_id, client_secret, tenant_id, refresh_token):
 def fetch_outlook(access_token):
     """Fetch recent emails from Microsoft Graph (Outlook)."""
     headers = {"Authorization": f"Bearer {access_token}"}
-    cutoff = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat() + "Z"
+    cutoff = (datetime.now(timezone.utc) - timedelta(hours=24)).strftime("%Y-%m-%dT%H:%M:%SZ")
     r = requests.get(
         "https://graph.microsoft.com/v1.0/me/messages",
         headers=headers,
