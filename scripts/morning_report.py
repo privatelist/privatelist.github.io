@@ -33,6 +33,11 @@ GMAIL_REFRESH_TOKEN = os.environ.get("GMAIL_REFRESH_TOKEN")
 
 GMAIL2_REFRESH_TOKEN = os.environ.get("GMAIL2_REFRESH_TOKEN")  # jhconrad2@gmail.com
 
+M365_CLIENT_ID     = os.environ.get("M365_CLIENT_ID")
+M365_CLIENT_SECRET = os.environ.get("M365_CLIENT_SECRET")
+M365_TENANT_ID     = os.environ.get("M365_TENANT_ID")
+M365_REFRESH_TOKEN = os.environ.get("M365_REFRESH_TOKEN")  # joseph@zeroth.media
+
 GCAL_CLIENT_ID     = os.environ.get("GCAL_CLIENT_ID")
 GCAL_CLIENT_SECRET = os.environ.get("GCAL_CLIENT_SECRET")
 GCAL_REFRESH_TOKEN = os.environ.get("GCAL_REFRESH_TOKEN")
@@ -384,6 +389,76 @@ def safe_fetch_gmail2():
         return [], f"Gmail2 failed: {e}"
 
 
+# ─── Microsoft Graph (Outlook) ──────────────────────────────────────────────
+def get_m365_access_token(client_id, client_secret, tenant_id, refresh_token):
+    """Exchange a Microsoft refresh token for an access token."""
+    r = requests.post(
+        f"https://login.microsoftonline.com/{tenant_id}/oauth2/v2.0/token",
+        data={
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "refresh_token": refresh_token,
+            "grant_type": "refresh_token",
+            "scope": "offline_access Mail.Read",
+        },
+        timeout=15,
+    )
+    if r.status_code != 200:
+        try:
+            detail = r.json()
+        except Exception:
+            detail = r.text[:200]
+        raise RuntimeError(f"M365 token refresh failed ({r.status_code}): {detail}")
+    data = r.json()
+    # Update the refresh token if Microsoft rotated it
+    new_rt = data.get("refresh_token")
+    return data["access_token"], new_rt
+
+
+def fetch_outlook(access_token):
+    """Fetch recent emails from Microsoft Graph (Outlook)."""
+    headers = {"Authorization": f"Bearer {access_token}"}
+    cutoff = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat() + "Z"
+    r = requests.get(
+        "https://graph.microsoft.com/v1.0/me/messages",
+        headers=headers,
+        params={
+            "$filter": f"receivedDateTime ge {cutoff}",
+            "$top": 15,
+            "$select": "subject,from,bodyPreview,receivedDateTime",
+            "$orderby": "receivedDateTime desc",
+        },
+        timeout=15,
+    )
+    r.raise_for_status()
+    emails = []
+    for msg in r.json().get("value", [])[:15]:
+        sender_data = msg.get("from", {}).get("emailAddress", {})
+        sender = sender_data.get("name") or sender_data.get("address", "unknown")
+        emails.append({
+            "subject": msg.get("subject", "(no subject)"),
+            "sender": sender,
+            "snippet": msg.get("bodyPreview", "")[:120],
+        })
+    return emails
+
+
+def safe_fetch_outlook():
+    """Attempt Outlook/M365 fetch (joseph@zeroth.media). Returns (emails, error)."""
+    if not all([M365_CLIENT_ID, M365_CLIENT_SECRET, M365_TENANT_ID, M365_REFRESH_TOKEN]):
+        return [], "M365 secrets not configured"
+    try:
+        access_token, _ = get_m365_access_token(
+            M365_CLIENT_ID, M365_CLIENT_SECRET, M365_TENANT_ID, M365_REFRESH_TOKEN
+        )
+        emails = fetch_outlook(access_token)
+        for em in emails:
+            em["account"] = "zeroth"
+        return emails, None
+    except Exception as e:
+        return [], f"Outlook failed: {e}"
+
+
 def safe_fetch_calendar():
     """Attempt Calendar fetch. Returns (events, error)."""
     if not all([GCAL_CLIENT_ID, GCAL_CLIENT_SECRET, GCAL_REFRESH_TOKEN]):
@@ -508,6 +583,7 @@ body {{ font-family:'Lucida Grande','Lucida Sans Unicode','Lucida Sans',Arial,sa
 <div class="status-bar">
   Sources: {'<span class="ok">Gmail ✓</span>' if 'gmail' not in errors else '<span class="err">Gmail ✗</span>'}
   &nbsp;|&nbsp; {'<span class="ok">Gmail2 ✓</span>' if 'gmail2' not in errors else '<span class="err">Gmail2 ✗</span>'}
+  &nbsp;|&nbsp; {'<span class="ok">Outlook ✓</span>' if 'outlook' not in errors else '<span class="err">Outlook ✗</span>'}
   &nbsp;|&nbsp; {'<span class="ok">Calendar ✓</span>' if 'calendar' not in errors else '<span class="err">Calendar ✗</span>'}
   &nbsp;|&nbsp; {'<span class="ok">Slack ✓</span>' if 'slack' not in errors else '<span class="err">Slack ✗</span>'}
   &nbsp;|&nbsp; {'<span class="ok">AI ✓</span>' if ai_summary else '<span class="err">AI ✗</span>'}
@@ -594,7 +670,7 @@ def build_email_html(emails, events, slack_msgs, errors, phoenix_now, ai_summary
 
     # Status summary line
     source_status = []
-    for name, key in [("Gmail", "gmail"), ("Gmail2", "gmail2"), ("Calendar", "calendar"), ("Slack", "slack")]:
+    for name, key in [("Gmail", "gmail"), ("Gmail2", "gmail2"), ("Outlook", "outlook"), ("Calendar", "calendar"), ("Slack", "slack")]:
         if key in errors:
             source_status.append(f'<span style="color:#C44;">{name} ✗</span>')
         else:
@@ -704,6 +780,15 @@ def main():
         print(f"  {len(emails2)} emails from jhconrad2.")
         emails = emails + emails2  # Merge into single list
 
+    print("Fetching Outlook (joseph@zeroth.media)...")
+    emails3, outlook_err = safe_fetch_outlook()
+    if outlook_err:
+        errors["outlook"] = outlook_err
+        print(f"  ⚠️  {outlook_err}")
+    else:
+        print(f"  {len(emails3)} emails from zeroth.media.")
+        emails = emails + emails3  # Merge into single list
+
     print("Fetching Google Calendar...")
     events, gcal_err = safe_fetch_calendar()
     if gcal_err:
@@ -721,7 +806,7 @@ def main():
         print(f"  {len(slack_msgs)} Slack messages.")
 
     # ── Report summary ──
-    total_sources = 4  # gmail, gmail2, calendar, slack
+    total_sources = 5  # gmail, gmail2, outlook, calendar, slack
     failed_sources = len(errors)
     print(f"\nData sources: {total_sources - failed_sources}/{total_sources} OK")
     if errors:
